@@ -153,18 +153,22 @@ Due to the long time required to solve the whole model, we provide some constrai
 
 ## Examples
 
-We give the models and the corresponding results of 2 versions of $\texttt{Deoxys}$, [goto](.\Deoxys):
+We give the models and the corresponding results of 2 versions of $\texttt{Deoxys}$, [goto](DeoxysTK23):
 
 - **11-round** $\texttt{Deoxys-BC-256}$
 - **15-round** $\texttt{Deoxys-BC-384}$
 
-We give the models and the corresponding results of 2 versions of $\texttt{Deoxys-AE}$, [goto](.\Deoxys-AE):
+We give the models and the corresponding results of 2 versions of $\texttt{Deoxys-AE}$, [goto](Deoxys-AE):
 
 * **10-round** $\texttt{Deoxys-I-128-128}$
 
 * **14-round** $\texttt{Deoxys-I-256-128}$
 
+We give the models and the corresponding results of 2 versions of $\texttt{Deoxys-AE}$, [goto](Deoxys-TK45):
 
+* **16-round** $\texttt{Deoxys-TBC-512-256}$
+
+* **18-round** $\texttt{Deoxys-TBC-640-256}$
 
 **Alter-abling specifications for different attacks** (example = 11-round rectangle attack on $\texttt{Deoxys-BC-256}$)
 
@@ -196,7 +200,7 @@ int: Rl = 3;
 int: Rf = 2;
 ```
 
-Result obtained ([detail](.\Deoxys\res_DeoxysTK2_11r.txt)):
+Result obtained ([detail](DeoxysTK23\res_DeoxysTK2_11r.txt)):
 
 ```
 Complexity of Rectangle Attack on Deoxys-BC-384: 
