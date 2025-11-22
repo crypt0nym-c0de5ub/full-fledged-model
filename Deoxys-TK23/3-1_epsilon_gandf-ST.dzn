@@ -1,0 +1,240 @@
+/*###################################################################*/
+/*###################################################################*/
+%                         -Step Assignment-
+/*###################################################################*/
+/*###################################################################*/
+
+/**********************************           **********************************/
+/**********************************    Eb     **********************************/
+/**********************************           **********************************/
+
+% The first state uAK
+constraint forall(i in 0..15)(
+  uSAK[0,i] = if uVAK[0,i] == 0 then -1 else 0 endif
+);
+
+% Step in STK
+constraint forall(r in 0..Rb-1, i in 0..15)(
+  uSGK[r,i] = if uGSTK[r,i] == 1 then 0
+              elseif uSAK[0,i] >= 0 then uSAK[0,i]
+              else -1
+              endif
+);
+
+% Step before SB, SR, MC
+constraint forall(r in 0..Rb-1, i in 0..15)(
+  uSSB[r,i] = uSGK[r,i]
+  /\
+  uSSR[r,i] = uSSB[r,i]
+  /\
+  uSMC[r,i] = uSSR[r,SRp[i]]
+);
+
+% To the next round
+constraint forall(r in 0..Rb-1, j in 0..3)(
+  uSBigMC[r,j] = max([uSMC[r,4*j+i] | i in 0..3])
+  /\
+  forall(i in 0..3)(uSAK[r+1,4*j+i] = if uVAK[r+1,4*j+i] == 1 then uSBigMC[r,j] else -1 endif)
+);
+
+/**********************************           **********************************/
+/**********************************    Ef     **********************************/
+/**********************************           **********************************/
+
+% initial step assignment
+constraint forall(i in 0..15)(
+  lSSR[Rb+Ru+Rm+Rl+Rf-1,i] = if (lVSR[Rb+Ru+Rm+Rl+Rf-1,i] == 1) then 0 else -1 endif
+);
+
+% Step in AeqK
+constraint forall(r in Rb+Ru+Rm+Rl..Rb+Ru+Rm+Rl+Rf-1, i in 0..15)(
+  if (lGSTK[r+1,i] == 1) then (lSGK[r+1,i] = 0)
+  elseif (lVSR[r,i] == 1) then (lSGK[r+1,i] >= lSSR[r,i])
+  else (lSGK[r+1,i] = -1)
+  endif
+);
+
+% Step before SB
+constraint forall(r in Rb+Ru+Rm+Rl..Rb+Ru+Rm+Rl+Rf-1, i in 0..15)(
+  lSSB[r,i] = lSGK[r+1,i]
+);
+
+% Step before MC
+constraint forall(r in Rb+Ru+Rm+Rl..Rb+Ru+Rm+Rl+Rf-2, j in 0..3)(
+  lSBigMC[r,j] = max([lSSB[r+1,4*j+i] | i in 0..3])
+  /\
+  forall(i in 0..3)(lSMC[r,4*j+i] = if lVMC[r,4*j+i] == 1 then lSBigMC[r,j] else -1 endif)
+);
+
+% Step before SR
+constraint forall(r in Rb+Ru+Rm+Rl..Rb+Ru+Rm+Rl+Rf-2, i in 0..15)(
+  lSSR[r,SRp[i]] = lSMC[r,i]
+);
+
+% =========================== Apply State Test ============================
+% ----- Upper -----
+constraint forall(r in 0..Rb-1, i in 0..15)(uEGK[r,i] != 0) /\ 
+           forall(r in 0..Rb-1, i in 0..15)(uESB[r,i] != 0) /\ 
+           forall(r in 0..Rb-1, i in 0..15)(uEMC[r,i] != 0) ;
+
+% State Test Start (in each round)
+constraint forall(r in 0..Rb-1, i in 0..15)(
+  if (uXSR[r,SRp[i]] == 0) /\ (uSMC[r,i] > 0) then uST[r,i] = -1 \/ uST[r,i] = uSMC[r,i]
+  else uST[r,i] = -1
+  endif
+);
+
+% Flag of State Test
+constraint forall(r in 0..Rb-1, s in 0..Step)(uFlagST[r,s] = exists(i in 0..15)(uST[r,i] == s));
+
+
+% -- Elimination --
+% Eliminate SB
+constraint forall(r in 0..Rb-1, i in 0..15)(uESB[r,i] = uEGK[r,i]);
+
+% Eliminate GK
+constraint forall(r in 0..Rb-1, i in 0..15)(uEGK[r,SRp[i]] = if uSGK[r,SRp[i]] == uSMC[r,i] then uEMC[r,i] else -1 endif);
+
+% Eliminate MC
+% Only 0 diff can be eliminated
+constraint forall(r in 0..Rb-1, i in 0..15)(if uXSR[r,SRp[i]] = 1 then uEMC[r,i] = -1 endif);
+
+% initial round
+constraint forall(s in 1..Step)(
+    if uFlagST[Rb-1,s] == 1
+    then forall(i in 0..15)(if uST[Rb-1,i] == s then uEMC[Rb-1,i] = s else uEMC[Rb-1,i] != s endif)
+    else forall(i in 0..15)(uEMC[Rb-1,i] != s)
+    endif
+);
+
+% subsequet rounds (impacted by prior SSB)
+constraint forall(s in 1..Step, r in 0..Rb-2)(
+    if uFlagST[r,s] == 1 
+    then forall(i in 0..15)(if uST[r,i] == s then uESB[r,i] = s else uESB[r,i] != s endif) 
+    endif 
+    /\
+    forall(c in 0..3)(
+      if exists(i in 0..3)(uESB[r+1,4*c+i] == s) 
+      then forall(i in 0..3)(if uSMC[r,4*c+i] == s then uEMC[r,4*c+i] = s else uEMC[r,4*c+i] != s endif)
+      endif
+    )
+    /\
+    forall(c in 0..3)(
+      if (uFlagST[r,s] == 0) /\ forall(i in 0..3)(uESB[r+1,4*c+i] != s) then forall(i in 0..3)(uEMC[r,4*c+i] != s) endif
+    )
+);
+
+
+% ----- Lower -----
+constraint forall(r in Rb+Ru+Rm+Rl+1..Rb+Ru+Rm+Rl+Rf, i in 0..15)(lEGK[r,i] != 0) /\ 
+           forall(r in Rb+Ru+Rm+Rl..Rb+Ru+Rm+Rl+Rf-1, i in 0..15)(lESB[r,i] != 0) /\ 
+           forall(r in Rb+Ru+Rm+Rl..Rb+Ru+Rm+Rl+Rf-2, i in 0..15)(lEMC[r,i] != 0) ;
+
+% State Test Start (in each round)
+constraint forall(r in Rb+Ru+Rm+Rl..Rb+Ru+Rm+Rl+Rf-1, i in 0..15)(
+  if (lXSB[r,i] == 0) /\ (lSSB[r,i] > 0) then lST[r,i] = -1 \/ lST[r,i] = lSSB[r,i]
+  else lST[r,i] = -1
+  endif
+);
+
+% Flag of State Test
+constraint forall(r in Rb+Ru+Rm+Rl..Rb+Ru+Rm+Rl+Rf-1, s in 0..Step)(lFlagST[r,s] = exists(i in 0..15)(lST[r,i] == s));
+
+
+% -- Elimination --
+% Eliminate SB
+% Only 0 diff can be eliminated
+constraint forall(r in Rb+Ru+Rm+Rl..Rb+Ru+Rm+Rl+Rf-1, i in 0..15)(if lXSB[r,i] = 1 then lESB[r,i] = -1 endif);
+
+% initial round
+constraint forall(s in 1..Step)(
+    if lFlagST[Rb+Ru+Rm+Rl,s] == 1
+    then forall(i in 0..15)(if lST[Rb+Ru+Rm+Rl,i] == s then lESB[Rb+Ru+Rm+Rl,i] = s else lESB[Rb+Ru+Rm+Rl,i] != s endif)
+    else forall(i in 0..15)(lESB[Rb+Ru+Rm+Rl,i] != s)
+    endif
+);
+% subsequet rounds (impacted by prior SMC)
+constraint forall(s in 1..Step, r in Rb+Ru+Rm+Rl+1..Rb+Ru+Rm+Rl+Rf-1)(
+    if lFlagST[r,s] == 1 
+    then forall(i in 0..15)(if lST[r,i] == s then lESB[r,i] = s else lESB[r,i] != s endif) 
+    endif 
+    /\
+    forall(c in 0..3)(
+      if exists(i in 0..3)(lEMC[r-1,4*c+i] == s) 
+      then forall(i in 0..3)(if lSSB[r,4*c+i] == s then lESB[r,4*c+i] = s else lESB[r,4*c+i] != s endif)
+      endif
+    )
+    /\
+    forall(c in 0..3)(
+      if (lFlagST[r,s] == 0) /\ forall(i in 0..3)(lEMC[r-1,4*c+i] != s) then forall(i in 0..3)(lESB[r,4*c+i] != s) endif
+    )
+);
+
+% Eliminate GK
+constraint forall(r in Rb+Ru+Rm+Rl..Rb+Ru+Rm+Rl+Rf-1, i in 0..15)(lEGK[r+1,i] = lESB[r,i]);
+
+% Eliminate MC
+constraint forall(r in Rb+Ru+Rm+Rl..Rb+Ru+Rm+Rl+Rf-2, i in 0..15)(lEMC[r,i] = if lSMC[r,i] == lSGK[r+1,SRp[i]] then lEGK[r+1,SRp[i]] else -1 endif);
+
+% =========================== FILTER in Eb and Ef ============================
+% ===== Filter in Eb =====
+
+% Filter from SB
+constraint forall(s in 1..Step)(
+  SFSB[s] = 
+    sum(r in 0..Rb-1, i in 0..15 where uSSR[r,i] == s)(uYSB[r,i] - uYSR[r,i]) +
+    sum(r in Rb+Ru+Rm+Rl..Rb+Ru+Rm+Rl+Rf-1, i in 0..15 where lSSB[r,i] == s)(lYSR[r,i] - lYSB[r,i])
+);
+
+constraint forall(r in 0..Rb-1, j in 0..3)(
+  uSBigDiffMC[r,j] = max([uSMC[r,4*j+i]*uYSR[r,SRp[4*j+i]] | i in 0..3])
+);
+constraint forall(r in Rb+Ru+Rm+Rl..Rb+Ru+Rm+Rl+Rf-2, j in 0..3)(
+  lSBigDiffMC[r,j] = max([lSSB[r+1,4*j+i]*lYAK[r+1,4*j+i] | i in 0..3])
+);
+
+constraint forall(s in 1..Step)(
+  SFMC[s] = 
+    sum(r in 0..Rb-1, j in 0..3 where uTC[r,j] == 1)(
+      if sum(i in 0..3)((uSBigMC[r,j] - s) * uYSR[r,SRp[4*j+i]]) == 0 
+      then 4 - sum(i in 0..3)(uYAK[r,4*j+i])
+      else 0
+      endif
+    ) + 
+    sum(r in Rb+Ru+Rm+Rl..Rb+Ru+Rm+Rl+Rf-2, j in 0..3 where lTC[r,j] == 1)(
+      if sum(i in 0..3)((lSBigDiffMC[r,j] - s) * lYAK[r+1,4*j+i]) == 0 
+      then 4 - sum(i in 0..3)(lYSR[r,SRp[4*j+i]])
+      else 0
+      endif
+    )
+);
+
+% =========== COMPLEXITY of EPSILON (Guess-and-Filter) ==========
+
+% array[1..Step] of var int: SData;
+
+% Guessed Key in each Step
+constraint forall(s in 1..Step)(
+    STTGK[s] = sum(
+        [1 | r in 0..Rb-1, i in 0..15 where (uSGK[r,i] == s) /\ uEGK[r,i] != s] ++
+        [1 | r in 0..Rb-1, i in 0..15 where uST[r,i] == s] ++
+        [1 | r in Rb+Ru+Rm+Rl+1..Rb+Ru+Rm+Rl+Rf, i in 0..15 where (lSGK[r,i] == s) /\ lEGK[r,i] != s] ++
+        [1 | r in Rb+Ru+Rm+Rl..Rb+Ru+Rm+Rl+Rf-1, i in 0..15 where lST[r,i] == s]
+    )
+);
+
+% Epsilon in each Step
+constraint forall(s in 1..Step)(SFrTT[s] = 2*(SFSB[s] + SFMC[s]));
+constraint (SDeRM[1] = STTGK[1] - SFrTT[1]) /\ forall(s in 2..Step)(SDeRM[s] = SDeRM[s-1] + STTGK[s] - SFrTT[s]);
+constraint (STeTT[1] = STTGK[1]) /\ forall(s in 2..Step)(STeTT[s] = STTGK[s] + SDeRM[s-1]);
+
+% Set all involved key be guessed
+constraint forall(r in 0..Rb-1, i in 0..15)(if(uVSTK[r,i] == 1) /\ (uGSTK[r,i] == 0) then (uSGK[r,i] >= 1) else (uSGK[r,i] <= 0) endif);
+constraint forall(r in Rb+Ru+Rm+Rl+1..Rb+Ru+Rm+Rl+Rf, i in 0..15)(if(lVSTK[r,i] == 1) /\ (lGSTK[r,i] == 0) then (lSGK[r,i] >= 1) else (lSGK[r,i] <= 0) endif);
+
+constraint Tepsilon = max([0] ++ [STeTT[s] | s in 1..Step]);
+
+constraint weight + 8*(
+    sum([uST[r,i] >= 1 | r in 0..Rb-1, i in 0..15]) + 
+    sum([lST[r,i] >= 1 | r in Rb+Ru+Rm+Rl..Rb+Ru+Rm+Rl+Rf-1, i in 0..15])
+) < block_size;

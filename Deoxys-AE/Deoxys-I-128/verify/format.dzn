@@ -1,0 +1,147 @@
+
+
+% output [
+%     " ============= Upper ============= \n" ++
+%     "  [     AK    ]           [     STK   ]           [     SB    ]            [     SR    ]            [     MC    ]\n" ++ 
+%     concat([
+%         "Round " ++ show(r) ++ ":\n" ++
+%         concat([
+%             "[  *   *   *   *] <(AK) " ++
+%             "[" ++ join(" ", [show_int(3, uSTK_int[r,4*i+c]) | i in 0..3]) ++ "] (AK)< " ++
+%             "[  *   *   *   *] <(SB)< " ++
+%             "[  *   *   *   *] <(SR)< " ++
+%             "[  *   *   *   *] <(MC)< " ++
+%             "\n"
+%             | c in 0..3
+%         ])
+%         | r in 0..bR-2
+%     ]) ++ 
+%     concat([
+%         "Round " ++ show(r) ++ ":\n" ++
+%         concat([
+%             "[  *   *   *   *] <(AK) " ++
+%             "[" ++ join(" ", [show_int(3, uSTK_int[r,4*i+c]) | i in 0..3]) ++ "] (AK)< " ++
+%             "[  *   *   *   *] <(SB)< " ++
+%             "[  *   *   *   *] <(SR)< " ++
+%             "[" ++ join(" ", [show_int(3, uMC_int[r,4*i+c]) | i in 0..3]) ++ "] <(MC)< " ++
+%             "\n"
+%             | c in 0..3
+%         ])
+%         | r = bR-1
+%     ]) ++ 
+%     concat([
+%         "Round " ++ show(r) ++ ":\n" ++
+%         concat([
+%             "[" ++ join(" ", [show_int(3, uAK_int[r,4*i+c]) | i in 0..3]) ++ "] <(AK) " ++
+%             "[" ++ join(" ", [show_int(3, uSTK_int[r,4*i+c]) | i in 0..3]) ++ "] (AK)< " ++
+%             "[" ++ join(" ", [show_int(3, uSB_int[r,4*i+c]) | i in 0..3]) ++ "] <(SB)< " ++
+%             "[" ++ join(" ", [show_int(3, uSR_int[r,4*i+c]) | i in 0..3]) ++ "] <(SR)< " ++
+%             "[" ++ join(" ", [show_int(3, uMC_int[r,4*i+c]) | i in 0..3]) ++ "] <(MC)< " ++
+%             "\n"
+%             | c in 0..3
+%         ])
+%         | r in bR..bR+uR+mR-2
+%     ]) 
+%     ++ 
+%     concat([
+%         "Round " ++ show(r) ++ ":\n" ++
+%         concat([
+%             "[" ++ join(" ", [show_int(3, uAK_int[r,4*i+c]) | i in 0..3]) ++ "] <(AK) " ++
+%             "[" ++ join(" ", [show_int(3, uSTK_int[r,4*i+c]) | i in 0..3]) ++ "] (AK)< " ++
+%             "[" ++ join(" ", [show_int(3, uSB_int[r,4*i+c]) | i in 0..3]) ++ "] <(SB)< " ++
+%             "\n"
+%             | c in 0..3
+%         ])
+%         | r = bR+uR+mR-1
+%     ])
+% ];
+
+% output["\n"];
+% output [
+%   "utk: \n" ++
+%   "       ", join(" ", [show_int(3, i) | i in 0..15]), "\n"
+% ] ++ [
+%   show_int(2, r) ++ "(" ++ show(s) ++ ")" ++ ": " ++ join(" ", [show_int(3, utk_int[s, r, c]) | c in 0..15]) ++ "\n"
+%   | r in 0..bR+uR+mR-1, s in 1..KSize
+% ];
+% output["\n\n"];
+
+
+output [ 
+    " ============= lower ============= \n" ++
+    "  [     AK    ]           [     STK   ]           [     SB    ]            [     SR    ]            [     MC    ]\n" ++ 
+    concat([
+        "Round " ++ show(r) ++ ":\n" ++
+        concat([
+            "[" ++ join(" ", [show_int(3, lAK_int[r,4*i+c]) | i in 0..3]) ++ "] <(AK) " ++
+            "[" ++ join(" ", [show_int(3, lSTK_int[r,4*i+c]) | i in 0..3]) ++ "] (AK)< " ++
+            "[" ++ join(" ", [show_int(3, lSB_int[r,4*i+c]) | i in 0..3]) ++ "] <(SB)< " ++
+            "[" ++ join(" ", [show_int(3, lSR_int[r,4*i+c]) | i in 0..3]) ++ "] <(SR)< " ++
+            "[" ++ join(" ", [show_int(3, lMC_int[r,4*i+c]) | i in 0..3]) ++ "] <(MC)< " ++
+            "\n"
+            | c in 0..3
+        ])
+        | r in bR+uR..bR+uR+mR+lR
+    ]) 
+    ++ 
+    concat([
+        "Round " ++ show(r) ++ ":\n" ++
+        concat([
+            "[" ++ join(" ", [show_int(3, lAK_int[r,4*i+c]) | i in 0..3]) ++ "] <(AK) " ++
+            "[" ++ join(" ", [show_int(3, lSTK_int[r,4*i+c]) | i in 0..3]) ++ "] (AK)< " ++
+            "[  *   *   *   *] <(SB)< " ++
+            "[  *   *   *   *] <(SR)< " ++
+            "[  *   *   *   *] <(MC)< " ++
+            "\n"
+            | c in 0..3
+        ])
+        | r = bR+uR+mR+lR+1
+    ]) 
+    ++ 
+    concat([
+        "Round " ++ show(r) ++ ":\n" ++
+        concat([
+            "[  *   *   *   *] <(AK) " ++
+            "[" ++ join(" ", [show_int(3, lSTK_int[r,4*i+c]) | i in 0..3]) ++ "] (AK)< " ++
+            "[  *   *   *   *] <(SB)< " ++
+            "[  *   *   *   *] <(SR)< " ++
+            "[  *   *   *   *] <(MC)< " ++
+            "\n"
+            | c in 0..3
+        ])
+        | r = bR+uR+mR+lR+fR
+    ])
+];
+
+output [
+  "ltk: \n" ++
+  "       ", join(" ", [show_int(3, i) | i in 0..15]), "\n"
+] ++ [
+  show_int(2, r) ++ "(" ++ show(s) ++ ")" ++ ": " ++ join(" ", [show_int(3, ltk_int[s, r, c]) | c in 0..15]) ++ "\n"
+  | r in bR+uR..bR+uR+mR+lR+fR, s in 1..KSize
+];
+output["\n\n"];
+
+% % ==============================
+
+% output [
+%   "uPrSB: " ++ " PEu = " ++ show(PEu) ++ "\n" ++
+%   "    ", join(" ", [show_int(2, i) | i in 0..15]), "\n"
+% ] ++ [
+%   show_int(2, r) ++ ": " ++ join(" ", [show_int(2, uPrSB[r, c]) | c in 0..15]) ++ "\n"
+%   | r in bR..bR+uR+mR-2
+% ];
+% output["\n"];
+% output [
+%   "lPrSB: " ++  " PEl = " ++ show(PEl) ++ "\n" ++
+%   "    ", join(" ", [show_int(2, i) | i in 0..15]), "\n"
+% ] ++ [
+%   show_int(2, r) ++ ": " ++ join(" ", [show_int(2, lPrSB[r, c]) | c in 0..15]) ++ "\n"
+%   | r in bR+uR+1..bR+uR+mR+lR-1
+% ];
+% output["\n"];
+% % output["P_EM = " ++ show(PEm) ++ " (BCT[i,j] = 5.4 in " ++ show(flag54) ++ " cells)"];
+% output["\n"];
+% output["================\n"];
+% output["Prob = " ++ show(Prob)];
+% output["\n================\n"];

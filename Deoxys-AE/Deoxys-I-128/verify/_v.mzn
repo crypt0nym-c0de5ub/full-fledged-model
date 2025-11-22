@@ -1,0 +1,272 @@
+
+% NOTE:
+% This model for TK3, slight modify it when mounting on TK2
+% bit format is reversed, i.e. 0x72 = 1,1,1,0, 0,0,1,0
+
+
+include "AES_DDT.dzn";
+include "AES_BCT.dzn";
+include "AES_MC.dzn";
+
+
+array[0..15] of var 0..15: SRp = array1d(0..15, [0,5,10,15,4,9,14,3,8,13,2,7,12,1,6,11]);
+array[0..15] of var 0..15: hperm = array1d(0..15, [1,6,11,12,5,10,15,0,9,14,3,4,13,2,7,8]);
+array[0..7] of int: weights = array1d(0..7,[1, 2, 4, 8, 16, 32, 64, 128]);
+int: KSize = 2;
+
+int: bR = 1;
+int: uR = 3;
+int: mR = 2;
+int: lR = 2;
+int: fR = 2;
+
+int: PEb = 0;
+var int: PEu;
+var int: PEm;
+var int: PEl;
+var int: Prob;
+
+% % ================================= UPPER (begin) =====================================
+% array[1..KSize, 0..bR+uR+mR-1, 0..15, 0..7] of var 0..1: utk;  % tk in binary format
+% array[1..KSize, 0..bR+uR+mR-1, 0..15] of var 0..255: utk_int;  % tk in integer format
+% array[2..KSize, 0..bR+uR+mR-1, 0..15, 0..7] of var 0..1: utp;  % temporary variable after shift bits.
+% array[0..bR+uR+mR-1, 0..15, 0..7] of var 0..1: uSTK;  % stk in binary format, stk = add(tk_i)
+% array[0..bR+uR+mR-1, 0..15] of var 0..255: uSTK_int;  % stk in integer format
+
+% constraint forall(r in 0..bR+uR+mR-1, c in 0..15)(
+%   forall(s in 1..KSize)(
+%     utk_int[s,r,c] = sum(i in 0..7)(utk[s,r,c,i] * weights[i])
+%   ) 
+%   /\
+%   uSTK_int[r,c] = sum(i in 0..7)(uSTK[r,c,i] * weights[i])
+% );
+
+% array[bR..bR+uR+mR-1, 0..15, 0..7] of var 0..1: uAK; % before AK
+% array[bR..bR+uR+mR-1, 0..15, 0..7] of var 0..1: uSB; % before SB
+% array[bR..bR+uR+mR-1, 0..15, 0..7] of var 0..1: uSR; % before SR
+% array[bR-1..bR+uR+mR-2, 0..15, 0..7] of var 0..1: uMC; % before MC
+
+% array[bR..bR+uR+mR-1, 0..15] of var 0..255: uAK_int; % before AK
+% array[bR..bR+uR+mR-1, 0..15] of var 0..255: uSB_int; % before SB
+% array[bR..bR+uR+mR-1, 0..15] of var 0..255: uSR_int; % before SR
+% array[bR-1..bR+uR+mR-2, 0..15] of var 0..255: uMC_int; % before MC
+
+% % bit to int
+% constraint 
+%   forall(r in bR..bR+uR+mR-1, c in 0..15)(
+%     uAK_int[r,c] = sum(i in 0..7)(uAK[r,c,i] * weights[i]) /\
+%     uSB_int[r,c] = sum(i in 0..7)(uSB[r,c,i] * weights[i]) /\
+%     uSR_int[r,c] = sum(i in 0..7)(uSR[r,c,i] * weights[i])
+%     ) /\
+%   forall(r in bR-1..bR+uR+mR-2, c in 0..15)(
+%     uMC_int[r,c] = sum(i in 0..7)(uMC[r,c,i] * weights[i])
+%     )
+% ;
+
+% % This verification without PrEb
+% array[bR..bR+uR+mR-2, 0..15] of var 0..255: uPrSB; % prob. of SB
+
+% % % =========== Key schedule ==============
+% % LFSR2 ("<<" to ">>" for compatibility)
+% constraint forall(r in 0..bR+uR+mR-1, c in 0..15, i in 1..7)((utp[2,r,c,i] = utk[2,r,c,i-1]));
+% constraint forall(r in 0..bR+uR+mR-1, c in 0..15)(utp[2,r,c,0] = (utk[2,r,c,5] + utk[2,r,c,7]) mod 2);
+% % LFSR3 ("<<" to ">>" for compatibility)
+% % constraint forall(r in 0..bR+uR+mR-1, c in 0..15, i in 0..6)(utp[3,r,c,i] = utk[3,r,c,i+1]);
+% % constraint forall(r in 0..bR+uR+mR-1, c in 0..15)(utp[3,r,c,7] = (utk[3,r,c,0] + utk[3,r,c,6]) mod 2);
+% % h permutation
+% constraint forall(r in 0..bR+uR+mR-2, c in 0..15, i in 0..7)(utk[1,r+1,c,i] = utk[1,r,hperm[c],i]);
+% constraint forall(r in 0..bR+uR+mR-2, c in 0..15, i in 0..7)(utk[2,r+1,c,i] = utp[2,r,hperm[c],i]);
+% % constraint forall(r in 0..bR+uR+mR-2, c in 0..15, i in 0..7)(utk[3,r+1,c,i] = utp[3,r,hperm[c],i]);
+% % Get STK
+% constraint forall(r in 0..bR+uR+mR-1, c in 0..15, i in 0..7)(uSTK[r,c,i] = (utk[1,r,c,i] + utk[2,r,c,i]) mod 2);
+
+% % ======== Diff. Propagation =======
+% % --- operation AK ---
+% constraint forall(r in bR..bR+uR+mR-1, c in 0..15, i in 0..7)(
+%   uSB[r,c,i] = (uAK[r,c,i] + uSTK[r,c,i]) mod 2
+% );
+
+% % --- operation SB ---
+% constraint forall(r in bR..bR+uR, c in 0..15)(
+%   if uSB_int[r,c] > 0
+%   then (uPrSB[r,c] = DDT[uSB_int[r,c], uSR_int[r,c]]) /\ uPrSB[r,c] > 0
+%   else uSR_int[r,c] = 0 /\ uPrSB[r,c] = 0
+%   endif
+% );
+% % constraint PEu = sum(r in bR..bR+uR-1, c in 0..15)(uPrSB[r,c]);
+
+% % --- operation SR ---
+% constraint forall(r in bR..bR+uR, c in 0..15)(
+%   forall(i in 0..7)(uMC[r,c,i] = uSR[r,SRp[c],i]) /\
+%   uMC_int[r,c] = uSR_int[r,SRp[c]]
+% );
+
+% % --- operation MC ---
+% constraint forall(r in bR-1..bR+uR, col in [0,4,8,12])(
+%   _MC(array1d(0..3, [uMC_int[r,c] | c in col..col+3]), 
+%       array2d(0..3, 0..7, [uMC[r,c,i] | c in col..col+3, i in 0..7]),
+%       array2d(0..3, 0..7, [uAK[r+1,c,i] | c in col..col+3, i in 0..7])
+%      )
+% );
+
+% % ================ Truncated Pattern ================
+% constraint forall(r = 0,c in 0..15)(if c in {14} then uSTK_int[r,c] > 1 else uSTK_int[r,c] = 0 endif);
+% constraint forall(r = 1,c in 0..15)(if c in {9} then uSTK_int[r,c] > 1 else uSTK_int[r,c] = 0 endif);
+% constraint forall(r = 2,c in 0..15)(if c in {} then uSTK_int[r,c] > 1 else uSTK_int[r,c] = 0 endif);
+% constraint forall(r = 3,c in 0..15)(if c in {15} then uSTK_int[r,c] > 1 else uSTK_int[r,c] = 0 endif);
+% constraint forall(r = 4,c in 0..15)(if c in {6} then uSTK_int[r,c] > 1 else uSTK_int[r,c] = 0 endif); % 0
+% constraint forall(r = 5,c in 0..15)(if c in {1} then uSTK_int[r,c] > 1 else uSTK_int[r,c] = 0 endif); % 0
+
+% % MC
+% constraint forall(r = 0, c in 0..15)(if c in {8,9,10,11} then uMC_int[r,c] > 1 else uMC_int[r,c] = 0 endif);
+% constraint forall(r = 1, c in 0..15)(if c in {} then uMC_int[r,c] > 1 else uMC_int[r,c] = 0 endif);
+% constraint forall(r = 2, c in 0..15)(if c in {} then uMC_int[r,c] > 1 else uMC_int[r,c] = 0 endif);
+% constraint forall(r = 3, c in 0..15)(if c in {3} then uMC_int[r,c] > 1 else uMC_int[r,c] = 0 endif); % 0
+% constraint forall(r = 4, c in 0..15)(if c in {0,7,10,13,14} then uMC_int[r,c] > 1 else uMC_int[r,c] = 0 endif); % 0
+
+% % AK
+% constraint forall(r = 1, c in 0..15)(if c in {9} then uAK_int[r,c] > 1 else uAK_int[r,c] = 0 endif);
+% constraint forall(r = 2, c in 0..15)(if c in {} then uAK_int[r,c] > 1 else uAK_int[r,c] = 0 endif);
+% constraint forall(r = 3, c in 0..15)(if c in {} then uAK_int[r,c] > 1 else uAK_int[r,c] = 0 endif);
+% constraint forall(r = 4, c in 0..15)(if c in {0,1,2,3} then uAK_int[r,c] > 1 else uAK_int[r,c] = 0 endif);
+
+% % SB
+% constraint forall(r = 1, c in 0..15)(if c in {} then uSB_int[r,c] > 1 else uSB_int[r,c] = 0 endif);
+% constraint forall(r = 2, c in 0..15)(if c in {} then uSB_int[r,c] > 1 else uSB_int[r,c] = 0 endif);
+% constraint forall(r = 3, c in 0..15)(if c in {15} then uSB_int[r,c] > 1 else uSB_int[r,c] = 0 endif); % 0
+% constraint forall(r = 4, c in 0..15)(if c in {0,1,2,3,6} then uSB_int[r,c] > 1 else uSB_int[r,c] = 0 endif); % 0
+% constraint forall(r = 5, c in 0..15)(if c in {0,2,3,4,5,6,7,8,9,10,11,12,13,14,15} then uSB_int[r,c] > 1 else uSB_int[r,c] = 0 endif); % 0
+
+% % ================================= UPPER (end) =====================================
+
+
+
+
+% ================================= LOWER (begin) ===================================
+array[1..KSize, bR+uR..bR+uR+mR+lR+fR, 0..15, 0..7] of var 0..1: ltk;  % s tks in lower
+array[1..KSize, bR+uR..bR+uR+mR+lR+fR, 0..15] of var 0..255: ltk_int;  % tk in integer format
+array[1..KSize, bR+uR..bR+uR+mR+lR+fR, 0..15, 0..7] of var 0..1: ltp;  % temporary variable after shift bits.
+array[bR+uR..bR+uR+mR+lR+fR, 0..15, 0..7] of var 0..1: lSTK;  % stk in binary format, stk = add(tk_i)
+array[bR+uR..bR+uR+mR+lR+fR, 0..15] of var 0..255: lSTK_int;  % stk in integer format
+
+% ====== bin to int ======
+constraint forall(r in bR+uR..bR+uR+mR+lR+fR, c in 0..15)(
+  forall(s in 1..KSize)(
+    ltk_int[s,r,c] = sum(i in 0..7)(ltk[s,r,c,i] * weights[i])
+  )
+  /\
+  lSTK_int[r,c] = sum(i in 0..7)(lSTK[r,c,i] * weights[i])
+);
+
+array[bR+uR..bR+uR+mR+lR+fR, 0..15, 0..7] of var 0..1: lAK; % before AK
+array[bR+uR..bR+uR+mR+lR+fR-1, 0..15, 0..7] of var 0..1: lSB; % before SB
+array[bR+uR..bR+uR+mR+lR+fR-1, 0..15, 0..7] of var 0..1: lSR; % before SR
+array[bR+uR..bR+uR+mR+lR+fR-1, 0..15, 0..7] of var 0..1: lMC; % before MC
+
+array[bR+uR..bR+uR+mR+lR+fR, 0..15] of var 0..255: lAK_int; % before AK
+array[bR+uR..bR+uR+mR+lR+fR-1, 0..15] of var 0..255: lSB_int; % before SB
+array[bR+uR..bR+uR+mR+lR+fR-1, 0..15] of var 0..255: lSR_int; % before SR
+array[bR+uR..bR+uR+mR+lR+fR-1, 0..15] of var 0..255: lMC_int; % before MC
+
+% bit to int
+constraint 
+  forall(r in bR+uR..bR+uR+mR+lR+fR, c in 0..15)(
+    lAK_int[r,c] = sum(i in 0..7)(lAK[r,c,i] * weights[i])
+  )/\
+  forall(r in bR+uR..bR+uR+mR+lR+fR-1, c in 0..15)(
+    lSB_int[r,c] = sum(i in 0..7)(lSB[r,c,i] * weights[i]) /\
+    lSR_int[r,c] = sum(i in 0..7)(lSR[r,c,i] * weights[i]) /\
+    lMC_int[r,c] = sum(i in 0..7)(lMC[r,c,i] * weights[i])
+    )
+;
+
+% This verification without PrEb
+array[bR+uR..bR+uR+mR+lR+fR, 0..15] of var 0..255: lPrSB; % prob. of SB
+
+% =========== Key schedule (lower) ==============
+% LFSR2 ("<<" to ">>" for compatibility)
+constraint forall(r in bR+uR..bR+uR+mR+lR+fR, c in 0..15, i in 1..7)(ltp[2,r,c,i] = ltk[2,r,c,i-1]);
+constraint forall(r in bR+uR..bR+uR+mR+lR+fR, c in 0..15)(ltp[2,r,c,0] = (ltk[2,r,c,5] + ltk[2,r,c,7]) mod 2);
+% LFSR3 ("<<" to ">>" for compatibility)
+% constraint forall(r in bR+uR..bR+uR+mR+lR+fR, c in 0..15, i in 0..6)(ltp[3,r,c,i] = ltk[3,r,c,i+1]);
+% constraint forall(r in bR+uR..bR+uR+mR+lR+fR, c in 0..15)(ltp[3,r,c,7] = (ltk[3,r,c,0] + ltk[3,r,c,6]) mod 2);                               
+% h permutation
+constraint forall(r in bR+uR..bR+uR+mR+lR+fR-1, c in 0..15, i in 0..7)(ltk[1,r+1,c,i] = ltk[1,r,hperm[c],i]);
+constraint forall(r in bR+uR..bR+uR+mR+lR+fR-1, c in 0..15, i in 0..7)(ltk[2,r+1,c,i] = ltp[2,r,hperm[c],i]);
+% constraint forall(r in bR+uR..bR+uR+mR+lR+fR-1, c in 0..15, i in 0..7)(ltk[3,r+1,c,i] = ltp[3,r,hperm[c],i]);
+% Get STK
+constraint forall(r in bR+uR..bR+uR+mR+lR+fR, c in 0..15, i in 0..7)(lSTK[r,c,i] = (ltk[1,r,c,i] + ltk[2,r,c,i]) mod 2);
+
+% % ======== Diff. Propagation =======
+% % % --- operation AK ---
+% constraint forall(r in bR+uR+1..bR+uR+mR+lR+fR-1, c in 0..15, i in 0..7)(
+%   lSB[r,c,i] = (lAK[r,c,i] + lSTK[r,c,i]) mod 2
+% );
+% % --- operation SB ---(4 is not required)
+% constraint forall(r in bR+uR+1..bR+uR+mR+lR, c in 0..15)(
+%   if lSB_int[r,c] > 0
+%   then (lPrSB[r,c] = DDT[lSB_int[r,c], lSR_int[r,c]]) /\ lPrSB[r,c] > 0
+%   else lSR_int[r,c] = 0 /\ lPrSB[r,c] = 0
+%   endif
+% );
+% % constraint PEl = sum(r in bR+uR+1..bR+uR+mR+lR+1, c in 0..15)(lPrSB[r,c]);
+
+% % --- operation SR ---
+% constraint forall(r in bR+uR+1..bR+uR+mR+lR, c in 0..15)(
+%   forall(i in 0..7)(lMC[r,c,i] = lSR[r,SRp[c],i]) /\
+%   lMC_int[r,c] = lSR_int[r,SRp[c]]
+% );
+
+% % --- operation MC ---
+% constraint forall(r in bR+uR..bR+uR+mR+lR-1, col in [0,4,8,12])(
+%   _MC(array1d(0..3, [lMC_int[r,c] | c in col..col+3]), 
+%       array2d(0..3, 0..7, [lMC[r,c,i] | c in col..col+3, i in 0..7]),
+%       array2d(0..3, 0..7, [lAK[r+1,c,i] | c in col..col+3, i in 0..7])
+%      )
+% );
+
+% ========= Truncated Pattern =========
+% constraint forall(r = 4, c in 0..15)(if c in {0,9} then lSTK_int[r,c] > 1 else lSTK_int[r,c] = 0 endif);
+% constraint forall(r = 5, c in 0..15)(if c in {7,8} then lSTK_int[r,c] > 1 else lSTK_int[r,c] = 0 endif);
+% constraint forall(r = 6, c in 0..15)(if c in {14,15} then lSTK_int[r,c] > 1 else lSTK_int[r,c] = 0 endif);
+% constraint forall(r = 7, c in 0..15)(if c in {} then lSTK_int[r,c] > 1 else lSTK_int[r,c] = 0 endif);
+% constraint forall(r = 8, c in 0..15)(if c in {1,8} then lSTK_int[r,c] > 1 else lSTK_int[r,c] = 0 endif);
+% constraint forall(r = 9, c in 0..15)(if c in {0,15} then lSTK_int[r,c] > 1 else lSTK_int[r,c] = 0 endif);
+% constraint forall(r = 10, c in 0..15)(if c in {6,7} then lSTK_int[r,c] > 1 else lSTK_int[r,c] = 0 endif);
+
+% AK
+% constraint forall(r = 5, c in 0..15)(if c in {1,6,7,8,11} then lAK_int[r,c] > 1 else lAK_int[r,c] = 0 endif);
+% constraint forall(r = 6, c in 0..15)(if c in {14,15} then lAK_int[r,c] > 1 else lAK_int[r,c] = 0 endif);
+% constraint forall(r = 7, c in 0..15)(if c in {} then lAK_int[r,c] > 1 else lAK_int[r,c] = 0 endif);
+% constraint forall(r = 8, c in 0..15)(if c in {} then lAK_int[r,c] > 1 else lAK_int[r,c] = 0 endif);
+
+% % SB
+% constraint forall(r = 5, c in 0..15)(if c in {1,6,11} then lSB_int[r,c] > 1 else lSB_int[r,c] = 0 endif);
+% constraint forall(r = 6, c in 0..15)(if c in {} then lSB_int[r,c] > 1 else lSB_int[r,c] = 0 endif);
+% constraint forall(r = 7, c in 0..15)(if c in {} then lSB_int[r,c] > 1 else lSB_int[r,c] = 0 endif); % 0
+% constraint forall(r = 8, c in 0..15)(if c in {1,8} then lSB_int[r,c] > 1 else lSB_int[r,c] = 0 endif); % 0
+
+% % MC
+% constraint forall(r = 4, c in 0..15)(if c in {0,1,2,3,4,5,6,8,9,11} then lMC_int[r,c] > 1 else lMC_int[r,c] = 0 endif);
+% constraint forall(r = 5, c in 0..15)(if c in {13,14,15} then lMC_int[r,c] > 1 else lMC_int[r,c] = 0 endif);
+% constraint forall(r = 6, c in 0..15)(if c in {} then lMC_int[r,c] > 1 else lMC_int[r,c] = 0 endif);
+% constraint forall(r = 7, c in 0..15)(if c in {} then lMC_int[r,c] > 1 elseif c in {} then lMC_int[r,c] = 0 endif);
+% % ================================= LOWER (end) ===================================
+
+
+
+% constraint PEu = uPrSB[3,15];
+% constraint PEl = 0;
+% constraint PEm = uPrSB[4,0] + lPrSB[5,6] + lPrSB[5,11];
+
+% % % % % % ==================================== Overall Prob. (begin) =======================================
+% constraint Prob = PEu + PEm;
+% solve minimize Prob;
+include "format.dzn";
+
+int: rrr = 8;
+constraint lSTK_int[rrr,0] = 204 /\ lSTK_int[rrr,9] = 62;
+constraint ltk_int[1,rrr,0] = 96 /\ ltk_int[1,rrr,9] = 29;
+constraint ltk_int[2,rrr,0] = 172 /\ ltk_int[2,rrr,9] = 35;
+
+

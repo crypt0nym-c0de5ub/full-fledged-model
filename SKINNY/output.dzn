@@ -1,0 +1,215 @@
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Pretty print for gandf & State Test
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+output["-----------------------"];
+output["\n|Differential pattern:|\n"];
+output["-----------------------\n"];
+
+% Eb. differential pattern:
+output [
+    "[     AK    ]       [     STK   ]       [     SB    ]        [     SR    ]        [     MC    ]\n" ++ 
+    concat([
+        "Round " ++ show(r) ++ ":\n" ++
+        concat([
+            "[" ++ join(" ", [if fix(uXAK[r,4*i+c]) == 1 /\ fix(uYAK[r,4*i+c] = 1) then " T" elseif fix(uXAK[r,4*i+c]) == 1 /\ fix(uYAK[r,4*i+c]) = 0 then " f" else "  " endif | i in 0..3]) ++ "] <(AK) " ++
+            "[" ++ join(" ", [if fix(uSTK[r,4*i+c]) == 1 then " f" else "  " endif | i in 0..3]) ++ "] (AK)< " ++
+            "[" ++ join(" ", [if fix(uXSB[r,4*i+c]) == 1 /\ fix(uYSB[r,4*i+c] = 1) then " T" elseif fix(uXSB[r,4*i+c]) == 1 /\ fix(uYSB[r,4*i+c]) = 0 then " f" else "  " endif | i in 0..3]) ++ "] <(SB)< " ++
+            "[" ++ join(" ", [if fix(uXSR[r,4*i+c]) == 1 /\ fix(uYSR[r,4*i+c] = 1) then " T" elseif fix(uXSR[r,4*i+c]) == 1 /\ fix(uYSR[r,4*i+c]) = 0 then " f" else "  " endif | i in 0..3]) ++ "] <(SR)< " ++
+            "[" ++ join(" ", [if fix(uXSR[r,SRp[4*i+c]]) == 1 /\ fix(uYSR[r,SRp[4*i+c]] = 1) then " T" elseif fix(uXSR[r,SRp[4*i+c]]) == 1 /\ fix(uYSR[r,SRp[4*i+c]] = 0) then " f" else "  " endif | i in 0..3]) ++ "] <(MC)< " ++
+            "\n"
+            | c in 0..3
+        ])
+        | r in 0..Rb-1
+    ])
+];
+output["----------^ Eb extension ^----------------------------------------------v Eu distinguisher v----------\n"];
+
+% Eu differential pattern
+output [
+    concat([
+        "Round " ++ show(r) ++ ":\n" ++
+        concat([
+            "[" ++ join(" ", [if fix(uXAK[r,4*i+c]) == 1 /\ fix(uYAK[r,4*i+c] = 1) then " T" elseif fix(uXAK[r,4*i+c]) == 1 /\ fix(uYAK[r,4*i+c]) = 0 then " f" else "  " endif | i in 0..3]) ++ "] >(AK) " ++
+            "[" ++ join(" ", [if fix(uSTK[r,4*i+c]) == 1 then " f" else "  " endif | i in 0..3]) ++ "] (AK)< " ++
+            "[" ++ join(" ", [if fix(uXSB[r,4*i+c]) == 1 /\ fix(uYSB[r,4*i+c] = 1) then " T" elseif fix(uXSB[r,4*i+c]) == 1 /\ fix(uYSB[r,4*i+c]) = 0 then " f" else "  " endif | i in 0..3]) ++ "] >(SB)> " ++
+            "[" ++ join(" ", [if fix(uXSR[r,4*i+c]) == 1 /\ fix(uYSR[r,4*i+c] = 1) then " T" elseif fix(uXSR[r,4*i+c]) == 1 /\ fix(uYSR[r,4*i+c]) = 0 then " f" else "  " endif | i in 0..3]) ++ "] >(SR)> " ++
+            "[" ++ join(" ", [if fix(uXSR[r,SRp[4*i+c]]) == 1 /\ fix(uYSR[r,SRp[4*i+c]] = 1) then " T" elseif fix(uXSR[r,SRp[4*i+c]]) == 1 /\ fix(uYSR[r,SRp[4*i+c]] = 0) then " f" else "  " endif | i in 0..3]) ++ "] >(MC)> " ++
+            "\n"
+            | c in 0..3
+        ])
+        | r in Rb..Rb+Ru-1
+    ])
+];
+
+output["-----------------------------------------------v Em v-------------------------------------------------\n"];
+
+output [
+    concat([
+        "Round " ++ show(r) ++ ":\n" ++
+        concat([
+            "[" ++ join(" ", [if fix(uXAK[r,4*i+c]) == 1 /\ fix(uYAK[r,4*i+c] = 1) then " T" elseif fix(uXAK[r,4*i+c]) == 1 /\ fix(uYAK[r,4*i+c]) = 0 then " f" else "  " endif | i in 0..3]) ++ "] >(AK) " ++
+            "[" ++ join(" ", [if fix(uSTK[r,4*i+c]) == 1 then " f" else "  " endif | i in 0..3]) ++ "] (AK)> " ++
+            "[" ++ join(" ", [if fix(uXSB[r,4*i+c]) == 1 /\ fix(uYSB[r,4*i+c] = 1) then " T" elseif fix(uXSB[r,4*i+c]) == 1 /\ fix(uYSB[r,4*i+c]) = 0 then " f" else "  " endif | i in 0..3]) ++ "] >(SB)> " ++
+            "[" ++ join(" ", [if fix(uXSR[r,4*i+c]) == 1 /\ fix(uYSR[r,4*i+c] = 1) then " T" elseif fix(uXSR[r,4*i+c]) == 1 /\ fix(uYSR[r,4*i+c]) = 0 then " f" else "  " endif | i in 0..3]) ++ "] >(SR)> " ++
+            "[" ++ join(" ", [if fix(uXSR[r,SRp[4*i+c]]) == 1 /\ fix(uYSR[r,SRp[4*i+c]] = 1) then " T" elseif fix(uXSR[r,SRp[4*i+c]]) == 1 /\ fix(uYSR[r,SRp[4*i+c]] = 0) then " f" else "  " endif | i in 0..3]) ++ "] >(MC)> " ++
+            "\n"
+            | c in 0..3
+        ])
+        | r in Rb+Ru..Rb+Ru+Rm-1
+    ])
+];
+
+output["------------------------------------------------------------------------------------------------------\n"];
+
+output [
+    concat([
+        "Round " ++ show(r) ++ ":\n" ++
+        concat([
+            "[" ++ join(" ", [if fix(lXAK[r,4*i+c]) == 1 /\ fix(lYAK[r,4*i+c] = 1) then " T" elseif fix(lXAK[r,4*i+c]) == 1 /\ fix(lYAK[r,4*i+c]) = 0 then " f" else "  " endif | i in 0..3]) ++ "] <(AK) " ++
+            "[" ++ join(" ", [if fix(lSTK[r,4*i+c]) == 1 then " f" else "  " endif | i in 0..3]) ++ "] (AK)< " ++
+            "[" ++ join(" ", [if fix(lXSB[r,4*i+c]) == 1 /\ fix(lYSB[r,4*i+c] = 1) then " T" elseif fix(lXSB[r,4*i+c]) == 1 /\ fix(lYSB[r,4*i+c]) = 0 then " f" else "  " endif | i in 0..3]) ++ "] <(SB)< " ++
+            "[" ++ join(" ", [if fix(lXSR[r,4*i+c]) == 1 /\ fix(lYSR[r,4*i+c] = 1) then " T" elseif fix(lXSR[r,4*i+c]) == 1 /\ fix(lYSR[r,4*i+c]) = 0 then " f" else "  " endif | i in 0..3]) ++ "] <(SR)< " ++
+            "[" ++ join(" ", [if fix(lXSR[r,SRp[4*i+c]]) == 1 /\ fix(lYSR[r,SRp[4*i+c]] = 1) then " T" elseif fix(lXSR[r,SRp[4*i+c]]) == 1 /\ fix(lYSR[r,SRp[4*i+c]] = 0) then " f" else "  " endif | i in 0..3]) ++ "] <(MC)< " ++
+            "\n"
+            | c in 0..3
+        ])
+        | r in Rb+Ru+Rm-2..Rb+Ru+Rm-1
+    ])
+];
+
+output["----------------------------------------------^ Em ^-------------------------------------------------\n"];
+
+% El differential pattern
+output [
+    concat([
+        "Round " ++ show(r) ++ ":\n" ++
+        concat([
+            "[" ++ join(" ", [if fix(lXAK[r,4*i+c]) == 1 /\ fix(lYAK[r,4*i+c] = 1) then " T" elseif fix(lXAK[r,4*i+c]) == 1 /\ fix(lYAK[r,4*i+c]) = 0 then " f" else "  " endif | i in 0..3]) ++ "] <(AK) " ++
+            "[" ++ join(" ", [if fix(lSTK[r,4*i+c]) == 1 then " f" else "  " endif | i in 0..3]) ++ "] (AK)< " ++
+            "[" ++ join(" ", [if fix(lXSB[r,4*i+c]) == 1 /\ fix(lYSB[r,4*i+c] = 1) then " T" elseif fix(lXSB[r,4*i+c]) == 1 /\ fix(lYSB[r,4*i+c]) = 0 then " f" else "  " endif | i in 0..3]) ++ "] <(SB)< " ++
+            "[" ++ join(" ", [if fix(lXSR[r,4*i+c]) == 1 /\ fix(lYSR[r,4*i+c] = 1) then " T" elseif fix(lXSR[r,4*i+c]) == 1 /\ fix(lYSR[r,4*i+c]) = 0 then " f" else "  " endif | i in 0..3]) ++ "] <(SR)< " ++
+            "[" ++ join(" ", [if fix(lXSR[r,SRp[4*i+c]]) == 1 /\ fix(lYSR[r,SRp[4*i+c]] = 1) then " T" elseif fix(lXSR[r,SRp[4*i+c]]) == 1 /\ fix(lYSR[r,SRp[4*i+c]] = 0) then " f" else "  " endif | i in 0..3]) ++ "] <(MC)< " ++
+            "\n"
+            | c in 0..3
+        ])
+        | r in Rb+Ru+Rm..Rb+Ru+Rm+Rl-1
+    ])
+];
+
+output["----------v El distinguisher v----------------------------------------------^ Ef extension ^----------\n"];
+
+
+% El differential pattern
+output [
+    concat([
+        "Round " ++ show(r) ++ ":\n" ++
+        concat([
+            "[" ++ join(" ", [if fix(lXAK[r,4*i+c]) == 1 /\ fix(lYAK[r,4*i+c] = 1) then " T" elseif fix(lXAK[r,4*i+c]) == 1 /\ fix(lYAK[r,4*i+c]) = 0 then " f" else "  " endif | i in 0..3]) ++ "] >(AK) " ++
+            "[" ++ join(" ", [if fix(lSTK[r,4*i+c]) == 1 then " f" else "  " endif | i in 0..3]) ++ "] (AK)> " ++
+            "[" ++ join(" ", [if fix(lXSB[r,4*i+c]) == 1 /\ fix(lYSB[r,4*i+c] = 1) then " T" elseif fix(lXSB[r,4*i+c]) == 1 /\ fix(lYSB[r,4*i+c]) = 0 then " f" else "  " endif | i in 0..3]) ++ "] >(SB)> " ++
+            "[" ++ join(" ", [if fix(lXSR[r,4*i+c]) == 1 /\ fix(lYSR[r,4*i+c] = 1) then " T" elseif fix(lXSR[r,4*i+c]) == 1 /\ fix(lYSR[r,4*i+c]) = 0 then " f" else "  " endif | i in 0..3]) ++ "] >(SR)> " ++
+            "[" ++ join(" ", [if fix(lXSR[r,SRp[4*i+c]]) == 1 /\ fix(lYSR[r,SRp[4*i+c]] = 1) then " T" elseif fix(lXSR[r,SRp[4*i+c]]) == 1 /\ fix(lYSR[r,SRp[4*i+c]] = 0) then " f" else "  " endif | i in 0..3]) ++ "] >(MC)> " ++
+            "\n"
+            | c in 0..3
+        ])
+        | r in Rb+Ru+Rm+Rl..Rb+Ru+Rm+Rl+Rf
+    ])
+];
+
+output [
+  "uLANE:\n",
+  join(" ", [show_int(2, i) | i in 0..15]), "\n" ++ 
+  join(" ", [show_int(2, uLANE[i]) | i in 0..15]) ++ "\n" ++
+  "lLANE:\n",
+  join(" ", [show_int(2, i) | i in 0..15]), "\n" ++
+  join(" ", [show_int(2, lLANE[i]) | i in 0..15]) ++ "\n"
+];
+
+
+% output [
+%   "BCT:\n",
+%   "    ", join(" ", [show_int(2, i) | i in 0..15]), "\n"
+% ] ++ [
+%   show_int(2, r) ++ ": " ++ join(" ", [show_int(2, Ta[r, i]) | i in 0..15]) ++ "\n"
+%   | r in Rb + Ru .. Rb + Ru + Rm - 1
+% ] ++ [
+%   "DDT:\n",
+%   "    ", join(" ", [show_int(2, i) | i in 0..15]), "\n"
+% ] ++ [
+%   show_int(2, r) ++ ": " ++ join(" ", [show_int(2, Tb[r, i]) | i in 0..15]) ++ "\n"
+%   | r in Rb + Ru .. Rb + Ru + Rm - 1
+% ];
+
+output["\n"];
+output["Pr: " ++ show(PrAtt) ++ " [Eb=" ++ show(PrEb) ++ ", Eu=" ++ show(PrEu)  ++ ", Em=" ++ show(PrEm)  ++ ", El=" ++ show(PrEl)  ++ ", Ef=" ++ show(PrEf) ++ "]\n"];
+
+% output [
+%   "uVSTK: " ++ show(mb) ++ "\n",
+%   "    ", join(" ", [show_int(2, i) | i in 0..15]), "\n"
+% ] ++ [
+%   show_int(2, r) ++ ": " ++ join(" ", [show_int(2, uVSTK[r, i]) | i in 0..15]) ++ "\n"
+%   | r in 0..Rb-1
+% ] ++ [
+%   "lVSTK: " ++ show(mf) ++ "\n",
+%   "    ", join(" ", [show_int(2, i) | i in 0..15]), "\n"
+% ] ++ [
+%   show_int(2, r) ++ ": " ++ join(" ", [show_int(2, lVSTK[r, i]) | i in 0..15]) ++ "\n"
+%   | r in Rb+Ru+Rm+Rl+1..Rb+Ru+Rm+Rl+Rf
+% ] ++ [
+%   "lVSKP: " ++ show(sum(r in Rb+Ru+Rm+Rl+1..Rb+Ru+Rm+Rl+Rf, i in 0..15)(lVSKP[r,i])) ++ "\n",
+%   "    ", join(" ", [show_int(2, i) | i in 0..15]), "\n"
+% ] ++ [
+%   show_int(2, r) ++ ": " ++ join(" ", [show_int(2, lVSKP[r, i]) | i in 0..15]) ++ "\n"
+%   | r in Rb+Ru+Rm+Rl+1..Rb+Ru+Rm+Rl+Rf
+% ];output["\n"];
+
+output [
+    "uVstate: " ++ show(sum(r in 0..Rb-1, i in 0..15)(uVstate[r,i])) ++ "\n" ++ 
+    join("\n", [
+        show_int(2, r) ++ ": " ++ join(" ", [show_int(2, fix(uVstate[r,i])) | i in 0..15])
+        | r in 0..Rb-1
+    ]) ++ "\n" ++
+    "lVstate: " ++ show(sum(r in Rb+Ru+Rm+Rl..Rb+Ru+Rm+Rl+Rf-1, i in 0..15)(lVstate[r,i])) ++ "\n" ++ 
+    join("\n", [
+        show_int(2, r) ++ ": " ++ join(" ", [show_int(2, fix(lVstate[r,i])) | i in 0..15])
+        | r in Rb+Ru+Rm+Rl..Rb+Ru+Rm+Rl+Rf-1
+    ]) ++ "\n"
+];
+
+output["\nVSTK_SUM = " ++ show(VSTK_SUM) ++ "\n\n"];
+
+% output [
+%   "uGSTK: " ++ show(mb_p) ++ "\n",
+%   "    ", join(" ", [show_int(2, i) | i in 0..15]), "\n"
+% ] ++ [
+%   show_int(2, r) ++ ": " ++ join(" ", [show_int(2, uGSTK[r, i]) | i in 0..15]) ++ "\n"
+%   | r in 0..Rb-1
+% ] ++ [
+%   "lGSTK: " ++ show(mf_p) ++ "\n",
+%   "    ", join(" ", [show_int(2, i) | i in 0..15]), "\n"
+% ] ++ [
+%   show_int(2, r) ++ ": " ++ join(" ", [show_int(2, lGSTK[r, i]) | i in 0..15]) ++ "\n"
+%   | r in Rb+Ru+Rm+Rl+1..Rb+Ru+Rm+Rl+Rf
+% ];output["\n"];
+
+% output [
+%   "uGstate: " ++ show(sum(r in 0..Rb-1, i in 0..15)(uGstate[r,i])) ++ "\n" ++
+%   "    ", join(" ", [show_int(2, i) | i in 0..15]), "\n"
+% ] ++ [
+%   show_int(2, r) ++ ": " ++ join(" ", [show_int(2, uGstate[r, i]) | i in 0..15]) ++ "\n"
+%   | r in 0..Rb-1
+% ] ++ [
+%   "lGstate: " ++ show(sum(r in Rb+Ru+Rm+Rl..Rb+Ru+Rm+Rl+Rf-1, i in 0..15)(lGstate[r,i])) ++ "\n" ++ 
+%   "    ", join(" ", [show_int(2, i) | i in 0..15]), "\n"
+% ] ++ [
+%   show_int(2, r) ++ ": " ++ join(" ", [show_int(2, lGstate[r, i]) | i in 0..15]) ++ "\n"
+%   | r in Rb+Ru+Rm+Rl..Rb+Ru+Rm+Rl+Rf-1
+% ];output["\n"];
+
+
+output["================================================= E N D ==============================================\n"];
+

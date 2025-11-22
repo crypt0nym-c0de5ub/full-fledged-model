@@ -1,0 +1,1648 @@
+-----------------------
+|Differential pattern:|
+-----------------------
+[     AK    ]       [     STK   ]       [     SB    ]        [     SR    ]        [     MC    ]
+Round 0:
+[    T     T] <(AK) [          f] (AK)< [    T     T] <(SB)< [    T     f] <(SR)< [    T     f] <(MC)< 
+[    T  T   ] <(AK) [           ] (AK)< [    T  T   ] <(SB)< [    f  T   ] <(SR)< [ f  T      ] <(MC)< 
+[    T  T  T] <(AK) [           ] (AK)< [    T  T  T] <(SB)< [    f  f  T] <(SR)< [ f  T     f] <(MC)< 
+[ T  f  T  T] <(AK) [    f      ] (AK)< [ T     T  T] <(SB)< [ T     f  f] <(SR)< [ f  T     f] <(MC)< 
+Round 1:
+[           ] <(AK) [           ] (AK)< [           ] <(SB)< [           ] <(SR)< [           ] <(MC)< 
+[          f] <(AK) [           ] (AK)< [          f] <(SB)< [          f] <(SR)< [       f   ] <(MC)< 
+[ f        f] <(AK) [          f] (AK)< [ f         ] <(SB)< [ f         ] <(SR)< [       f   ] <(MC)< 
+[ f  T      ] <(AK) [ f         ] (AK)< [    T      ] <(SB)< [    f      ] <(SR)< [       f   ] <(MC)< 
+----------^ Eb extension ^----------------------------------------------v Eu distinguisher v----------
+Round 2:
+[           ] >(AK) [           ] (AK)< [           ] >(SB)> [           ] >(SR)> [           ] >(MC)> 
+[       f   ] >(AK) [       f   ] (AK)< [           ] >(SB)> [           ] >(SR)> [           ] >(MC)> 
+[       f   ] >(AK) [       f   ] (AK)< [           ] >(SB)> [           ] >(SR)> [           ] >(MC)> 
+[           ] >(AK) [           ] (AK)< [           ] >(SB)> [           ] >(SR)> [           ] >(MC)> 
+Round 3:
+[           ] >(AK) [           ] (AK)< [           ] >(SB)> [           ] >(SR)> [           ] >(MC)> 
+[           ] >(AK) [           ] (AK)< [           ] >(SB)> [           ] >(SR)> [           ] >(MC)> 
+[           ] >(AK) [           ] (AK)< [           ] >(SB)> [           ] >(SR)> [           ] >(MC)> 
+[           ] >(AK) [           ] (AK)< [           ] >(SB)> [           ] >(SR)> [           ] >(MC)> 
+Round 4:
+[           ] >(AK) [           ] (AK)< [           ] >(SB)> [           ] >(SR)> [           ] >(MC)> 
+[           ] >(AK) [           ] (AK)< [           ] >(SB)> [           ] >(SR)> [           ] >(MC)> 
+[           ] >(AK) [           ] (AK)< [           ] >(SB)> [           ] >(SR)> [           ] >(MC)> 
+[           ] >(AK) [           ] (AK)< [           ] >(SB)> [           ] >(SR)> [           ] >(MC)> 
+Round 5:
+[           ] >(AK) [           ] (AK)< [           ] >(SB)> [           ] >(SR)> [           ] >(MC)> 
+[           ] >(AK) [           ] (AK)< [           ] >(SB)> [           ] >(SR)> [           ] >(MC)> 
+[           ] >(AK) [    f      ] (AK)< [    f      ] >(SB)> [    f      ] >(SR)> [          f] >(MC)> 
+[           ] >(AK) [       f   ] (AK)< [       f   ] >(SB)> [       f   ] >(SR)> [          f] >(MC)> 
+-----------------------------------------------v Em v-------------------------------------------------
+Round 6:
+[          f] >(AK) [           ] (AK)> [          f] >(SB)> [          f] >(SR)> [          f] >(MC)> 
+[          f] >(AK) [ f         ] (AK)> [ f        f] >(SB)> [ f        T] >(SR)> [       T  f] >(MC)> 
+[           ] >(AK) [ f         ] (AK)> [ f         ] >(SB)> [ T         ] >(SR)> [       T   ] >(MC)> 
+[          f] >(AK) [           ] (AK)> [          f] >(SB)> [          f] >(SR)> [ f         ] >(MC)> 
+Round 7:
+[ f     T  f] >(AK) [ f         ] (AK)> [ f     T  f] >(SB)> [ T     T  T] >(SR)> [ T     T  T] >(MC)> 
+[ f     T  f] >(AK) [          f] (AK)> [ f     T  f] >(SB)> [ T     T  T] >(SR)> [    T  T  T] >(MC)> 
+[ f     T  f] >(AK) [           ] (AK)> [ f     T  f] >(SB)> [ f     T  T] >(SR)> [ T  T  f   ] >(MC)> 
+[ f     T  f] >(AK) [           ] (AK)> [ f     T  f] >(SB)> [ T     T  T] >(SR)> [ T  T     T] >(MC)> 
+------------------------------------------------------------------------------------------------------
+Round 6:
+[           ] <(AK) [          f] (AK)< [ T  T     f] <(SB)< [ f  T     f] <(SR)< [ f  T     f] <(MC)< 
+[           ] <(AK) [           ] (AK)< [    T  T   ] <(SB)< [    f  T   ] <(SR)< [ f  T      ] <(MC)< 
+[           ] <(AK) [           ] (AK)< [    T  T  T] <(SB)< [    f  f  T] <(SR)< [ f  T     f] <(MC)< 
+[           ] <(AK) [    f      ] (AK)< [ T     T  f] <(SB)< [ T     f  f] <(SR)< [ f  T     f] <(MC)< 
+Round 7:
+[           ] <(AK) [           ] (AK)< [           ] <(SB)< [           ] <(SR)< [           ] <(MC)< 
+[          f] <(AK) [           ] (AK)< [          f] <(SB)< [          f] <(SR)< [       f   ] <(MC)< 
+[ f        f] <(AK) [          f] (AK)< [ f         ] <(SB)< [ f         ] <(SR)< [       f   ] <(MC)< 
+[ f  T      ] <(AK) [ f         ] (AK)< [    T      ] <(SB)< [    f      ] <(SR)< [       f   ] <(MC)< 
+----------------------------------------------^ Em ^-------------------------------------------------
+Round 8:
+[           ] <(AK) [           ] (AK)< [           ] <(SB)< [           ] <(SR)< [           ] <(MC)< 
+[       f   ] <(AK) [       f   ] (AK)< [           ] <(SB)< [           ] <(SR)< [           ] <(MC)< 
+[       f   ] <(AK) [       f   ] (AK)< [           ] <(SB)< [           ] <(SR)< [           ] <(MC)< 
+[           ] <(AK) [           ] (AK)< [           ] <(SB)< [           ] <(SR)< [           ] <(MC)< 
+Round 9:
+[           ] <(AK) [           ] (AK)< [           ] <(SB)< [           ] <(SR)< [           ] <(MC)< 
+[           ] <(AK) [           ] (AK)< [           ] <(SB)< [           ] <(SR)< [           ] <(MC)< 
+[           ] <(AK) [           ] (AK)< [           ] <(SB)< [           ] <(SR)< [           ] <(MC)< 
+[           ] <(AK) [           ] (AK)< [           ] <(SB)< [           ] <(SR)< [           ] <(MC)< 
+Round 10:
+[           ] <(AK) [           ] (AK)< [           ] <(SB)< [           ] <(SR)< [           ] <(MC)< 
+[           ] <(AK) [           ] (AK)< [           ] <(SB)< [           ] <(SR)< [           ] <(MC)< 
+[           ] <(AK) [           ] (AK)< [           ] <(SB)< [           ] <(SR)< [           ] <(MC)< 
+[           ] <(AK) [           ] (AK)< [           ] <(SB)< [           ] <(SR)< [           ] <(MC)< 
+----------v El distinguisher v----------------------------------------------^ Ef extension ^----------
+Round 11:
+[           ] >(AK) [           ] (AK)> [           ] >(SB)> [           ] >(SR)> [           ] >(MC)> 
+[           ] >(AK) [           ] (AK)> [           ] >(SB)> [           ] >(SR)> [           ] >(MC)> 
+[           ] >(AK) [    f      ] (AK)> [    f      ] >(SB)> [    T      ] >(SR)> [          T] >(MC)> 
+[           ] >(AK) [       f   ] (AK)> [       f   ] >(SB)> [       T   ] >(SR)> [          T] >(MC)> 
+Round 12:
+[          T] >(AK) [           ] (AK)> [          T] >(SB)> [          T] >(SR)> [          T] >(MC)> 
+[          T] >(AK) [ f         ] (AK)> [ f        T] >(SB)> [ T        T] >(SR)> [       T  T] >(MC)> 
+[           ] >(AK) [ f         ] (AK)> [ f         ] >(SB)> [ T         ] >(SR)> [       T   ] >(MC)> 
+[          T] >(AK) [           ] (AK)> [          T] >(SB)> [          T] >(SR)> [ T         ] >(MC)> 
+Round 13:
+[ T     T  T] >(AK) [ f         ] (AK)> [ T     T  T] >(SB)> [ T     T  T] >(SR)> [ T     T  T] >(MC)> 
+[ T     T  T] >(AK) [          f] (AK)> [ T     T  T] >(SB)> [ T     T  T] >(SR)> [    T  T  T] >(MC)> 
+[ T     T  T] >(AK) [           ] (AK)> [ T     T  T] >(SB)> [ T     T  T] >(SR)> [ T  T  T   ] >(MC)> 
+[ T     T  T] >(AK) [           ] (AK)> [ T     T  T] >(SB)> [ T     T  T] >(SR)> [ T  T     T] >(MC)> 
+Round 14:
+[ T  T  T  T] >(AK) [          f] (AK)> [           ] >(SB)> [           ] >(SR)> [           ] >(MC)> 
+[ T  T  T  T] >(AK) [           ] (AK)> [           ] >(SB)> [           ] >(SR)> [           ] >(MC)> 
+[ T  T  T  T] >(AK) [           ] (AK)> [           ] >(SB)> [           ] >(SR)> [           ] >(MC)> 
+[ T  T  T  T] >(AK) [    f      ] (AK)> [           ] >(SB)> [           ] >(SR)> [           ] >(MC)> 
+uLANE:
+ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15
+ 0  0  0  0  0  0  0  1  0  0  0  0  1  0  0  0
+lLANE:
+ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15
+ 0  0  0  0  0  0  0  0  0  1  1  0  0  0  0  0
+BCT:
+     0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15
+ 6:  0  1  0  0  0  0  0  0  0  0  0  0  1  0  0  1
+ 7:  0  0  1  0  0  0  0  0  0  0  0  0  0  1  0  0
+DDT:
+     0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15
+ 6:  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+ 7:  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+
+Pr: 102 [Eb=28, Eu=28, Em=30, El=0, Ef=16]
+VSTK_SUM = 35
+uGSTK:
+     0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15
+ 0:  0  0  0  1  1  1  1  0  0  1  1  1  1  0  1  1
+ 1:  0  0  0  0  0  0  0  1  0  0  0  0  0  0  0  0
+lGSTK:
+     0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15
+12:  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+13:  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
+14:  1  1  1  1  0  0  0  0  0  0  0  0  0  0  0  0
+
+
+================================================= E N D ==============================================
+------------------------------------------------------------------
+|On epsilon, using pre-constructed table aided by State Test|
+
+------------------------------------------------------------------Eb. Step Assign:
+[    uAK    ]         [    uGK    ]         [    uSR    ]            [    uST    ]  [    uMC    ]
+Round 0:
+[    0     0] =>(AK)- [    0     0] -(SB)=> [    0     0] =>(SR)=> ST[           ]->[    0     0] =>(MC)=> BigMC[c0]= 0
+[    0  0   ] =>(AK)- [    0  0   ] -(SB)=> [    0  0   ] =>(SR)=> ST[           ]->[ 0  0      ] =>(MC)=> BigMC[c1]= 0
+[    0  0  0] =>(AK)- [    0  0  0] -(SB)=> [    0  0  0] =>(SR)=> ST[           ]->[ 0  0     0] =>(MC)=> BigMC[c2]=-1
+[ 0     0  0] =>(AK)- [ 0     0  0] -(SB)=> [ 0     0  0] =>(SR)=> ST[           ]->[ 0  0     0] =>(MC)=> BigMC[c3]= 0
+Round 1:
+[           ] =>(AK)- [           ] -(SB)=> [           ] =>(SR)=> ST[           ]->[           ] =>(MC)=> BigMC[c0]=-1
+[           ] =>(AK)- [           ] -(SB)=> [           ] =>(SR)=> ST[           ]->[           ] =>(MC)=> BigMC[c1]=-1
+[           ] =>(AK)- [           ] -(SB)=> [           ] =>(SR)=> ST[           ]->[           ] =>(MC)=> BigMC[c2]= 0
+[           ] =>(AK)- [    0      ] -(SB)=> [    0      ] =>(SR)=> ST[           ]->[       0   ] =>(MC)=> BigMC[c3]=-1
+Round 2:
+[           ]
+[           ]
+[           ]
+[           ]
+
+uFlagST 0: [0, 0, 0, 0, 0, 0, 0]
+uFlagST 1: [0, 0, 0, 0, 0, 0, 0]
+
+uEGK 0: [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+uEGK 1: [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+
+uESB 0: [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+uESB 1: [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+
+uEMC 0: [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+uEMC 1: [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+
+--------------------------------------------------------------------------------------------------------------------------
+Ef. Step Assign:
+  [    lST    ]  [    lSB    ]         [    lGK    ]         [    lSR    ]          [    lMC    ]
+Round 11:
+ST[           ]->[           ] <=(SB)- [           ] -(AK)<= [           ] <=(SR)<= [           ] <=(MC)<= BigMC[c0]= 4
+ST[           ]->[           ] <=(SB)- [           ] -(AK)<= [           ] <=(SR)<= [           ] <=(MC)<= BigMC[c1]=-1
+ST[           ]->[    5      ] <=(SB)- [    5      ] -(AK)<= [    5      ] <=(SR)<= [          5] <=(MC)<= BigMC[c2]=-1
+ST[           ]->[       5   ] <=(SB)- [       5   ] -(AK)<= [       5   ] <=(SR)<= [          5] <=(MC)<= BigMC[c3]= 5
+Round 12:
+ST[           ]->[          5] <=(SB)- [          5] -(AK)<= [          4] <=(SR)<= [          4] <=(MC)<= BigMC[c0]= 0
+ST[           ]->[ 4        5] <=(SB)- [ 4        5] -(AK)<= [ 4        2] <=(SR)<= [       2  4] <=(MC)<= BigMC[c1]= 5
+ST[          5]->[ 2       *5] <=(SB)- [ 2       *5] -(AK)<= [ 2       *5] <=(SR)<= [   *5  2   ] <=(MC)<= BigMC[c2]= 2
+ST[           ]->[          5] <=(SB)- [          5] -(AK)<= [          0] <=(SR)<= [ 0         ] <=(MC)<= BigMC[c3]= 4
+Round 13:
+ST[           ]->[ 0 *5  2  3] <=(SB)- [ 0 *5  2  3] -(AK)<= [ 0 *0  0  0] <=(SR)
+ST[           ]->[ 0 *5  2  4] <=(SB)- [ 0 *5  2  4] -(AK)<= [ 0 *0  0  0] <=(SR)
+ST[           ]->[ 0 *5  2  4] <=(SB)- [ 0 *5  2  4] -(AK)<= [ 0 *0  0  0] <=(SR)
+ST[           ]->[ 0 *5  2  4] <=(SB)- [ 0 *5  2  4] -(AK)<= [ 0 *0  0  0] <=(SR)
+
+lFlagST 11: [0, 0, 0, 0, 0, 0, 0]
+lFlagST 12: [0, 0, 0, 0, 0, 0, 1]
+lFlagST 13: [0, 0, 0, 0, 0, 0, 0]
+
+lEGK 12: [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+lEGK 13: [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 5, -1]
+lEGK 14: [-1, -1, -1, -1, 5, 5, 5, 5, -1, -1, -1, -1, -1, -1, -1, -1]
+
+lESB 11: [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+lESB 12: [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 5, -1]
+lESB 13: [-1, -1, -1, -1, 5, 5, 5, 5, -1, -1, -1, -1, -1, -1, -1, -1]
+
+lEMC 11: [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+lEMC 12: [-1, -1, -1, -1, -1, -1, 5, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+
+--------------------------------------------------------------------------------------------------------------------------
+STEP   : [ 1, 2, 3, 4, 5]
+         ---------------------- 
+flag_PQ: [ 1, 2, 1, 2, 2] (obj: 1 = pair, 2 = quartet)
+
+S_G_Key: [ 0, 5, 1, 4, 6] (Guess subkey in each step)
+
+S_Fr_SB: [ 0, 1, 0, 1, 2] (Filter obtain from SBox)
+S_Fr_MC: [ 0, 2, 0, 2, 2] (Filter obtain from Mixcolumn)
+S_Fr_TT: [ 0, 6, 0, 6, 8] (Filter obtain Total)
+
+S_M._SB: [ 0, 4, 1, 3, 4] (Memory cost of Sbox)
+S_Mv_Mc: [ 0, 0, 0, 1, 0] (Memory cost of MC_value)
+S_Md_Mc: [ 0, 0, 0, 0, 0] (Memory cost of MC_diff)
+S_M._ep: [ 0,15, 3,14,14] (Memory cost in each step)
+
+S_T._ep: [ 0,-1, 0,-2,-4] (Time cost in each step)
+
+Tot_ep :  0                     (Time complexity on epsilon of pre-build table) 
+Mot_ep : 15                     (Memory complexity of pre-build table) 
+====================================================== E N D =============================================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Complexity of Rectangle Attack on Deoxys-BC-384: 
+
+Parameters:
+----------------------
+rb=10 | rb'=10 | mb=11 | mb'=11
+rf=12 | rf'= 3 | mf=19 | mf'= 4
+----------------------
+Prob.  : 102
+DataC  : 117
+MemoryC: 120
+TimeC  : 242 [T1=237 | T2u=238 | T3=242 (epsilon=0)]
+
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{fontawesome}
+\usetikzlibrary{patterns}
+\usepackage{bm}
+\usepackage{amsmath}
+\usetikzlibrary{crypto.symbols}
+\tikzset{shadows=no}
+\begin{document}
+\begin{tikzpicture}[scale=0.32]
+\definecolor{fk}{RGB}{0, 255, 0}
+\definecolor{fs}{RGB}{48, 180, 255}
+\definecolor{tt}{RGB}{172, 172, 180}
+\definecolor{gk}{RGB}{255, 0, 0}
+\definecolor{geqk}{RGB}{255, 128, 0}
+\definecolor{dt}{RGB}{200, 0, 255}
+\definecolor{fr}{RGB}{255, 0, 255}];
+
+\begin{scope}[yshift=-0.0cm]
+  \begin{scope}[xshift=0cm]
+    \node at(2,0)[below] {\scriptsize $\Delta STK_0$};
+    \fill[fk] (1,0) rectangle (2,1);
+    \fill[fk] (3,3) rectangle (4,4);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[gk, ultra thick] (0,0) rectangle (1,1);
+    \draw[gk, ultra thick] (1,3) rectangle (2,4);
+    \draw[gk, ultra thick] (1,2) rectangle (2,3);
+    \draw[gk, ultra thick] (1,1) rectangle (2,2);
+    \draw[gk, ultra thick] (2,2) rectangle (3,3);
+    \draw[gk, ultra thick] (2,1) rectangle (3,2);
+    \draw[gk, ultra thick] (2,0) rectangle (3,1);
+    \draw[gk, ultra thick] (3,3) rectangle (4,4);
+    \draw[gk, ultra thick] (3,1) rectangle (4,2);
+    \draw[gk, ultra thick] (3,0) rectangle (4,1);
+    \node at(0+0.5,0+0.5) {\scriptsize \color{black} $\mathsf{0}$};
+    \node at(1+0.5,3+0.5) {\scriptsize \color{black} $\mathsf{0}$};
+    \node at(1+0.5,2+0.5) {\scriptsize \color{black} $\mathsf{0}$};
+    \node at(1+0.5,1+0.5) {\scriptsize \color{black} $\mathsf{0}$};
+    \node at(2+0.5,2+0.5) {\scriptsize \color{black} $\mathsf{0}$};
+    \node at(2+0.5,1+0.5) {\scriptsize \color{black} $\mathsf{0}$};
+    \node at(2+0.5,0+0.5) {\scriptsize \color{black} $\mathsf{0}$};
+    \node at(3+0.5,3+0.5) {\scriptsize \color{black} $\mathsf{0}$};
+    \node at(3+0.5,1+0.5) {\scriptsize \color{black} $\mathsf{0}$};
+    \node at(3+0.5,0+0.5) {\scriptsize \color{black} $\mathsf{0}$};
+  \end{scope}
+  \begin{scope}[xshift=5cm]
+    \node at(2,0)[below] {\scriptsize $\Delta P$};
+    \fill[tt] (0,0) rectangle (1,1);
+    \fill[tt] (1,3) rectangle (2,4);
+    \fill[tt] (1,2) rectangle (2,3);
+    \fill[tt] (1,1) rectangle (2,2);
+    \fill[fs] (1,0) rectangle (2,1);
+    \fill[tt] (2,2) rectangle (3,3);
+    \fill[tt] (2,1) rectangle (3,2);
+    \fill[tt] (2,0) rectangle (3,1);
+    \fill[tt] (3,3) rectangle (4,4);
+    \fill[tt] (3,1) rectangle (4,2);
+    \fill[tt] (3,0) rectangle (4,1);
+    \draw[pattern=north west lines] (0,0) rectangle (1,1);
+    \draw[pattern=north west lines] (1,3) rectangle (2,4);
+    \draw[pattern=north west lines] (1,2) rectangle (2,3);
+    \draw[pattern=north west lines] (1,1) rectangle (2,2);
+    \draw[pattern=north west lines] (2,2) rectangle (3,3);
+    \draw[pattern=north west lines] (2,1) rectangle (3,2);
+    \draw[pattern=north west lines] (2,0) rectangle (3,1);
+    \draw[pattern=north west lines] (3,3) rectangle (4,4);
+    \draw[pattern=north west lines] (3,1) rectangle (4,2);
+    \draw[pattern=north west lines] (3,0) rectangle (4,1);
+    \node at(0+0.5,0+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(1+0.5,3+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(1+0.5,2+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(1+0.5,1+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(2+0.5,2+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(2+0.5,1+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(2+0.5,0+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(3+0.5,3+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(3+0.5,1+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(3+0.5,0+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) -- +(2,0);
+    \draw[->] (-3,4)--++(0,0.5) --++(8,0)--++(0,-2.2);
+    \node at (5,2) {$\oplus$};
+  \end{scope}
+  \begin{scope}[xshift=11cm]
+    \node at(2,0)[below] {\scriptsize $\Delta X_0$};
+    \fill[tt] (0,0) rectangle (1,1);
+    \fill[tt] (1,3) rectangle (2,4);
+    \fill[tt] (1,2) rectangle (2,3);
+    \fill[tt] (1,1) rectangle (2,2);
+    \fill[tt] (2,2) rectangle (3,3);
+    \fill[tt] (2,1) rectangle (3,2);
+    \fill[tt] (2,0) rectangle (3,1);
+    \fill[tt] (3,3) rectangle (4,4);
+    \fill[tt] (3,1) rectangle (4,2);
+    \fill[tt] (3,0) rectangle (4,1);
+    \draw[pattern=north west lines] (0,0) rectangle (1,1);
+    \draw[pattern=north west lines] (1,3) rectangle (2,4);
+    \draw[pattern=north west lines] (1,2) rectangle (2,3);
+    \draw[pattern=north west lines] (1,1) rectangle (2,2);
+    \draw[pattern=north west lines] (2,2) rectangle (3,3);
+    \draw[pattern=north west lines] (2,1) rectangle (3,2);
+    \draw[pattern=north west lines] (2,0) rectangle (3,1);
+    \draw[pattern=north west lines] (3,3) rectangle (4,4);
+    \draw[pattern=north west lines] (3,1) rectangle (4,2);
+    \draw[pattern=north west lines] (3,0) rectangle (4,1);
+    \node at(0+0.5,0+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(1+0.5,3+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(1+0.5,2+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(1+0.5,1+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(2+0.5,2+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(2+0.5,1+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(2+0.5,0+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(3+0.5,3+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(3+0.5,1+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(3+0.5,0+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) -- node[above] {\tiny SB} node[below] {\tiny SR} +(2,0);
+  \end{scope}
+  \begin{scope}[xshift=17cm]
+    \node at(2,0)[below] {\scriptsize $\Delta Z_0$};
+    \fill[fs] (0,2) rectangle (1,3);
+    \fill[fs] (0,1) rectangle (1,2);
+    \fill[fs] (0,0) rectangle (1,1);
+    \fill[tt] (1,3) rectangle (2,4);
+    \fill[tt] (1,2) rectangle (2,3);
+    \fill[tt] (1,1) rectangle (2,2);
+    \fill[tt] (1,0) rectangle (2,1);
+    \fill[fs] (3,3) rectangle (4,4);
+    \fill[fs] (3,1) rectangle (4,2);
+    \fill[fs] (3,0) rectangle (4,1);
+    \draw[pattern=north west lines] (0,2) rectangle (1,3);
+    \draw[pattern=north west lines] (0,1) rectangle (1,2);
+    \draw[pattern=north west lines] (0,0) rectangle (1,1);
+    \draw[pattern=north west lines] (1,3) rectangle (2,4);
+    \draw[pattern=north west lines] (1,2) rectangle (2,3);
+    \draw[pattern=north west lines] (1,1) rectangle (2,2);
+    \draw[pattern=north west lines] (1,0) rectangle (2,1);
+    \draw[pattern=north west lines] (3,3) rectangle (4,4);
+    \draw[pattern=north west lines] (3,1) rectangle (4,2);
+    \draw[pattern=north west lines] (3,0) rectangle (4,1);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[fr, ultra thick] (0,2) rectangle (1,3);
+    \draw[fr, ultra thick] (0,1) rectangle (1,2);
+    \draw[fr, ultra thick] (0,0) rectangle (1,1);
+    \draw[fr, ultra thick] (3,3) rectangle (4,4);
+    \draw[fr, ultra thick] (3,1) rectangle (4,2);
+    \draw[fr, ultra thick] (3,0) rectangle (4,1);
+    \node at(0+0.5,2+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(0+0.5,1+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(0+0.5,0+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(1+0.5,3+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(1+0.5,2+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(1+0.5,1+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(1+0.5,0+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(3+0.5,3+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(3+0.5,1+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(3+0.5,0+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \draw[->] (4,2) -- node[above] {\tiny MC} +(2,0);
+  \end{scope}
+  \begin{scope}[xshift=23cm]
+    \node at(2,0)[below] {\scriptsize $\Delta W_0$};
+    \fill[fs] (0,1) rectangle (1,2);
+    \fill[fs] (0,0) rectangle (1,1);
+    \fill[tt] (1,0) rectangle (2,1);
+    \fill[fs] (3,2) rectangle (4,3);
+    \fill[fs] (3,1) rectangle (4,2);
+    \draw[pattern=north west lines] (1,0) rectangle (2,1);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[fr, ultra thick] (1,3) rectangle (2,4);
+    \draw[fr, ultra thick] (1,2) rectangle (2,3);
+    \draw[fr, ultra thick] (1,1) rectangle (2,2);
+    \node at(1+0.5,0+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \draw[->] (4,2) --  +(2,0);
+    \node at (5,2) {$\oplus$};
+  \end{scope}
+\end{scope}
+
+\begin{scope}[yshift=-0.0cm]
+  \begin{scope}[xshift=29cm]
+    \node at(2,0)[below] {\scriptsize $\Delta X_1$};
+    \fill[fs] (0,1) rectangle (1,2);
+    \fill[tt] (1,0) rectangle (2,1);
+    \fill[fs] (3,2) rectangle (4,3);
+    \draw[pattern=north west lines] (1,0) rectangle (2,1);
+    \node at(1+0.5,0+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) -- node[above] {\tiny SB} node[below] {\tiny SR} +(2,0);
+  \end{scope}
+  \begin{scope}[xshift=35cm]
+    \node at(2,0)[below] {\scriptsize $\Delta Z_1$};
+    \fill[fs] (2,2) rectangle (3,3);
+    \fill[fs] (2,1) rectangle (3,2);
+    \fill[fs] (2,0) rectangle (3,1);
+    \draw[pattern=north west lines] (2,0) rectangle (3,1);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[fr, ultra thick] (2,0) rectangle (3,1);
+    \node at(2+0.5,0+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \draw[->] (4,2) -- node[above] {\tiny MC} +(2,0);
+    \node at (5,1.5)[below, fill opacity=0.5] {$\stackrel{E_b}{\leftarrow}$}
+  \end{scope}
+  \begin{scope}[xshift=41cm]
+    \node at(2,0)[below] {\scriptsize $\Delta W_1$};
+    \fill[fs] (2,2) rectangle (3,3);
+    \fill[fs] (2,1) rectangle (3,2);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) --  +(1,0);
+  \end{scope}
+  \begin{scope}[xshift=46cm]
+    \node at(2,0)[below] {\scriptsize $\Delta STK_1$};
+    \fill[fk] (0,0) rectangle (1,1);
+    \fill[fk] (3,1) rectangle (4,2);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[gk, ultra thick] (1,0) rectangle (2,1);
+    \node at(1+0.5,0+0.5) {\scriptsize \color{black} $\mathsf{0}$};
+    \draw[->] (2,4) -- ++(0,0.5) --++(-20,0) --++(0,-2.2);
+  \end{scope}
+\end{scope}
+
+\begin{scope}[yshift=-6.0cm]
+  \begin{scope}[xshift=0cm]
+    \node at(2,0)[below] {\scriptsize $\Delta STK_2$};
+    \fill[fk] (2,2) rectangle (3,3);
+    \fill[fk] (2,1) rectangle (3,2);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+  \end{scope}
+  \begin{scope}[xshift=5cm]
+    \node at(2,0)[below] {\scriptsize $\Delta W_1$};
+    \fill[fs] (2,2) rectangle (3,3);
+    \fill[fs] (2,1) rectangle (3,2);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) -- +(2,0);
+    \draw[->] (-3,4)--++(0,0.5) --++(8,0)--++(0,-2.2);
+    \node at (5,2) {$\oplus$};
+  \end{scope}
+  \begin{scope}[xshift=11cm]
+    \node at(2,0)[below] {\scriptsize $\Delta X_2$};
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) -- node[above] {\tiny SB} node[below] {\tiny SR} +(2,0);
+  \end{scope}
+  \begin{scope}[xshift=17cm]
+    \node at(2,0)[below] {\scriptsize $\Delta Z_2$};
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) -- node[above] {\tiny MC} +(2,0);
+  \end{scope}
+  \begin{scope}[xshift=23cm]
+    \node at(2,0)[below] {\scriptsize $\Delta W_2$};
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) --  +(2,0);
+    \node at (5,2) {$\oplus$};
+  \end{scope}
+\end{scope}
+\begin{scope}[yshift=-6.0cm]
+  \begin{scope}[xshift=29cm]
+    \node at(2,0)[below] {\scriptsize $\Delta X_3$};
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) -- node[above] {\tiny SB} node[below] {\tiny SR} +(2,0);
+  \end{scope}
+  \begin{scope}[xshift=35cm]
+    \node at(2,0)[below] {\scriptsize $\Delta Z_3$};
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) -- node[above] {\tiny MC} +(2,0);
+  \end{scope}
+  \begin{scope}[xshift=41cm]
+    \node at(2,0)[below] {\scriptsize $\Delta W_3$};
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+  \end{scope}
+  \begin{scope}[xshift=46cm]
+    \node at(2,0)[below] {\scriptsize $\Delta STK_3$};
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (2,4) -- ++(0,0.5) --++(-20,0) --++(0,-2.2);
+  \end{scope}
+\end{scope}
+
+\begin{scope}[yshift=-12.0cm]
+  \begin{scope}[xshift=0cm]
+    \node at(2,0)[below] {\scriptsize $\Delta STK_4$};
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+  \end{scope}
+  \begin{scope}[xshift=5cm]
+    \node at(2,0)[below] {\scriptsize $\Delta W_3$};
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) -- +(2,0);
+    \draw[->] (-3,4)--++(0,0.5) --++(8,0)--++(0,-2.2);
+    \node at (5,2) {$\oplus$};
+  \end{scope}
+  \begin{scope}[xshift=11cm]
+    \node at(2,0)[below] {\scriptsize $\Delta X_4$};
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) -- node[above] {\tiny SB} node[below] {\tiny SR} +(2,0);
+  \end{scope}
+  \begin{scope}[xshift=17cm]
+    \node at(2,0)[below] {\scriptsize $\Delta Z_4$};
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) -- node[above] {\tiny MC} +(2,0);
+  \end{scope}
+  \begin{scope}[xshift=23cm]
+    \node at(2,0)[below] {\scriptsize $\Delta W_4$};
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) --  +(2,0);
+    \node at (5,2) {$\oplus$};
+  \end{scope}
+\end{scope}
+\begin{scope}[yshift=-12.0cm]
+  \begin{scope}[xshift=29cm]
+    \node at(2,0)[below] {\scriptsize $\Delta X_5$};
+    \fill[fs] (1,1) rectangle (2,2);
+    \fill[fs] (2,0) rectangle (3,1);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) -- node[above] {\tiny SB} node[below] {\tiny SR} +(2,0);
+  \end{scope}
+  \begin{scope}[xshift=35cm]
+    \node at(2,0)[below] {\scriptsize $\Delta Z_5$};
+    \fill[fs] (3,1) rectangle (4,2);
+    \fill[fs] (3,0) rectangle (4,1);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) -- node[above] {\tiny MC} +(2,0);
+  \end{scope}
+  \begin{scope}[xshift=41cm]
+    \node at(2,0)[below] {\scriptsize $\Delta W_5$};
+    \fill[fs] (3,3) rectangle (4,4);
+    \fill[fs] (3,2) rectangle (4,3);
+    \fill[fs] (3,0) rectangle (4,1);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+  \end{scope}
+  \begin{scope}[xshift=46cm]
+    \node at(2,0)[below] {\scriptsize $\Delta STK_5$};
+    \fill[fk] (1,1) rectangle (2,2);
+    \fill[fk] (2,0) rectangle (3,1);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (2,4) -- ++(0,0.5) --++(-20,0) --++(0,-2.2);
+  \end{scope}
+\end{scope}
+
+\begin{scope}[yshift=-18.0cm]
+  \begin{scope}[xshift=0cm]
+    \node at(2,0)[below] {\scriptsize $\Delta STK_6$};
+    \fill[fk] (0,2) rectangle (1,3);
+    \fill[fk] (0,1) rectangle (1,2);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+  \end{scope}
+  \begin{scope}[xshift=5cm]
+    \node at(2,0)[below] {\scriptsize $\Delta W_5$};
+    \fill[fs] (3,3) rectangle (4,4);
+    \fill[fs] (3,2) rectangle (4,3);
+    \fill[fs] (3,0) rectangle (4,1);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) -- +(2,0);
+    \draw[->] (-3,4)--++(0,0.5) --++(8,0)--++(0,-2.2);
+    \node at (5,2) {$\oplus$};
+  \end{scope}
+  \begin{scope}[xshift=11cm]
+    \node at(2,0)[below] {\scriptsize $\Delta X_6$};
+    \fill[fs] (0,2) rectangle (1,3);
+    \fill[fs] (0,1) rectangle (1,2);
+    \fill[fs] (3,3) rectangle (4,4);
+    \fill[fs] (3,2) rectangle (4,3);
+    \fill[fs] (3,0) rectangle (4,1);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) -- node[above] {\tiny SB} node[below] {\tiny SR} +(2,0);
+  \end{scope}
+  \begin{scope}[xshift=17cm]
+    \node at(2,0)[below] {\scriptsize $\Delta Z_6$};
+    \fill[fs] (0,0) rectangle (1,1);
+    \fill[tt] (2,2) rectangle (3,3);
+    \fill[tt] (2,1) rectangle (3,2);
+    \fill[fs] (3,3) rectangle (4,4);
+    \fill[fs] (3,2) rectangle (4,3);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) -- node[above] {\tiny MC} +(2,0);
+  \end{scope}
+  \begin{scope}[xshift=23cm]
+    \node at(2,0)[below] {\scriptsize $\Delta W_6$};
+    \fill[fs] (0,3) rectangle (1,4);
+    \fill[fs] (0,2) rectangle (1,3);
+    \fill[fs] (0,1) rectangle (1,2);
+    \fill[fs] (0,0) rectangle (1,1);
+    \fill[tt] (2,3) rectangle (3,4);
+    \fill[tt] (2,2) rectangle (3,3);
+    \fill[tt] (2,1) rectangle (3,2);
+    \fill[tt] (2,0) rectangle (3,1);
+    \fill[fs] (3,3) rectangle (4,4);
+    \fill[fs] (3,2) rectangle (4,3);
+    \fill[fs] (3,1) rectangle (4,2);
+    \fill[fs] (3,0) rectangle (4,1);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) --  +(2,0);
+    \node at (5,2) {$\oplus$};
+  \end{scope}
+\end{scope}
+\begin{scope}[yshift=-18.0cm]
+  \begin{scope}[xshift=29cm]
+    \node at(2,0)[below] {\scriptsize $\Delta X_7$};
+    \fill[fs] (0,3) rectangle (1,4);
+    \fill[fs] (0,2) rectangle (1,3);
+    \fill[fs] (0,1) rectangle (1,2);
+    \fill[fs] (0,0) rectangle (1,1);
+    \fill[tt] (2,3) rectangle (3,4);
+    \fill[tt] (2,2) rectangle (3,3);
+    \fill[tt] (2,1) rectangle (3,2);
+    \fill[tt] (2,0) rectangle (3,1);
+    \fill[fs] (3,3) rectangle (4,4);
+    \fill[fs] (3,2) rectangle (4,3);
+    \fill[fs] (3,1) rectangle (4,2);
+    \fill[fs] (3,0) rectangle (4,1);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) -- node[above] {\tiny SB} node[below] {\tiny SR} +(2,0);
+  \end{scope}
+  \begin{scope}[xshift=35cm]
+    \node at(2,0)[below] {\scriptsize $\Delta Z_7$};
+    \fill[tt] (0,3) rectangle (1,4);
+    \fill[tt] (0,1) rectangle (1,2);
+    \fill[tt] (0,0) rectangle (1,1);
+    \fill[tt] (1,2) rectangle (2,3);
+    \fill[tt] (1,1) rectangle (2,2);
+    \fill[tt] (1,0) rectangle (2,1);
+    \fill[tt] (2,3) rectangle (3,4);
+    \fill[tt] (2,2) rectangle (3,3);
+    \fill[fs] (2,1) rectangle (3,2);
+    \fill[tt] (3,3) rectangle (4,4);
+    \fill[tt] (3,2) rectangle (4,3);
+    \fill[tt] (3,0) rectangle (4,1);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+  \end{scope}
+  \begin{scope}[xshift=46cm]
+    \node at(2,0)[below] {\scriptsize $\Delta STK_7$};
+    \fill[fk] (0,3) rectangle (1,4);
+    \fill[fk] (3,2) rectangle (4,3);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (2,4) -- ++(0,0.5) --++(-20,0) --++(0,-2.2);
+  \end{scope}
+\end{scope}
+
+\begin{scope}[yshift=-20.0cm]
+\draw[help lines, dashed, fill opacity=0.5] (2,0) -- (20,0);
+\draw[help lines, dashed, fill opacity=0.5] (30,0) -- (48,0);
+\node at(20.5,0)[right, fill opacity=0.5] {\scriptsize $E_m: \{\Delta X_{6} \leftrightarrow \Delta W_{8}\}$};
+\end{scope}
+
+\begin{scope}[yshift=-26.0cm]
+  \begin{scope}[xshift=0cm]
+    \node at(2,0)[below] {\scriptsize $\Delta STK_{6}$};
+    \fill[fk] (1,0) rectangle (2,1);
+    \fill[fk] (3,3) rectangle (4,4);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+  \end{scope}
+  \begin{scope}[xshift=11cm]
+    \node at(2,0)[below] {\scriptsize $\Delta X_{6}$};
+    \fill[tt] (0,3) rectangle (1,4);
+    \fill[tt] (0,0) rectangle (1,1);
+    \fill[tt] (1,3) rectangle (2,4);
+    \fill[tt] (1,2) rectangle (2,3);
+    \fill[tt] (1,1) rectangle (2,2);
+    \fill[tt] (2,2) rectangle (3,3);
+    \fill[tt] (2,1) rectangle (3,2);
+    \fill[tt] (2,0) rectangle (3,1);
+    \fill[fs] (3,3) rectangle (4,4);
+    \fill[tt] (3,1) rectangle (4,2);
+    \fill[fs] (3,0) rectangle (4,1);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) -- node[above] {\tiny SB} node[below] {\tiny SR} +(2,0);
+  \end{scope}
+  \begin{scope}[xshift=17cm]
+    \node at(2,0)[below] {\scriptsize $\Delta Z_{6}$};
+    \fill[fs] (0,3) rectangle (1,4);
+    \fill[fs] (0,2) rectangle (1,3);
+    \fill[fs] (0,1) rectangle (1,2);
+    \fill[fs] (0,0) rectangle (1,1);
+    \fill[tt] (1,3) rectangle (2,4);
+    \fill[tt] (1,2) rectangle (2,3);
+    \fill[tt] (1,1) rectangle (2,2);
+    \fill[tt] (1,0) rectangle (2,1);
+    \fill[fs] (3,3) rectangle (4,4);
+    \fill[fs] (3,1) rectangle (4,2);
+    \fill[fs] (3,0) rectangle (4,1);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) -- node[above] {\tiny MC} +(2,0);
+  \end{scope}
+  \begin{scope}[xshift=23cm]
+    \node at(2,0)[below] {\scriptsize $\Delta W_{6}$};
+    \fill[fs] (0,1) rectangle (1,2);
+    \fill[fs] (0,0) rectangle (1,1);
+    \fill[tt] (1,0) rectangle (2,1);
+    \fill[fs] (3,2) rectangle (4,3);
+    \fill[fs] (3,1) rectangle (4,2);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) --  +(2,0);
+    \node at (5,2) {$\oplus$};
+  \end{scope}
+\end{scope}
+\begin{scope}[yshift=-26.0cm]
+  \begin{scope}[xshift=29cm]
+    \node at(2,0)[below] {\scriptsize $\Delta X_{7}$};
+    \fill[fs] (0,1) rectangle (1,2);
+    \fill[tt] (1,0) rectangle (2,1);
+    \fill[fs] (3,2) rectangle (4,3);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) -- node[above] {\tiny SB} node[below] {\tiny SR} +(2,0);
+  \end{scope}
+  \begin{scope}[xshift=35cm]
+    \node at(2,0)[below] {\scriptsize $\Delta Z_{7}$};
+    \fill[fs] (2,2) rectangle (3,3);
+    \fill[fs] (2,1) rectangle (3,2);
+    \fill[fs] (2,0) rectangle (3,1);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) -- node[above] {\tiny MC} +(2,0);
+  \end{scope}
+  \begin{scope}[xshift=41cm]
+    \node at(2,0)[below] {\scriptsize $\Delta W_{7}$};
+    \fill[fs] (2,2) rectangle (3,3);
+    \fill[fs] (2,1) rectangle (3,2);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+  \end{scope}
+  \begin{scope}[xshift=46cm]
+    \node at(2,0)[below] {\scriptsize $\Delta STK_{7}$};
+    \fill[fk] (0,0) rectangle (1,1);
+    \fill[fk] (3,1) rectangle (4,2);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (2,4) -- ++(0,0.5) --++(-20,0) --++(0,-2.2);
+  \end{scope}
+\end{scope}
+
+\begin{scope}[yshift=-32.0cm]
+  \begin{scope}[xshift=0cm]
+    \node at(2,0)[below] {\scriptsize $\Delta STK_{8}$};
+    \fill[fk] (2,2) rectangle (3,3);
+    \fill[fk] (2,1) rectangle (3,2);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+  \end{scope}
+  \begin{scope}[xshift=5cm]
+    \node at(2,0)[below] {\scriptsize $\Delta W_{7}$};
+    \fill[fs] (2,2) rectangle (3,3);
+    \fill[fs] (2,1) rectangle (3,2);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) -- +(2,0);
+    \draw[->] (-3,4)--++(0,0.5) --++(8,0)--++(0,-2.2);
+    \node at (5,2) {$\oplus$};
+  \end{scope}
+  \begin{scope}[xshift=11cm]
+    \node at(2,0)[below] {\scriptsize $\Delta X_{8}$};
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) -- node[above] {\tiny SB} node[below] {\tiny SR} +(2,0);
+  \end{scope}
+  \begin{scope}[xshift=17cm]
+    \node at(2,0)[below] {\scriptsize $\Delta Z_{8}$};
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) -- node[above] {\tiny MC} +(2,0);
+  \end{scope}
+  \begin{scope}[xshift=23cm]
+    \node at(2,0)[below] {\scriptsize $\Delta W_{8}$};
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) --  +(2,0);
+    \node at (5,2) {$\oplus$};
+  \end{scope}
+\end{scope}
+\begin{scope}[yshift=-32.0cm]
+  \begin{scope}[xshift=29cm]
+    \node at(2,0)[below] {\scriptsize $\Delta X_{9}$};
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) -- node[above] {\tiny SB} node[below] {\tiny SR} +(2,0);
+  \end{scope}
+  \begin{scope}[xshift=35cm]
+    \node at(2,0)[below] {\scriptsize $\Delta Z_{9}$};
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) -- node[above] {\tiny MC} +(2,0);
+  \end{scope}
+  \begin{scope}[xshift=41cm]
+    \node at(2,0)[below] {\scriptsize $\Delta W_{9}$};
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+  \end{scope}
+  \begin{scope}[xshift=46cm]
+    \node at(2,0)[below] {\scriptsize $\Delta STK_{9}$};
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (2,4) -- ++(0,0.5) --++(-20,0) --++(0,-2.2);
+  \end{scope}
+\end{scope}
+
+\begin{scope}[yshift=-38.0cm]
+  \begin{scope}[xshift=0cm]
+    \node at(2,0)[below] {\scriptsize $\Delta STK_{10}$};
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+  \end{scope}
+  \begin{scope}[xshift=5cm]
+    \node at(2,0)[below] {\scriptsize $\Delta W_{9}$};
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) -- +(2,0);
+    \draw[->] (-3,4)--++(0,0.5) --++(8,0)--++(0,-2.2);
+    \node at (5,2) {$\oplus$};
+  \end{scope}
+  \begin{scope}[xshift=11cm]
+    \node at(2,0)[below] {\scriptsize $\Delta X_{10}$};
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) -- node[above] {\tiny SB} node[below] {\tiny SR} +(2,0);
+  \end{scope}
+  \begin{scope}[xshift=17cm]
+    \node at(2,0)[below] {\scriptsize $\Delta Z_{10}$};
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) -- node[above] {\tiny MC} +(2,0);
+  \end{scope}
+  \begin{scope}[xshift=23cm]
+    \node at(2,0)[below] {\scriptsize $\Delta W_{10}$};
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) --  +(2,0);
+    \node at (5,2) {$\oplus$};
+  \end{scope}
+\end{scope}
+\begin{scope}[yshift=-38.0cm]
+  \begin{scope}[xshift=29cm]
+    \node at(2,0)[below] {\scriptsize $\Delta X_{11}$};
+    \fill[fs] (1,1) rectangle (2,2);
+    \fill[fs] (2,0) rectangle (3,1);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[pattern=north west lines] (1,1) rectangle (2,2);
+    \draw[pattern=north west lines] (2,0) rectangle (3,1);
+    \node at(1+0.5,1+0.5) {\scriptsize \color{black} \bm{$\mathsf{5}$}};
+    \node at(2+0.5,0+0.5) {\scriptsize \color{black} \bm{$\mathsf{5}$}};
+    \draw[->] (4,2) -- node[above] {\tiny SB} node[below] {\tiny $\stackrel{\textcolor{geqk}{eqk}}{\text{SR}}$} +(2,0);
+  \end{scope}
+  \begin{scope}[xshift=35cm]
+    \node at(2,0)[below] {\scriptsize $\Delta Z_{11}$};
+    \fill[tt] (3,1) rectangle (4,2);
+    \fill[tt] (3,0) rectangle (4,1);
+    \draw[pattern=north west lines] (3,1) rectangle (4,2);
+    \draw[pattern=north west lines] (3,0) rectangle (4,1);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \node at(3+0.5,1+0.5) {\scriptsize \color{black} \bm{$\mathsf{5}$}};
+    \node at(3+0.5,0+0.5) {\scriptsize \color{black} \bm{$\mathsf{5}$}};
+    \draw[->] (4,2) -- node[above] {\tiny MC} +(2,0);
+  \end{scope}
+  \begin{scope}[xshift=41cm]
+    \node at(2,0)[below] {\scriptsize $\Delta W_{11}$};
+    \fill[tt] (3,3) rectangle (4,4);
+    \fill[tt] (3,2) rectangle (4,3);
+    \fill[tt] (3,0) rectangle (4,1);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \node at(0+0.5,2+0.5) {\scriptsize \color{black} \bm{$\mathsf{4}$}};
+    \node at(0+0.5,1+0.5) {\scriptsize \color{black} \bm{$\mathsf{2}$}};
+    \node at(3+0.5,3+0.5) {\scriptsize \color{black} \bm{$\mathsf{5}$}};
+    \node at(3+0.5,2+0.5) {\scriptsize \color{black} \bm{$\mathsf{5}$}};
+    \node at(3+0.5,1+0.5) {\scriptsize \color{red} \bm{$\mathsf{5}$}};
+    \node at(3+0.5,0+0.5) {\scriptsize \color{black} \bm{$\mathsf{5}$}};
+  \end{scope}
+  \begin{scope}[xshift=46cm]
+    \node at(2,0)[below] {\scriptsize $\Delta STK_{11}$};
+    \fill[fk] (1,1) rectangle (2,2);
+    \fill[fk] (2,0) rectangle (3,1);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (2,4) -- ++(0,0.5) --++(-20,0) --++(0,-2.2);
+  \end{scope}
+\end{scope}
+
+\begin{scope}[yshift=-44.0cm]
+  \begin{scope}[xshift=0cm]
+    \node at(2,0)[below] {\scriptsize $\Delta STK_{12}$};
+    \fill[fk] (0,2) rectangle (1,3);
+    \fill[fk] (0,1) rectangle (1,2);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \node at(1+0.5,1+0.5) {\scriptsize \color{black} $\mathsf{5}$};
+    \node at(2+0.5,0+0.5) {\scriptsize \color{black} $\mathsf{5}$};
+  \end{scope}
+  \begin{scope}[xshift=5cm]
+    \node at(2,0)[below] {\scriptsize $\Delta W_{11}$};
+    \fill[tt] (3,3) rectangle (4,4);
+    \fill[tt] (3,2) rectangle (4,3);
+    \fill[tt] (3,0) rectangle (4,1);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[pattern=north west lines] (3,3) rectangle (4,4);
+    \draw[pattern=north west lines] (3,2) rectangle (4,3);
+    \draw[pattern=north west lines] (3,1) rectangle (4,2);
+    \draw[pattern=north west lines] (3,0) rectangle (4,1);
+    \node at(0+0.5,2+0.5) {\scriptsize \color{black} \bm{$\mathsf{4}$}};
+    \node at(0+0.5,1+0.5) {\scriptsize \color{black} \bm{$\mathsf{2}$}};
+    \node at(3+0.5,3+0.5) {\scriptsize \color{black} \bm{$\mathsf{5}$}};
+    \node at(3+0.5,2+0.5) {\scriptsize \color{black} \bm{$\mathsf{5}$}};
+    \node at(3+0.5,1+0.5) {\scriptsize \color{red} \bm{$\mathsf{5}$}};
+    \node at(3+0.5,0+0.5) {\scriptsize \color{black} \bm{$\mathsf{5}$}};
+    \draw[->] (4,2) -- +(2,0);
+    \draw[->] (-3,4)--++(0,0.5) --++(8,0)--++(0,-2.2);
+    \node at (5,2) {$\oplus$};
+  \end{scope}
+  \begin{scope}[xshift=11cm]
+    \node at(2,0)[below] {\scriptsize $\Delta X_{12}$};
+    \fill[fs] (0,2) rectangle (1,3);
+    \fill[fs] (0,1) rectangle (1,2);
+    \fill[tt] (3,3) rectangle (4,4);
+    \fill[tt] (3,2) rectangle (4,3);
+    \fill[tt] (3,0) rectangle (4,1);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[pattern=north west lines] (0,2) rectangle (1,3);
+    \draw[pattern=north west lines] (0,1) rectangle (1,2);
+    \draw[pattern=north west lines] (3,3) rectangle (4,4);
+    \draw[pattern=north west lines] (3,2) rectangle (4,3);
+    \draw[pattern=north west lines] (3,1) rectangle (4,2);
+    \draw[pattern=north west lines] (3,0) rectangle (4,1);
+    \node at(0+0.5,2+0.5) {\scriptsize \color{black} \bm{$\mathsf{4}$}};
+    \node at(0+0.5,1+0.5) {\scriptsize \color{black} \bm{$\mathsf{2}$}};
+    \node at(3+0.5,3+0.5) {\scriptsize \color{black} \bm{$\mathsf{5}$}};
+    \node at(3+0.5,2+0.5) {\scriptsize \color{black} \bm{$\mathsf{5}$}};
+    \node at(3+0.5,1+0.5) {\scriptsize \color{red} \bm{$\mathsf{5}$}};
+    \node at(3+0.5,0+0.5) {\scriptsize \color{black} \bm{$\mathsf{5}$}};
+    \draw[->] (4,2) -- node[above] {\tiny SB} node[below, yshift=0mm] {\tiny $\stackrel{\textcolor{geqk}{eqk}}{\text{SR}}$} +(2,0);
+  \end{scope}
+  \begin{scope}[xshift=17cm]
+    \node at(2,0)[below] {\scriptsize $\Delta Z_{12}$};
+    \fill[tt] (0,0) rectangle (1,1);
+    \fill[tt] (2,2) rectangle (3,3);
+    \fill[tt] (2,1) rectangle (3,2);
+    \fill[tt] (3,3) rectangle (4,4);
+    \fill[tt] (3,2) rectangle (4,3);
+    \draw[pattern=north west lines] (0,0) rectangle (1,1);
+    \draw[pattern=north west lines] (1,1) rectangle (2,2);
+    \draw[pattern=north west lines] (2,2) rectangle (3,3);
+    \draw[pattern=north west lines] (2,1) rectangle (3,2);
+    \draw[pattern=north west lines] (3,3) rectangle (4,4);
+    \draw[pattern=north west lines] (3,2) rectangle (4,3);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[fr, ultra thick] (0,3) rectangle (1,4);
+    \draw[fr, ultra thick] (0,2) rectangle (1,3);
+    \draw[fr, ultra thick] (0,1) rectangle (1,2);
+    \node at(0+0.5,0+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(1+0.5,1+0.5) {\scriptsize \color{red} \bm{$\mathsf{5}$}};
+    \node at(2+0.5,2+0.5) {\scriptsize \color{black} \bm{$\mathsf{2}$}};
+    \node at(2+0.5,1+0.5) {\scriptsize \color{black} \bm{$\mathsf{2}$}};
+    \node at(3+0.5,3+0.5) {\scriptsize \color{black} \bm{$\mathsf{4}$}};
+    \node at(3+0.5,2+0.5) {\scriptsize \color{black} \bm{$\mathsf{4}$}};
+    \draw[->] (4,2) -- node[above] {\tiny MC} +(2,0);
+  \end{scope}
+  \begin{scope}[xshift=23cm]
+    \node at(2,0)[below] {\scriptsize $\Delta W_{12}$};
+    \fill[tt] (0,3) rectangle (1,4);
+    \fill[tt] (0,2) rectangle (1,3);
+    \fill[tt] (0,1) rectangle (1,2);
+    \fill[tt] (0,0) rectangle (1,1);
+    \fill[tt] (2,3) rectangle (3,4);
+    \fill[tt] (2,2) rectangle (3,3);
+    \fill[tt] (2,1) rectangle (3,2);
+    \fill[tt] (2,0) rectangle (3,1);
+    \fill[tt] (3,3) rectangle (4,4);
+    \fill[tt] (3,2) rectangle (4,3);
+    \fill[tt] (3,1) rectangle (4,2);
+    \fill[tt] (3,0) rectangle (4,1);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[pattern=north west lines] (0,3) rectangle (1,4);
+    \draw[pattern=north west lines] (0,2) rectangle (1,3);
+    \draw[pattern=north west lines] (0,1) rectangle (1,2);
+    \draw[pattern=north west lines] (0,0) rectangle (1,1);
+    \draw[pattern=north west lines] (1,3) rectangle (2,4);
+    \draw[pattern=north west lines] (1,2) rectangle (2,3);
+    \draw[pattern=north west lines] (1,1) rectangle (2,2);
+    \draw[pattern=north west lines] (1,0) rectangle (2,1);
+    \draw[pattern=north west lines] (2,3) rectangle (3,4);
+    \draw[pattern=north west lines] (2,2) rectangle (3,3);
+    \draw[pattern=north west lines] (2,1) rectangle (3,2);
+    \draw[pattern=north west lines] (2,0) rectangle (3,1);
+    \draw[pattern=north west lines] (3,3) rectangle (4,4);
+    \draw[pattern=north west lines] (3,2) rectangle (4,3);
+    \draw[pattern=north west lines] (3,1) rectangle (4,2);
+    \draw[pattern=north west lines] (3,0) rectangle (4,1);
+    \node at(0+0.5,3+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(0+0.5,2+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(0+0.5,1+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(0+0.5,0+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(1+0.5,3+0.5) {\scriptsize \color{red} \bm{$\mathsf{5}$}};
+    \node at(1+0.5,2+0.5) {\scriptsize \color{red} \bm{$\mathsf{5}$}};
+    \node at(1+0.5,1+0.5) {\scriptsize \color{red} \bm{$\mathsf{5}$}};
+    \node at(1+0.5,0+0.5) {\scriptsize \color{red} \bm{$\mathsf{5}$}};
+    \node at(2+0.5,3+0.5) {\scriptsize \color{black} \bm{$\mathsf{2}$}};
+    \node at(2+0.5,2+0.5) {\scriptsize \color{black} \bm{$\mathsf{2}$}};
+    \node at(2+0.5,1+0.5) {\scriptsize \color{black} \bm{$\mathsf{2}$}};
+    \node at(2+0.5,0+0.5) {\scriptsize \color{black} \bm{$\mathsf{2}$}};
+    \node at(3+0.5,3+0.5) {\scriptsize \color{black} \bm{$\mathsf{3}$}};
+    \node at(3+0.5,2+0.5) {\scriptsize \color{black} \bm{$\mathsf{4}$}};
+    \node at(3+0.5,1+0.5) {\scriptsize \color{black} \bm{$\mathsf{4}$}};
+    \node at(3+0.5,0+0.5) {\scriptsize \color{black} \bm{$\mathsf{4}$}};
+    \draw[->] (4,2) --  +(2,0);
+    \node at (5,2) {$\oplus$};
+  \end{scope}
+\end{scope}
+
+\begin{scope}[yshift=-44.0cm]
+  \begin{scope}[xshift=29cm]
+    \node at(2,0)[below] {\scriptsize $\Delta X_{13}$};
+    \fill[tt] (0,3) rectangle (1,4);
+    \fill[tt] (0,2) rectangle (1,3);
+    \fill[tt] (0,1) rectangle (1,2);
+    \fill[tt] (0,0) rectangle (1,1);
+    \fill[tt] (2,3) rectangle (3,4);
+    \fill[tt] (2,2) rectangle (3,3);
+    \fill[tt] (2,1) rectangle (3,2);
+    \fill[tt] (2,0) rectangle (3,1);
+    \fill[tt] (3,3) rectangle (4,4);
+    \fill[tt] (3,2) rectangle (4,3);
+    \fill[tt] (3,1) rectangle (4,2);
+    \fill[tt] (3,0) rectangle (4,1);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[pattern=north west lines] (0,3) rectangle (1,4);
+    \draw[pattern=north west lines] (0,2) rectangle (1,3);
+    \draw[pattern=north west lines] (0,1) rectangle (1,2);
+    \draw[pattern=north west lines] (0,0) rectangle (1,1);
+    \draw[pattern=north west lines] (1,3) rectangle (2,4);
+    \draw[pattern=north west lines] (1,2) rectangle (2,3);
+    \draw[pattern=north west lines] (1,1) rectangle (2,2);
+    \draw[pattern=north west lines] (1,0) rectangle (2,1);
+    \draw[pattern=north west lines] (2,3) rectangle (3,4);
+    \draw[pattern=north west lines] (2,2) rectangle (3,3);
+    \draw[pattern=north west lines] (2,1) rectangle (3,2);
+    \draw[pattern=north west lines] (2,0) rectangle (3,1);
+    \draw[pattern=north west lines] (3,3) rectangle (4,4);
+    \draw[pattern=north west lines] (3,2) rectangle (4,3);
+    \draw[pattern=north west lines] (3,1) rectangle (4,2);
+    \draw[pattern=north west lines] (3,0) rectangle (4,1);
+    \node at(0+0.5,3+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(0+0.5,2+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(0+0.5,1+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(0+0.5,0+0.5) {\scriptsize \color{black} \bm{$\mathsf{0}$}};
+    \node at(1+0.5,3+0.5) {\scriptsize \color{red} \bm{$\mathsf{5}$}};
+    \node at(1+0.5,2+0.5) {\scriptsize \color{red} \bm{$\mathsf{5}$}};
+    \node at(1+0.5,1+0.5) {\scriptsize \color{red} \bm{$\mathsf{5}$}};
+    \node at(1+0.5,0+0.5) {\scriptsize \color{red} \bm{$\mathsf{5}$}};
+    \node at(2+0.5,3+0.5) {\scriptsize \color{black} \bm{$\mathsf{2}$}};
+    \node at(2+0.5,2+0.5) {\scriptsize \color{black} \bm{$\mathsf{2}$}};
+    \node at(2+0.5,1+0.5) {\scriptsize \color{black} \bm{$\mathsf{2}$}};
+    \node at(2+0.5,0+0.5) {\scriptsize \color{black} \bm{$\mathsf{2}$}};
+    \node at(3+0.5,3+0.5) {\scriptsize \color{black} \bm{$\mathsf{3}$}};
+    \node at(3+0.5,2+0.5) {\scriptsize \color{black} \bm{$\mathsf{4}$}};
+    \node at(3+0.5,1+0.5) {\scriptsize \color{black} \bm{$\mathsf{4}$}};
+    \node at(3+0.5,0+0.5) {\scriptsize \color{black} \bm{$\mathsf{4}$}};
+    \draw[->] (4,2) -- node[above] {\tiny SB} node[below] {\tiny $\stackrel{\textcolor{geqk}{eqk}}{\text{SR}}$} +(2,0);
+  \end{scope}
+  \begin{scope}[xshift=35cm]
+    \node at(2,0)[below] {\scriptsize $\Delta Z_{13}$};
+    \fill[tt] (0,3) rectangle (1,4);
+    \fill[tt] (0,1) rectangle (1,2);
+    \fill[tt] (0,0) rectangle (1,1);
+    \fill[tt] (1,2) rectangle (2,3);
+    \fill[tt] (1,1) rectangle (2,2);
+    \fill[tt] (1,0) rectangle (2,1);
+    \fill[tt] (2,3) rectangle (3,4);
+    \fill[tt] (2,2) rectangle (3,3);
+    \fill[tt] (2,1) rectangle (3,2);
+    \fill[tt] (3,3) rectangle (4,4);
+    \fill[tt] (3,2) rectangle (4,3);
+    \fill[tt] (3,0) rectangle (4,1);
+    \draw[pattern=north west lines] (0,3) rectangle (1,4);
+    \draw[pattern=north west lines] (0,2) rectangle (1,3);
+    \draw[pattern=north west lines] (0,1) rectangle (1,2);
+    \draw[pattern=north west lines] (0,0) rectangle (1,1);
+    \draw[pattern=north west lines] (1,3) rectangle (2,4);
+    \draw[pattern=north west lines] (1,2) rectangle (2,3);
+    \draw[pattern=north west lines] (1,1) rectangle (2,2);
+    \draw[pattern=north west lines] (1,0) rectangle (2,1);
+    \draw[pattern=north west lines] (2,3) rectangle (3,4);
+    \draw[pattern=north west lines] (2,2) rectangle (3,3);
+    \draw[pattern=north west lines] (2,1) rectangle (3,2);
+    \draw[pattern=north west lines] (2,0) rectangle (3,1);
+    \draw[pattern=north west lines] (3,3) rectangle (4,4);
+    \draw[pattern=north west lines] (3,2) rectangle (4,3);
+    \draw[pattern=north west lines] (3,1) rectangle (4,2);
+    \draw[pattern=north west lines] (3,0) rectangle (4,1);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[->] (4,2) -- node[above] {\tiny MC} +(2,0);
+  \end{scope}
+  \begin{scope}[xshift=41cm]
+    \node at(2,0)[below] {\scriptsize $\Delta W_{13}$};
+    \fill[tt] (0,3) rectangle (1,4);
+    \fill[tt] (0,2) rectangle (1,3);
+    \fill[tt] (0,1) rectangle (1,2);
+    \fill[tt] (0,0) rectangle (1,1);
+    \fill[tt] (1,3) rectangle (2,4);
+    \fill[tt] (1,2) rectangle (2,3);
+    \fill[tt] (1,1) rectangle (2,2);
+    \fill[tt] (1,0) rectangle (2,1);
+    \fill[tt] (2,3) rectangle (3,4);
+    \fill[tt] (2,2) rectangle (3,3);
+    \fill[tt] (2,1) rectangle (3,2);
+    \fill[tt] (2,0) rectangle (3,1);
+    \fill[tt] (3,3) rectangle (4,4);
+    \fill[tt] (3,2) rectangle (4,3);
+    \fill[tt] (3,1) rectangle (4,2);
+    \fill[tt] (3,0) rectangle (4,1);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[pattern=north west lines] (0,3) rectangle (1,4);
+    \draw[pattern=north west lines] (0,2) rectangle (1,3);
+    \draw[pattern=north west lines] (0,1) rectangle (1,2);
+    \draw[pattern=north west lines] (0,0) rectangle (1,1);
+    \draw[pattern=north west lines] (1,3) rectangle (2,4);
+    \draw[pattern=north west lines] (1,2) rectangle (2,3);
+    \draw[pattern=north west lines] (1,1) rectangle (2,2);
+    \draw[pattern=north west lines] (1,0) rectangle (2,1);
+    \draw[pattern=north west lines] (2,3) rectangle (3,4);
+    \draw[pattern=north west lines] (2,2) rectangle (3,3);
+    \draw[pattern=north west lines] (2,1) rectangle (3,2);
+    \draw[pattern=north west lines] (2,0) rectangle (3,1);
+    \draw[pattern=north west lines] (3,3) rectangle (4,4);
+    \draw[pattern=north west lines] (3,2) rectangle (4,3);
+    \draw[pattern=north west lines] (3,1) rectangle (4,2);
+    \draw[pattern=north west lines] (3,0) rectangle (4,1);
+  \end{scope}
+  \begin{scope}[xshift=46cm]
+    \node at(2,0)[below] {\scriptsize $\Delta STK_{13}$};
+    \fill[fk] (0,3) rectangle (1,4);
+    \fill[fk] (3,2) rectangle (4,3);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \node at(0+0.5,2+0.5) {\scriptsize \color{black} $\mathsf{4}$};
+    \node at(0+0.5,1+0.5) {\scriptsize \color{black} $\mathsf{2}$};
+    \node at(3+0.5,3+0.5) {\scriptsize \color{black} $\mathsf{5}$};
+    \node at(3+0.5,2+0.5) {\scriptsize \color{black} $\mathsf{5}$};
+    \node at(3+0.5,1+0.5) {\scriptsize \color{red} $\mathsf{5}$};
+    \node at(3+0.5,0+0.5) {\scriptsize \color{black} $\mathsf{5}$};
+    \draw[->] (2,4) -- ++(0,0.5) --++(-20,0) --++(0,-2.2);
+  \end{scope}
+\end{scope}
+
+\begin{scope}[yshift=-50.0cm]
+  \begin{scope}[xshift=0cm]
+    \node at(2,0)[below] {\scriptsize $\Delta STK_{14}$};
+    \fill[fk] (1,0) rectangle (2,1);
+    \fill[fk] (3,3) rectangle (4,4);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[geqk, ultra thick] (0,3) rectangle (1,4);
+    \draw[geqk, ultra thick] (0,2) rectangle (1,3);
+    \draw[geqk, ultra thick] (0,1) rectangle (1,2);
+    \draw[geqk, ultra thick] (0,0) rectangle (1,1);
+    \node at(0+0.5,3+0.5) {\scriptsize \color{black} $\mathsf{0}$};
+    \node at(0+0.5,2+0.5) {\scriptsize \color{black} $\mathsf{0}$};
+    \node at(0+0.5,1+0.5) {\scriptsize \color{black} $\mathsf{0}$};
+    \node at(0+0.5,0+0.5) {\scriptsize \color{black} $\mathsf{0}$};
+    \node at(1+0.5,3+0.5) {\scriptsize \color{red} $\mathsf{5}$};
+    \node at(1+0.5,2+0.5) {\scriptsize \color{red} $\mathsf{5}$};
+    \node at(1+0.5,1+0.5) {\scriptsize \color{red} $\mathsf{5}$};
+    \node at(1+0.5,0+0.5) {\scriptsize \color{red} $\mathsf{5}$};
+    \node at(2+0.5,3+0.5) {\scriptsize \color{black} $\mathsf{2}$};
+    \node at(2+0.5,2+0.5) {\scriptsize \color{black} $\mathsf{2}$};
+    \node at(2+0.5,1+0.5) {\scriptsize \color{black} $\mathsf{2}$};
+    \node at(2+0.5,0+0.5) {\scriptsize \color{black} $\mathsf{2}$};
+    \node at(3+0.5,3+0.5) {\scriptsize \color{black} $\mathsf{3}$};
+    \node at(3+0.5,2+0.5) {\scriptsize \color{black} $\mathsf{4}$};
+    \node at(3+0.5,1+0.5) {\scriptsize \color{black} $\mathsf{4}$};
+    \node at(3+0.5,0+0.5) {\scriptsize \color{black} $\mathsf{4}$};
+  \end{scope}
+  \begin{scope}[xshift=5cm]
+    \node at(2,0)[below] {\scriptsize $\Delta W_{13}$};
+    \fill[tt] (0,3) rectangle (1,4);
+    \fill[tt] (0,2) rectangle (1,3);
+    \fill[tt] (0,1) rectangle (1,2);
+    \fill[tt] (0,0) rectangle (1,1);
+    \fill[tt] (1,3) rectangle (2,4);
+    \fill[tt] (1,2) rectangle (2,3);
+    \fill[tt] (1,1) rectangle (2,2);
+    \fill[tt] (1,0) rectangle (2,1);
+    \fill[tt] (2,3) rectangle (3,4);
+    \fill[tt] (2,2) rectangle (3,3);
+    \fill[tt] (2,1) rectangle (3,2);
+    \fill[tt] (2,0) rectangle (3,1);
+    \fill[tt] (3,3) rectangle (4,4);
+    \fill[tt] (3,2) rectangle (4,3);
+    \fill[tt] (3,1) rectangle (4,2);
+    \fill[tt] (3,0) rectangle (4,1);
+    \draw (0,0) rectangle (4,4);
+    \draw (0,1) -- +(4,0);
+    \draw (0,2) -- +(4,0);
+    \draw (0,3) -- +(4,0);
+    \draw (1,0) -- +(0,4);
+    \draw (2,0) -- +(0,4);
+    \draw (3,0) -- +(0,4);
+    \draw[pattern=north west lines] (0,3) rectangle (1,4);
+    \draw[pattern=north west lines] (0,2) rectangle (1,3);
+    \draw[pattern=north west lines] (0,1) rectangle (1,2);
+    \draw[pattern=north west lines] (0,0) rectangle (1,1);
+    \draw[pattern=north west lines] (1,3) rectangle (2,4);
+    \draw[pattern=north west lines] (1,2) rectangle (2,3);
+    \draw[pattern=north west lines] (1,1) rectangle (2,2);
+    \draw[pattern=north west lines] (1,0) rectangle (2,1);
+    \draw[pattern=north west lines] (2,3) rectangle (3,4);
+    \draw[pattern=north west lines] (2,2) rectangle (3,3);
+    \draw[pattern=north west lines] (2,1) rectangle (3,2);
+    \draw[pattern=north west lines] (2,0) rectangle (3,1);
+    \draw[pattern=north west lines] (3,3) rectangle (4,4);
+    \draw[pattern=north west lines] (3,2) rectangle (4,3);
+    \draw[pattern=north west lines] (3,1) rectangle (4,2);
+    \draw[pattern=north west lines] (3,0) rectangle (4,1);
+    \draw[->] (4,2) -- +(2,0);
+    \draw[->] (-3,4)--++(0,0.5) --++(8,0)--++(0,-2.2);
+    \node at (5,2) {$\oplus$};
+\node at (7,2) {$\Delta C$};
+  \end{scope}
+\end{scope}
+
+\begin{scope}[yshift=-53.0cm]
+\begin{scope}[xshift=0cm]
+\node at(25,0) {\small Prob.: 102 (28, 28, 30, 0, 16);\quad$r_b=10$\; $r'_b=10$\; $m_b=11$\; $m'_b=11$;\quad $r_f=12$\; $r'_f=3$\; $m_f=19$\; $m'_f=4$};
+\node at(25,-1.5) {\small DataC: 117,\quad MemoryC: 120 ($M_\epsilon=15$),\quad TimeC: 242 [$T_1$=237, $T_{2u}$=238, $T_3$=242 ($T_\epsilon$=0)]};
+\end{scope}
+ \end{scope}
+
+\end{tikzpicture}
+\end{document}
+----------
+==========
