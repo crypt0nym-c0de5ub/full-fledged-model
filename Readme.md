@@ -137,7 +137,7 @@ $$
 ##### Main + Pattern+ Guessing Strategy
 
 $$
-constraint\ \ Time_\epsilon = 0\\
+constraint\ \ Time_\epsilon = 0\newline
 \min (a\times Time+b\times Memory + c\times Date)
 $$
 
@@ -153,7 +153,7 @@ Due to the long time required to solve the whole model, we provide some constrai
 
 ## Examples
 
-We give the models and the corresponding results of 2 versions of $\texttt{Deoxys}$, [goto](DeoxysTK23):
+We give the models and the corresponding results of 2 versions of $\texttt{Deoxys}$, [goto](Deoxys-TK23):
 
 - **11-round** $\texttt{Deoxys-BC-256}$
 - **15-round** $\texttt{Deoxys-BC-384}$
@@ -164,7 +164,7 @@ We give the models and the corresponding results of 2 versions of $\texttt{Deoxy
 
 * **14-round** $\texttt{Deoxys-I-256-128}$
 
-We give the models and the corresponding results of 2 versions of $\texttt{Deoxys-AE}$, [goto](Deoxys-TK45):
+We give the models and the corresponding results of 2 versions of $\texttt{Deoxys-multiTK}$, [goto](Deoxys-TK45):
 
 * **16-round** $\texttt{Deoxys-TBC-512-256}$
 
@@ -184,8 +184,6 @@ int: Rl = 3; % lower differential
 int: Rf = 2; % forward extension
 ```
 
-
-
 ### Deoxys-BC-256 (11r)
 
 ```
@@ -200,7 +198,7 @@ int: Rl = 3;
 int: Rf = 2;
 ```
 
-Result obtained ([detail](DeoxysTK23\res_DeoxysTK2_11r.txt)):
+Result obtained ([detail](Deoxys-TK23\res_DeoxysTK2_11r.txt)):
 
 ```
 Complexity of Rectangle Attack on Deoxys-BC-384: 
