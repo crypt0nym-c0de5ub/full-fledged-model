@@ -214,7 +214,7 @@ TimeC  : 195 [T1=194 | T2u=195, T2l=253 | T3=188 (epsilon=0)]
 
 Draw with TikZ latex:
 
-<img src="D:\Nutstore\_Subjects\Breaking DeoxysTK3\Full-Fledged Model\Readme.assets\Deoxys_Draw_page-0001.jpg" alt="Deoxys_Draw_page-0001" style="zoom:67%;" />
+<img src=".\Figures\DeoxysTK2.jpg" style="zoom:67%;" />
 
 ### Deoxys-BC-384 (15r)
 
@@ -230,7 +230,7 @@ int: Rl = 4;
 int: Rf = 4;
 ```
 
-<img src="D:\Nutstore\_Subjects\Breaking DeoxysTK3\Full-Fledged Model\Readme.assets\TK2_11r_RECT_page-0001.jpg" alt="TK2_11r_RECT_page-0001" style="zoom:67%;" />
+<img src=".\Figures\DeoxysTK3.jpg" style="zoom:67%;" />
 
 ### Deoxys-I-128 (10r)
 
