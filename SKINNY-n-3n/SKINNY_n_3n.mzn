@@ -5,7 +5,6 @@ include "table.mzn";
 int: Spec = 3;
 int: block_size = 64;
 
-
 array[0..15] of int: SRp = array1d(0..15,[0,1,2,3, 7,4,5,6, 10,11,8,9, 13,14,15,12]);
 array[0..15] of int: SRpv = array1d(0..15,[0,1,2,3, 5,6,7,4, 10,11,8,9, 15,12,13,14]);
 array[0..15, 0..34] of int: posTable = array2d(0..15, 0..34, [  
@@ -34,7 +33,7 @@ int: rEm = 6;
 int: rEl = 6;
 int: rEf = 7;
 
-int: Step = 5;
+int: Step = 7;
 
 % ========================================================= Upper (Begin) ======================================================
 % ----- [Upper] Differential (Begin) -----
@@ -308,7 +307,7 @@ constraint forall(r in 0..rEb-1, c in 0..15)(
 );
 
 % *** MixColumn ***
-constraint forall(r in 0..3, c in 0..3)(
+constraint forall(r in 0..rEb-1, c in 0..3)(
   if bsaX[r+1,c   ] >= 1 then bsaX[r+1,c   ] = max(max(bsaW[r,c], bsaW[r,c+8]), bsaW[r,c+12]) endif /\
   if bsaX[r+1,c+ 4] >= 1 then bsaX[r+1,c+ 4] = bsaW[r,c] endif /\
   if bsaX[r+1,c+ 8] >= 1 then bsaX[r+1,c+ 8] = max(bsaW[r,c+4], bsaW[r,c+8]) endif /\
@@ -344,17 +343,17 @@ constraint forall(r = 5, c in 0..15)(if c in {0,7}    then bY[r,c] = 1   else bY
 constraint bX[5,0] = 2 /\ bX[5,7] = 1;
 constraint PrEb = 8;
 
-constraint forall(r in {0,2}, c in 0..7)(bgSTK[r,c] = 1);
-constraint forall(r in {1}, c in 8..15)(bgSTK[r,c] = 1);
-
+constraint forall(r in 0..3, c in 0..15)(if bvSTK[r,c] = 1 then bgSTK[r,c] = 1 else bgSTK[r,c] = 0 endif);
+constraint forall(c in 0..15)(bgSTK[4,c] = 0);
+% constraint forall(r in {0,2}, c in 0..7)(bgSTK[r,c] = 1);
+% constraint forall(r in {1}, c in 8..15)(bgSTK[r,c] = 1);
 % constraint forall(r in {3}, c in {8,9,11,12,14,15})(bgSTK[r,c] = 1);
 % constraint sum(r in 0..3, c in 0..15)(bgSTK[r,c]) = 30;
 % constraint sum(r in 0..rEb, c in 0..15)(bflagST[r,c]) = 0;
-
-constraint forall(r in {3}, c in {8,9,11,12,14})(bgSTK[r,c] = 1);
-constraint sum(r in 0..3, c in 0..15)(bgSTK[r,c]) = 29;
-constraint btSC[5,0] = 1;
-constraint sum(r in 0..rEb, c in 0..15)(bflagST[r,c]) = 1;
+% constraint forall(r in {3}, c in {8,9,11,12,14})(bgSTK[r,c] = 1);
+% constraint sum(r in 0..3, c in 0..15)(bgSTK[r,c]) = 29;
+% constraint btSC[5,0] = 1;
+constraint sum(r in 0..rEb, c in 0..15)(bflagST[r,c]) = 0;
 % ##### Fixed Pattern #####
 % % ========================================================= Upper (End) ======================================================
 
@@ -452,7 +451,7 @@ constraint forall(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, c in 0..15)(fdX[r
 
 % ** MixColumn **
 constraint forall(r in rEb+rEu+rEm+rEl+1..rEb+rEu+rEm+rEl+rEf-1, c in 0..3)(
-  if fX[r,c+4] = 2 then fdW[r-1,c] = 1 endif /\
+  if fX[r,c+4] = 2 then fdW[r-1,c] = 1 else fdW[r-1,c] = 0 endif /\
   if fX[r,c+8] = 2 \/ fW[r-1,c+8] = 2 then fdW[r-1,c+4] = 1 endif /\
   if fX[r,c+4] = 2 \/ fX[r,c+12] = 2 then fdW[r-1,c+8] = 1 endif /\
   if fX[r,c] = 2 \/ fX[r,c+12] = 2 then fdW[r-1,c+12] = 1 endif
@@ -588,14 +587,16 @@ constraint forall(r in rEb+rEu+rEm+rEl+1..rEb+rEu+rEm+rEl+rEf-1, c in 0..15)(
 
 % ** MixColumn ** 
 constraint forall(r in rEb+rEu+rEm+rEl+1..rEb+rEu+rEm+rEl+rEf-1, c in 0..3)(
-  fdetdiffW[r-1,c   ] = if (fdetdiffX[r,c+4] = 1 \/ fX[r,c+4] = 0)    then 1 else 0 endif /\
+  fdetdiffW[r-1,c   ] = if (fdetdiffX[r,c+4] = 1 \/ fX[r,c+4] = 0) then fdW[r-1,c] else 0 endif /\
+  
   fdetdiffW[r-1,c+ 4] = if (fdetdiffX[r,c+4] = 1 \/ fX[r,c+4] = 0) /\ 
                            (fdetdiffX[r,c+8] = 1 \/ fX[r,c+8] = 0) /\ 
-                           (fdetdiffX[r,c+12] = 1 \/ fX[r,c+12] = 0)  then 1 else 0 endif /\
+                           (fdetdiffX[r,c+12] = 1 \/ fX[r,c+12] = 0)  then fdW[r-1,c+4] else 0 endif /\
+                           
   fdetdiffW[r-1,c+ 8] = if (fdetdiffX[r,c+4] = 1 \/ fX[r,c+4] = 0) /\ 
-                           (fdetdiffX[r,c+8] = 1 \/ fX[r,c+8] = 0)    then 1 else 0 endif /\
+                           (fdetdiffX[r,c+8] = 1 \/ fX[r,c+8] = 0)    then fdW[r-1,c+8] else 0 endif /\
   fdetdiffW[r-1,c+12] = if (fdetdiffX[r,c] = 1 \/ fX[r,c] = 0) /\ 
-                           (fdetdiffX[r,c+12] = 1 \/ fX[r,c+12] = 0)  then 1 else 0 endif
+                           (fdetdiffX[r,c+12] = 1 \/ fX[r,c+12] = 0)  then fdW[r-1,c+12] else 0 endif
 );
 % -- *** --
 
@@ -617,6 +618,8 @@ constraint forall(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-2, c in 0..3)(
 % ----- [Lower] Epsilon (Begin) -----
 % Here, we give the approach of guess-and-filter only, which allows the subkey deduction from known differentials
 
+% --- value step assignment ---
+% Since some values are allowed to be deduced, not all the values have to be assign a step.
 array[rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, 0..15] of var -1..Step: fsaX;
 array[rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, 0..15] of var -1..Step: fsaY;
 array[rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, 0..15] of var -1..Step: fsgSTK;
@@ -627,15 +630,15 @@ constraint forall(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, c in 0..15)(
   if fdetZ[r,c] = 1 then fsaZ[r,c] = 0 elseif fdetZ[r,c] = 0 then fsaZ[r,c] != 0 endif /\
   if fvZ[r,c] = 0 then fsaZ[r,c] = -1 endif
 );
-
 constraint forall(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1)(
   forall(c in 0..7)(
-    if fgSTK[r,posTable[c,r]] = 1 then fsgSTK[r,posTable[c,r]] = 0 elseif fgSTK[r,posTable[c,r]] = 0 then fsgSTK[r,posTable[c,r]] != 0 endif /\
-    if fvSTK[r,posTable[c,r]] = 0 then fsgSTK[r,posTable[c,r]] = -1 endif
+    if fvSTK[r,posTable[c,r]] = 0 then fsgSTK[r,posTable[c,r]] = -1
+    elseif fgSTK[r,posTable[c,r]] = 1 then fsgSTK[r,posTable[c,r]] = 0
+%     elseif fgSTK[r,posTable[c,r]] = 0 then fsgSTK[r,posTable[c,r]] > 0 
+    endif
   ) /\
   forall(c in 8..15)(fsgSTK[r,posTable[c,r]] = -1)
 );
-
 
 % *** SubCell ***
 constraint forall(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, c in 0..15)(fsaX[r,c] = fsaY[r,c]);
@@ -648,91 +651,186 @@ constraint forall(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1)(
 
 % *** ShiftRow ***
 constraint forall(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-2, c in 0..15)(
-  fsaZ[r,SRp[c]] = fsaW[r,c]
+  if fvW[r,c] = 1 then fsaZ[r,SRp[c]] = fsaW[r,c] endif
 );
 
 % *** MixColumn ***
 constraint forall(r in rEb+rEu+rEm+rEl+1..rEb+rEu+rEm+rEl+rEf-1, c in 0..3)(
-  fsaW[r-1,c   ] = if fvW[r-1,c   ] = 1 /\                  fsaX[r,c+4] >= 0                                          then fsaX[r,c+4] else -1 endif /\
-  fsaW[r-1,c+ 4] = if fvW[r-1,c+ 4] = 1 /\                  fsaX[r,c+4] >= 0 /\ fsaX[r,c+8] >= 0 /\ fsaX[r,c+12] >= 0 then max(max(fsaX[r,c+4], fsaX[r,c+8]), fsaX[r,c+12]) else -1 endif /\
-  fsaW[r-1,c+ 8] = if fvW[r-1,c+ 8] = 1 /\                  fsaX[r,c+4] >= 0 /\                     fsaX[r,c+12] >= 0 then max(fsaX[r,c+4], fsaX[r,c+12]) else -1 endif /\
-  fsaW[r-1,c+12] = if fvW[r-1,c+12] = 1 /\ fsaX[r,c] >= 0 /\                                        fsaX[r,c+12] >= 0 then max(fsaX[r,c], fsaX[r,c+12]) else -1 endif
+  fsaW[r-1,c   ] = if fvW[r-1,c   ] = 1 /\                   fsaX[r,c+4] >= 0                                          then fsaX[r,c+4] else -1 endif /\
+  fsaW[r-1,c+ 4] = if fvW[r-1,c+ 4] = 1 /\                   fsaX[r,c+4] >= 0 /\ fsaX[r,c+8] >= 0 /\ fsaX[r,c+12] >= 0 then max(max(fsaX[r,c+4], fsaX[r,c+8]), fsaX[r,c+12]) else -1 endif /\
+  fsaW[r-1,c+ 8] = if fvW[r-1,c+ 8] = 1 /\                   fsaX[r,c+4] >= 0 /\                     fsaX[r,c+12] >= 0 then max(fsaX[r,c+4], fsaX[r,c+12]) else -1 endif /\
+  fsaW[r-1,c+12] = if fvW[r-1,c+12] = 1 /\ fsaX[r,c] >= 0 /\                                         fsaX[r,c+12] >= 0 then max(fsaX[r,c], fsaX[r,c+12]) else -1 endif
 );
+
 
 % -- Differential step assignment --
 array[rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, 0..15] of var -1..Step: fsadiffX;
 array[rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, 0..15] of var -1..Step: fsadiffY;
-array[rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, 0..15] of var -1..Step: fsadiffZ;
 array[rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-2, 0..15] of var -1..Step: fsadiffW;
+
 % ** Initialization **
 constraint forall(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, c in 0..15)(
-  if fdetX[r,c] = 1 then fsadiffX[r,c] = 0 elseif fdetX[r,c] = 0 then fsadiffX[r,c] != 0 endif /\ if fdX[r,c] = 0 then fsadiffX[r,c] = -1 endif /\
-  if fdetY[r,c] = 1 then fsadiffY[r,c] = 0 elseif fdetY[r,c] = 0 then fsadiffY[r,c] != 0 endif /\ if fvY[r,c] = 0 then fsadiffY[r,c] = -1 endif /\
-  if fdetZ[r,c] = 1 then fsadiffZ[r,c] = 0 elseif fdetZ[r,c] = 0 then fsadiffZ[r,c] != 0 endif /\ if fvZ[r,c] = 0 then fsadiffZ[r,c] = -1 endif
+  if fdX[r,c] = 0 then fsadiffX[r,c] = -1 
+  elseif fdetdiffX[r,c] = 1 then fsadiffX[r,c] = 0
+  elseif fdetdiffX[r,c] = 0 /\ fdX[r,c] = 1 then fsadiffX[r,c] >= fsaX[r,c] 
+  endif
+  /\
+  if fvY[r,c] = 0 then fsadiffY[r,c] = -1
+  elseif fdetdiffY[r,c] = 1 then fsadiffY[r,c] = 0
+  elseif fdetdiffY[r,c] = 0 /\ fvY[r,c] = 1 then fsadiffY[r,c] >= fsaY[r,c] 
+  endif
 );
 constraint forall(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-2, c in 0..15)(
-  if fsaW[r,c] >= 1 then fsadiffW[r,c] = fsaW[r,c] 
-    elseif (fdetW[r,c] = 1 \/ fdetdiffW[r,c] = 1) /\ fdW[r,c] = 1 then fsadiffW[r,c] = 0 
-    elseif fdetW[r,c] = 0 then fsadiffW[r,c] != 0 
+  if fdW[r,c] = 0 then fsadiffW[r,c] = -1
+  elseif fdetdiffW[r,c] = 1 then fsadiffW[r,c] = 0
   endif 
-  /\ if fdW[r,c] = 0 then fsadiffW[r,c] = -1 endif
 );
 
 % ** SubCell **
 constraint forall(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1)(
-  forall(c in 0..7)(if fsgSTK[r,posTable[c,r]] >= 1 then fsadiffX[r,c] = fsgSTK[r,posTable[c,r]] endif) /\
-  forall(c in 8..15)(fsadiffX[r,c] = fsadiffY[r,c])
-);
-
-constraint forall(r in rEb+rEu+rEm+rEl+1..rEb+rEu+rEm+rEl+rEf-1, c in 0..3)(
-  if fW[r-1,c+8] = 0 \/ (fW[r-1,c+4] = 0 /\ fX[r,c+8] = 0) then 
-    (if fdX[r,c+4] = 1 /\ fsaX[r,c+4] = -1 then fsadiffX[r,c+4] >= fsadiffX[r,c+12] endif) /\
-    (if fdX[r,c+12] = 1 /\ fsaX[r,c+12] = -1 then fsadiffX[r,c+12] >= fsadiffX[r,c+4] endif)
-     endif /\
-  if fW[r-1,c+12] = 0 then 
-    (if fdX[r,c] = 1 /\ fsaX[r,c] = -1 then fsadiffX[r,c] >= fsadiffX[r,c+12] endif) /\
-    (if fdX[r,c+12] = 1 /\ fsaX[r,c+12] = -1 then fsadiffX[r,c+12] >= fsadiffX[r,c] endif)
-     endif /\
-  if fW[r-1,c+4] = 0 /\ fX[r,c+12] = 0 then
-    (if fdX[r,c+4] = 1 /\ fsaX[r,c+4] = -1 then fsadiffX[r,c+4] >= fsadiffX[r,c+8] endif) /\
-    (if fdX[r,c+8] = 1 /\ fsaX[r,c+8] = -1 then fsadiffX[r,c+8] >= fsadiffX[r,c+4] endif)
-     endif
+  forall(c in 0..7)(if fsgSTK[r,posTable[c,r]] >= 1 then fsadiffX[r,c] = fsgSTK[r,posTable[c,r]] 
+                    elseif fsgSTK[r,posTable[c,r]] = -1 then fsadiffX[r,c] = -1 endif) /\
+  forall(c in 8..15)(fsadiffX[r,c] = fsaY[r,c])
 );
 
 % ** ShiftRow **
-constraint forall(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-2, c in 0..15)(if fvY[r,SRp[c]] = 1 then fsadiffY[r,SRp[c]] >= fsadiffW[r,c] endif);
+constraint forall(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-2, c in 0..15)(if fdX[r,SRp[c]] = 1 then fsadiffY[r,SRp[c]] >= fsadiffW[r,c] endif);
 
 % ** MixColumn **
 constraint forall(r in rEb+rEu+rEm+rEl+1..rEb+rEu+rEm+rEl+rEf-1, c in 0..3)(
-  if fdW[r-1,c   ] = 1 /\ fsaW[r-1,c   ] = -1 then fsadiffW[r-1,c   ] = fsadiffX[r,c+4] endif /\
-  if fdW[r-1,c+ 4] = 1 /\ fsaW[r-1,c+ 4] = -1 then fsadiffW[r-1,c+ 4] = max(max(fsadiffX[r,c+4], fsadiffX[r,c+8]), fsadiffX[r,c+12]) endif /\
-  if fdW[r-1,c+ 8] = 1 /\ fsaW[r-1,c+ 8] = -1 then fsadiffW[r-1,c+ 8] = max(fsadiffX[r,c+4], fsadiffX[r,c+12]) endif /\
-  if fdW[r-1,c+12] = 1 then fsadiffW[r-1,c+12] = max(fsadiffX[r,c], fsadiffX[r,c+12]) endif
+  if fdW[r-1,c   ] = 1 then fsadiffW[r-1,c   ] = fsadiffX[r,c+4] endif /\
+  
+  if fdW[r-1,c+ 4] = 1 /\ (fsadiffX[r,c+4]*fX[r,c+4] >= 0) /\ (fsadiffX[r,c+8]*fX[r,c+8] >= 0) /\ (fsadiffX[r,c+12]*fX[r,c+12] >= 0)
+    then fsadiffW[r-1,c+ 4] = max(max(fsadiffX[r,c+4]*(fX[r,c+4] != 0), fsadiffX[r,c+8]*(fX[r,c+8] != 0)), fsadiffX[r,c+12]*(fX[r,c+12] != 0)) 
+  else fsadiffW[r-1,c+ 4] = -1
+  endif /\
+    
+  if fdW[r-1,c+ 8] = 1 /\ (fsadiffX[r,c+4]*fX[r,c+4] >= 0) /\ (fsadiffX[r,c+12]*fX[r,c+12] >= 0)
+    then fsadiffW[r-1,c+ 8] = max(fsadiffX[r,c+4]*(fX[r,c+4] != 0), fsadiffX[r,c+12]*(fX[r,c+12] != 0)) 
+  else fsadiffW[r-1,c+ 8] = -1
+  endif /\
+  
+  if fdW[r-1,c+12] = 1 /\ (fsadiffX[r,c]*fX[r,c] >= 0) /\ (fsadiffX[r,c+12]*fX[r,c+12] >= 0)
+    then fsadiffW[r-1,c+12] = max(fsadiffX[r,c]*(fX[r,c] != 0), fsadiffX[r,c+12]*(fX[r,c+12] != 0)) 
+  else fsadiffW[r-1,c+12] = -1
+  endif
 );
 
-% % TEST temporary
-constraint forall(r = 28, c in 0..7)(if c in {7} then fsgSTK[r,posTable[c,r]] = 5 else fsgSTK[r,posTable[c,r]] = -1 endif);
-constraint forall(r = 29, c in 0..7)(if c in {2} then fsgSTK[r,posTable[c,r]] = 4 elseif c in {4} then fsgSTK[r,posTable[c,r]] = 5 else fsgSTK[r,posTable[c,r]] = -1 endif);
 
-% % -- The back-track deduction --
-% array[rEb+rEu+rEm+rEl+1..rEb+rEu+rEm+rEl+rEf-1, 0..15] of var -1..Step: fsddX;
+% --- deduce Differential by Sbox-property [begin] ---
+array[rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, 0..15] of var -1..Step: fsadedX;
+array[rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-2, 0..15] of var -1..Step: fsadedW;
 
-% array[rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, 0..15] of var -1..Step: fsdvX;
-% array[rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, 0..15] of var -1..Step: fsdvY;
-% array[rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, 0..15] of var -1..Step: fsdvZ;
-% array[rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, 0..15] of var -1..Step: fsdvW;
-% array[rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, 0..15] of var -1..Step: fdvSTK; % mark where the subkey can be deduced by the property of Sbox
+% initialization
+constraint forall(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, c in 0..15)(
+  if fsadiffX[r,c] >= 0 \/ fdX[r,c] = 0 then fsadedX[r,c] = -1 else fsadedX[r,c] >= 0 endif 
+);
+constraint forall(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-2, c in 0..15)(
+  if fsadiffW[r,c] >= 0 \/ fdW[r,c] = 0 then fsadedW[r,c] = -1 else fsadedW[r,c] >= 0 endif
+);
 
-% % ** Initialization **
-% constraint forall(r in rEb+rEu+rEm+rEl+1..rEb+rEu+rEm+rEl+rEf-1, c in 0..15)(
-%   if fsadiffX[r,c] <= 0 then fsddX[r,c] = fsadiffX[r,c] 
-%   elseif fX[r,c] = 0 then fsddX[r,c] = -1 
-%   else fsddX[r,c] >= 4 endif
-% );
+% back-track differential determination arising
+constraint forall(r in rEb+rEu+rEm+rEl+1..rEb+rEu+rEm+rEl+rEf-1, c in 0..3)(
+  if fW[r-1,c+8] = 0 \/ (fW[r-1,c+4] = 0 /\ fX[r,c+8] = 0) then 
+    (if fsadedX[r,c+4] >= 0 then fsadedX[r,c+4] = fsadiffX[r,c+12] endif) 
+    /\
+    (if fsadedX[r,c+12] >= 0 then fsadedX[r,c+12] = fsadiffX[r,c+4] endif)
+  endif
+  /\
+  if fW[r-1,c+12] = 0 then 
+    (if fsadedX[r,c] >= 0 then fsadedX[r,c] = fsadiffX[r,c+12] endif)
+    /\
+    (if fsadedX[r,c+12] >= 0 then fsadedX[r,c+12] = fsadiffX[r,c] endif)
+  endif
+  /\
+  % Three branches W1 = X1 + X2 + X3
+  if fW[r-1,c+4] = 0 /\ fX[r,c+4] = 0 then
+    (if fsadedX[r,c+8] >= 0 then fsadedX[r,c+8] = fsadiffX[r,c+12] endif) 
+    /\
+    (if fsadedX[r,c+12] >= 0 then fsadedX[r,c+12] = fsadiffX[r,c+8] endif)
+   endif
+  /\
+  if fW[r-1,c+4] = 0 /\ fX[r,c+8] = 0 then
+    (if fsadedX[r,c+4] >= 0 then fsadedX[r,c+4] = fsadiffX[r,c+12] endif) 
+    /\
+    (if fsadedX[r,c+12] >= 0 then fsadedX[r,c+12] = fsadiffX[r,c+4] endif)
+   endif
+   /\
+   if fW[r-1,c+4] = 0 /\ fX[r,c+12] = 0 then
+    (if fsadedX[r,c+4] >= 0 then fsadedX[r,c+4] = fsadiffX[r,c+8] endif) 
+    /\
+    (if fsadedX[r,c+8] >= 0 then fsadedX[r,c+8] = fsadiffX[r,c+4] endif)
+   endif
+);
 
-% constraint forall(r in rEb+rEu+rEm+rEl+1..rEb+rEu+rEm+rEl+rEf-1, c in 0..3)(
-%   if fW[r-1, c+8] = 0 then fsddX[r,c+4] = fsddX[r,c+12] /\ fsddX[r,c+4] = fsadiffW[r-1,c+8] else fsddX[r,c+4] = -1 /\ fsddX[r,c+12] = -1 endif
-% );
+% MixColumn
+constraint forall(r in rEb+rEu+rEm+rEl+1..rEb+rEu+rEm+rEl+rEf-1, c in 0..3)(
+  if fsadedW[r-1,c   ] >= 0 then fsadedW[r-1,c   ] = fsadedX[r,c+4] endif /\
+  if fsadedW[r-1,c+ 4] >= 0 then fsadedW[r-1,c+ 4] = max(max(fsadedX[r,c+4], fsadedX[r,c+8]), fsadedX[r,c+12]) endif /\
+  if fsadedW[r-1,c+ 8] >= 0 then fsadedW[r-1,c+ 8] = max(fsadedX[r,c+4], fsadedX[r,c+12]) endif /\
+  if fsadedW[r-1,c+12] >= 0 then fsadedW[r-1,c+12] = max(fsadedX[r,c], fsadedX[r,c+12]) endif
+);
+
+% --- deduce values by Sbox-property (differential) [end] ---
+
+% --- deduce values by Sbox-property [begin] ---
+% !! value determining using the property of Sbox
+array[rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, 0..15] of var -1..Step: fsadevX;
+array[rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, 0..15] of var -1..Step: fsadevY;
+array[rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, 0..15] of var -1..Step: fsadevZ;
+array[rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-2, 0..15] of var -1..Step: fsadevW;
+array[rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, 0..15] of var -1..Step: fsadevSTK;
+% initialization
+constraint forall(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, c in 0..15)(
+  if fsaX[r,c] >= 0 \/ fvY[r,c] = 0 then fsadevX[r,c] = -1 else fsadevX[r,c] >= 0 endif /\
+  if fsaY[r,c] >= 0 \/ fvY[r,c] = 0 then fsadevY[r,c] = -1 else fsadevY[r,c] >= 0 endif /\
+  if fsaZ[r,c] >= 0 \/ fvZ[r,c] = 0 then fsadevZ[r,c] = -1 else fsadevZ[r,c] >= 0 endif /\
+  if fsgSTK[r,c] >= 0 \/ fvSTK[r,c] = 0 then fsadevSTK[r,c] = -1 else fsadevSTK[r,c] >= 0 endif
+);
+constraint forall(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-2, c in 0..15)(
+  if fsaW[r,c] >= 0 \/ fvW[r,c] = 0 then fsadevW[r,c] = -1 else fsadevW[r,c] >= 0 endif
+);
+% Value deducation
+constraint forall(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, c in 0..15)(
+  if fsadedX[r,c] >= 0 /\ fX[r,c] >= 1 
+    then fsadevX[r,c] = max(fsadedX[r,c], fsadiffY[r,c])
+  endif 
+);
+% Subkey deducation
+constraint forall(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, c in 0..7)(
+  if fsadevY[r,c] >= 0 /\ (fsaZ[r,c] >= 0 \/ fsadevZ[r,c] >= 0) then fsadevSTK[r,posTable[c,r]] = max(fsadevY[r,c], fsadevZ[r,c]) endif
+);
+constraint forall(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, c in 8..15)(
+  fsadevY[r,c] = fsadevZ[r,c]
+);
+
+% Value propagation - SB
+constraint forall(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, c in 0..15)(fsadevX[r,c] = fsadevY[r,c]);
+
+% Value propagation - MC
+constraint forall(r in rEb+rEu+rEm+rEl+1..rEb+rEu+rEm+rEl+rEf-1, c in 0..3)(
+  if fsadevW[r-1,c   ] > -1 then fsadevW[r-1,c   ] = fsadevX[r,c+4] endif /\
+  if fsadevW[r-1,c+ 4] > -1 then fsadevW[r-1,c+ 4] = max(max(fsadevX[r,c+4], fsadevX[r,c+8]), fsadevX[r,c+12]) endif /\
+  if fsadevW[r-1,c+ 8] > -1 then fsadevW[r-1,c+ 8] = max(fsadevX[r,c+4], fsadevX[r,c+12]) endif /\
+  if fsadevW[r-1,c+12] > -1 then fsadevW[r-1,c+12] = max(fsadevX[r,c], fsadevX[r,c+12]) endif
+);
+% Value propagation - SR
+constraint forall(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-2, c in 0..15)(fsadevZ[r,SRp[c]] = fsadevW[r,c]);
+% --- deduce values by Sbox-property [end] ---
+
+% TEST temporary
+constraint bsaSTK[4,posTable[0,4]] = 3;
+constraint forall(r = 28, c in 0..7)(
+  if c in {7} then fsgSTK[r,posTable[c,r]] = 5
+  else fsgSTK[r,posTable[c,r]] = -1
+  endif
+);
+constraint forall(r = 29, c in 0..7)(
+  if c in {2} then fsgSTK[r,posTable[c,r]] = 4
+  elseif c in {4} then fsgSTK[r,posTable[c,r]] = 5
+  else fsgSTK[r,posTable[c,r]] = -1
+  endif
+);
 % ----- [Lower] Epsilon (End) -----
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -743,113 +841,178 @@ constraint forall(r = 28, c in 0..7)(if c in {6} then fSTK[r,c] = 1 else fSTK[r,
 constraint forall(r = 30, c in 0..7)(if c in {5} then fSTK[r,c] = 1 else fSTK[r,c] = 0 endif);
 constraint forall(r = 32, c in 0..7)(if c in {3} then fSTK[r,c] = 1 else fSTK[r,c] = 0 endif);
 constraint PrEf = 0;
-
 constraint forall(r in 27..33, c in 0..15)(ftSC[r,c] = 0);
-
-constraint forall(r in 30..33)(forall(c in 0..7)(fgSTK[r,posTable[c,r]] = 1) /\ forall(c in 8..15)(fgSTK[r,posTable[c,r]] = 0));
 constraint forall(r in 27..29, c in 0..15)(fgSTK[r,c] = 0);
+constraint forall(r in 30..33, c in 0..15)(if fvSTK[r,c] = 1 then fgSTK[r,c] = 1 else fgSTK[r,c] = 0 endif);
 % ##### Fixed Pattern #####
 % ======================================================= Lower (End) ======================================================
 
-
 % ===================================================== Epsilon Complexity Eb union Ef (Begin) ====================================================
-
 % ** Filters related to Steps **
-array[1..Step] of var int: sFrSC;
-array[1..Step] of var int: sFrMC;
+array[1..rEb, 0..15] of var int: bsfrMC;
+array[rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-2, 0..15] of var int: fsfrMC;
+array[0..Step] of var int: sgSTK;
+array[0..Step] of var int: sFrSC;
+array[0..Step] of var int: sFrMC;
+array[0..Step] of var int: sFrTT; % for rectangle attack, #filter times 2
 
+% Can be directly deduced.
+constraint sFrSC[0] = sum(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, c in 0..15)(if fsadevX[r,c] = 0 then fX[r,c] - fY[r,c] else 0 endif);
+constraint forall(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-2, c in 0..3)(
+  fsfrMC[r,c   ] = 0 /\
+  if fsadedW[r,c+4 ] = 0 then (if fW[r,c+4 ] <= 1 /\ (fW[r  ,c+8] + fX[r+1,c+ 8])>= 3 then fsfrMC[r,c+4 ] = 99 else fsfrMC[r,c+ 4] != 99 endif) else fsfrMC[r,c+ 4] != 99 endif/\
+  if fsadedW[r,c+8 ] = 0 then (if fW[r,c+8 ] <= 1 /\ (fX[r+1,c+4] + fX[r+1,c+12])>= 3 then fsfrMC[r,c+8 ] = 99 else fsfrMC[r,c+ 8] != 99 endif) else fsfrMC[r,c+ 8] != 99 endif/\
+  if fsadedW[r,c+12] = 0 then (if fW[r,c+12] <= 1 /\ (fX[r+1,c  ] + fX[r+1,c+12])>= 3 then fsfrMC[r,c+12] = 99 else fsfrMC[r,c+12] != 99 endif) else fsfrMC[r,c+12] != 99 endif
+);
+constraint sFrMC[0] = sum(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-2, c in 0..15)(fsfrMC[r,c] = 99);
+constraint sFrTT[0] = 2*(sFrSC[0] + sFrMC[0]) - sum(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, c in 0..15)(fsadevSTK[r,c] = 0);
+
+% Filters for following steps
 constraint forall(s in 1..Step)(
   sFrSC[s] = 
-    sum(r in 1..rEb, c in 0..15)(if bsaY[r,c] = s then bX[r,c] - bY[r,c] else 0 endif)
+    sum(r in 1..rEb, c in 0..15)(if bsaY[r,c] = s then bX[r,c] - bY[r,c] else 0 endif) + 
+    sum(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, c in 0..15)(if fsaX[r,c] = s then fY[r,c] - fX[r,c] else 0 endif) + 
+    sum(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, c in 0..15)(if fsadevX[r,c] = s then fY[r,c] - fX[r,c] else 0 endif)
+);
+constraint forall(s in 1..Step)(
+  forall(r in 1..rEb-1, c in 0..3)(
+    if bsadiffW[r,c+ 4] = s then (if bX[r+1,c] <= 1 /\ (bX[r+1,c+12] + bW[r,c+12]) >= 3 then bsfrMC[r+1,c] = s else bsfrMC[r+1,c] != s endif) else bsfrMC[r+1,c] != s endif/\
+    bsfrMC[r+1,c+ 4] = 0 /\
+    if bsadiffW[r,c+ 8] = s then (if bX[r+1,c+8] <= 1 /\ (bW[r,c+4] + bW[r,c+ 8]) >= 3 then  bsfrMC[r+1,c+ 8] = s else  bsfrMC[r+1,c+ 8] != s endif) else bsfrMC[r+1,c+8] != s endif /\
+    if bsadiffW[r,c+ 12] = s then (if bX[r+1,c+12] <= 1  /\ (bW[r,c] + bW[r,c+8 ]) >= 3 then bsfrMC[r+1,c+12] = s else bsfrMC[r+1,c+12] != s endif) else bsfrMC[r+1,c+12] != s endif
+  )
+);
+constraint forall(s in 1..Step)(
+  forall(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-2, c in 0..3)(
+    fsfrMC[r,c   ] = 0 /\
+    if fsadedW[r,c+ 4] = s \/ fsadiffW[r,c+ 4] = s then (if fW[r,c+4 ] <= 1 /\ (fW[r  ,c+8] + fX[r+1,c+ 8])>= 3 then fsfrMC[r,c+4 ] = s else fsfrMC[r,c+4 ] != s endif) else fsfrMC[r,c+4 ] != s endif /\
+    if fsadedW[r,c+ 8] = s \/ fsadiffW[r,c+ 8] = s then (if fW[r,c+8 ] <= 1 /\ (fX[r+1,c+4] + fX[r+1,c+12])>= 3 then fsfrMC[r,c+8 ] = s else fsfrMC[r,c+8 ] != s endif) else fsfrMC[r,c+8 ] != s endif /\
+    if fsadedW[r,c+12] = s \/ fsadiffW[r,c+12] = s then (if fW[r,c+12] <= 1 /\ (fX[r+1,c  ] + fX[r+1,c+12])>= 3 then fsfrMC[r,c+12] = s else fsfrMC[r,c+12] != s endif) else fsfrMC[r,c+12] != s endif
+  )
+);
+constraint forall(s in 1..Step)(
+  sFrMC[s] = sum(r in 1..rEb-1, c in 0..15)(bsfrMC[r,c] = s) + 
+             sum(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-2, c in 0..15)(fsfrMC[r,c] = s)
+); 
+constraint forall(s in 1..Step)(
+  sFrTT[s] = 2*(sFrSC[s] + sFrMC[s]) - 
+             sum(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-2, c in 0..15)(fsadevSTK[r,c] = s)
+);
+constraint sgSTK[0] = 0;
+% consider the stronger key bridging
+constraint forall(s in 1..Step)(
+  sgSTK[s] = sum(r in 1..rEb-1, c in 0..15)(bsaSTK[r,c] = s /\ gL_bg[c] <= 2) + 
+             sum(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, c in 0..15)(fsgSTK[r,c] = s /\ gL_bg[c] <= 2)
 );
 
-
-% ====================================================== Epsilon (End) =====================================================
-
-
-% % % =================================================== Key Bridge (Begin) ===================================================
-% array[0..15] of var int: vLANE;
-% array[0..15] of var int: gLANE;
-% var int: vSTK_SUM;
-% var int: gSTK_SUM;
-% var 0..1: tsFlag; % 0 is state test in preguessing
-
-% % count involved subkey
-% constraint forall(c in 0..15)(
-%   vLANE[c] = sum(r in 0..rEb-1)(bvSTK[r,c]) 
-%   + sum(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1)(fvSTK[r,c])
-% );
-
-% % count guessed subkey
-% constraint forall(c in 0..15)(
-%   gLANE[c] = sum(r in 0..rEb-1)(bgSTK[r,c] = 1) + 
-%              sum(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1)(fgSTK[r,c] = 1)
-% );
-
-% % involved state without consideration of State Test
-% constraint vSTK_SUM = sum(c in 0..15)(if vLANE[c] >= 3 then 3 else vLANE[c] endif);
-% % guessed state without consideration of State Test
-% constraint gSTK_SUM = sum(c in 0..15)(if gLANE[c] >= 3 then 3 else gLANE[c] endif) + 
-%                       sum(r in 1..rEb, c in 0..15)(btSC[r,c] = 1) + 
-%                       sum(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, c in 0..15)(ftSC[r,c] = 1);
-% % ==================================================== Key Bridge (End) ====================================================
+array[0..Step] of var int: Re;
+array[0..Step] of var int: Te;
+var int: Tepsilon;
+constraint Re[0] = 0 - sFrTT[0] /\ Te[0] = 0;
+constraint forall(s in 1..Step)(Te[s] = Re[s-1] + sgSTK[s] /\ Re[s] = Re[s-1] + sgSTK[s] - sFrTT[s]);
+constraint Tepsilon = max([0] ++ [Te[s] | s in 1..Step]);
+% ====================================================== Epsilon Complexity Eb union Ef (End) =====================================================
 
 
+% % =================================================== Key Bridge (Begin) ===================================================
+array[0..15] of var int: vLANE;
+array[0..15] of var int: gLANE;
+var int: vSTK_SUM;
+var int: gSTK_SUM;
+var 0..1: tsFlag; % 0 is state test in preguessing
+
+% count involved subkey
+constraint forall(c in 0..15)(
+  vLANE[c] = sum(r in 0..rEb-1)(bvSTK[r,c]) 
+  + sum(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1)(fvSTK[r,c])
+);
+
+% count guessed subkey
+constraint forall(c in 0..15)(
+  gLANE[c] = sum(r in 0..rEb-1)(bgSTK[r,c] = 1) + 
+             sum(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1)(fgSTK[r,c] = 1)
+);
+% involved state without consideration of State Test
+constraint vSTK_SUM = sum(c in 0..15)(if vLANE[c] >= 3 then 3 else vLANE[c] endif);
+% guessed state without consideration of State Test
+constraint gSTK_SUM = sum(c in 0..15)(if gLANE[c] >= 3 then 3 else gLANE[c] endif) + 
+                      sum(r in 0..rEb, c in 0..15)(btSC[r,c] = 1) + 
+                      sum(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, c in 0..15)(ftSC[r,c] = 1);
+                      
+% -----------------------------------------------------------------------------------------------------------------------
+% When the stronger key bridge is employed, key counting is performed using a sliding window that spans 30 rounds.
+% For the 33 round attack, the window slide as [0..4, 27..29],[1..4, 27..30],[2..4, 27..31],[3..4, 27..32],[4..4, 27..33]
+array[0..15] of var int: vL_bg;
+array[0..15] of var int: gL_bg;
+var int: vSTK_Sbg;
+var int: gSTK_Sbg;
+
+constraint forall(c in 0..15)(
+    let {
+        var int: vsum029 = sum(r in 0..4)(bvSTK[r,c]) + sum(r in 27..29)(fvSTK[r,c]),
+        var int: vsum130 = sum(r in 1..4)(bvSTK[r,c]) + sum(r in 27..30)(fvSTK[r,c]),
+        var int: vsum231 = sum(r in 2..4)(bvSTK[r,c]) + sum(r in 27..31)(fvSTK[r,c]),
+        var int: vsum332 = sum(r in 3..4)(bvSTK[r,c]) + sum(r in 27..32)(fvSTK[r,c]),
+        var int: vsum433 = sum(r in 4..4)(bvSTK[r,c]) + sum(r in 27..33)(fvSTK[r,c]),
+    } in (
+        vL_bg[c] = max(max(vsum029, vsum130), max(max(vsum231, vsum332), vsum433))
+    )
+);
+constraint forall(c in 0..15)(
+    let {
+        var int: gsum029 = sum(r in 0..4)(bgSTK[r,c]) + sum(r in 27..29)(fgSTK[r,c]),
+        var int: gsum130 = sum(r in 1..4)(bgSTK[r,c]) + sum(r in 27..30)(fgSTK[r,c]),
+        var int: gsum231 = sum(r in 2..4)(bgSTK[r,c]) + sum(r in 27..31)(fgSTK[r,c]),
+        var int: gsum332 = sum(r in 3..4)(bgSTK[r,c]) + sum(r in 27..32)(fgSTK[r,c]),
+        var int: gsum433 = sum(r in 4..4)(bgSTK[r,c]) + sum(r in 27..33)(fgSTK[r,c]),
+    } in (
+        gL_bg[c] = max(max(gsum029, gsum130), max(max(gsum231, gsum332), gsum433))
+    )
+);
+
+vSTK_Sbg = sum(c in 0..15)(if vL_bg[c] >= 3 then 3 else vL_bg[c] endif);
+gSTK_Sbg = sum(c in 0..15)(if gL_bg[c] >= 3 then 3 else gL_bg[c] endif);
+% ==================================================== Key Bridge (End) ====================================================
 
 
+% ================================================================== Complexity [begin] ===================================================================
+var int: rb;
+var int: rf;
+var int: rb_p;
+var int: rf_p;
 
+constraint rb = sum(c in 0..15)(bY[0,c] = 2);
+constraint rf = sum(c in 0..15)(fZ[rEb+rEu+rEm+rEl+rEf-1,c] = 2);
+constraint rb_p = sum(r in 1..rEb-1, c in 0..15)(bfrSC[r,c]) + sum(r in 2..rEb-1, c in 0..15)(bfrMC[r,c]);
+constraint rf_p = sum(r in rEb+rEu+rEm+rEl+1..rEb+rEu+rEm+rEl+rEf-1, c in 0..15)(ffrSC[r,c]) + sum(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-2, c in 0..15)(ffrMC[r,c]);
+% constraint gk = gSTK_Sbg;
 
+var int: DataC;
+int: N = 64;
+var int: T1;
+var int: T2u;
+var int: T2l;
+var int: T2;
+var int: T3;  
+var int: TimeC;
+var int: MemoryC;
+var 0..1: cp_P;
+var int: PrAtt = 46 + PrEb + PrEf;
 
+constraint 2*DataC = N + 4 + PrAtt;
 
+constraint MemoryC = max([DataC, min(T2u-(4*gSTK_Sbg), T2l-(4*gSTK_Sbg)), 4*(vSTK_Sbg - gSTK_Sbg)]);
 
+constraint T1 = DataC + 4*(gSTK_Sbg);
+constraint T2u = T1 + 4*(rb-rb_p) + 1;
+constraint T2l = T1 + 4*(rf-rf_p) + DataC - N + 1;
+constraint if(T2u <= T2l) then(T2 = T2u /\ cp_P = 1) else(T2 = T2l /\ cp_P = 0) endif;
+constraint T3 = 4*gSTK_Sbg + 2*DataC + 8*(rb+rf-rb_p-rf_p) - 2*N + 4*Tepsilon;
+constraint TimeC = max([T1, T2, T3]);
+% ================================================================== Complexity [end] ===================================================================
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+% Solve
+solve minimize 7*TimeC + 3*MemoryC;
 
 
 
