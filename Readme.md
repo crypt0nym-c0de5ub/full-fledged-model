@@ -236,11 +236,11 @@ int: Rf = 4;
 
 ### Deoxys-I-128 (10r)
 
-
+<img src=".\Figures\Deoxys-AE-I-128.png" style="zoom:50%;" />
 
 ### Deoxys-I-256 (14r)
 
-
+<img src=".\Figures\Deoxys-AE-I-256.png" style="zoom:60%;" />
 
 
 
@@ -283,4 +283,6 @@ Considering new sets of variables, `detdiffX, sadiffX, sdvX, sdSTK`, allows more
 Security Claims for $\texttt{Deoxys-TK4}$ and  $\texttt{Deoxys-TK5}$:
 
 The claimed security margins of these two versions of $\texttt{Deoxys-BC}$ are bounded by $2^{256}$ in single-key-scenario key recovery attacks. The advantage of larger tweakey exhibits at the more frequent subkey cancellations (refers to [Benoît Cogliati, Jérémy Jean, Thomas Peyrin, and Yannick Seurin, A Long Tweak Goes a Long Way: High Multi-user Security Authenticated Encryption from Tweakable Block Ciphers. *IACR Communications in Cryptology*, vol. 1, no. 2, Jul 08, 2024, doi: 10.62056/a3qjp2fgx.](https://cic.iacr.org/p/1/2/17/pdf) for details). Notably, the cancellation exists both in the distinguisher and the extension in our models.
+
+Note the tweak update of  $\texttt{Deoxys-TK4}$ and  $\texttt{Deoxys-TK5}$ use multiplication in the Finite Field; therefore, the key bridge is excluded in the models for these two block ciphers.
 

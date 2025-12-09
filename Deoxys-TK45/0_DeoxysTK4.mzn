@@ -8,8 +8,8 @@ int: block_size = 128;
 int: Rb = 2;
 int: Ru = 4;
 int: Rm = 2;
-int: Rl = 4;
-int: Rf = 4;
+int: Rl = 5;
+int: Rf = 3;
 
 array[0..15] of var 0..15: SRp = array1d(0..15, [0,5,10,15,4,9,14,3,8,13,2,7,12,1,6,11]);
 array[0..15, 0..20] of int: hTable = array2d(0..15, 0..20, [0,7,14,9,8,15,6,1,0,7,14,9,8,15,6,1,0,7,14,9,8,
@@ -50,8 +50,8 @@ array[0..Rb+Ru+Rm-1, 0..3] of var 0..1: uTC;
 
 % Key Schedule Auxiliary
 array[0..15] of var 0..1: uLANE;
-array[0..Rb+Ru, 0..3] of var 0..4: uPasDeg;
-array[0..Rb+Ru, 0..3] of var 0..4: uCanDeg;
+array[0..Rb+Ru+Rm-1, 0..3] of var 0..4: uPasDeg;
+array[0..Rb+Ru+Rm-1, 0..3] of var 0..4: uCanDeg;
 % --------------------------------------------
 
 
@@ -70,8 +70,8 @@ array[Rb+Ru..Rb+Ru+Rm+Rl+Rf-1, 0..3] of var 0..1: lTC;
 
 % Key Schedule Auxiliary
 array[0..15] of var 0..1: lLANE;
-array[Rb+Ru+Rm-1..Rb+Ru+Rm+Rl-1, 0..3] of var 0..4: lPasDeg;
-array[Rb+Ru+Rm-1..Rb+Ru+Rm+Rl-1, 0..3] of var 0..4: lCanDeg;
+array[Rb+Ru+Rm-1..Rb+Ru+Rm+Rl+Rf-1, 0..3] of var 0..4: lPasDeg;
+array[Rb+Ru+Rm-1..Rb+Ru+Rm+Rl+Rf-1, 0..3] of var 0..4: lCanDeg;
 
 var int: VSTK_SUM;
 % ---------------------------------------------------------
@@ -187,20 +187,17 @@ var int: Tepsilon;  % count Time cost (total) in each step
 include "1_differential.dzn";
 % ---------------------------------
 % --------------------------------
-% Part 2 (Guess-and-Determine)
+% % Part 2 (Guess-and-Determine)
 include "2_guess_and_determine.dzn";
-% --------------------------------
+% % --------------------------------
 
 % --------------------------------
 % % Part 3 (epsilon G and F)
 % include "3-1_epsilon_gandf-ST.dzn";
 % include "3-1_format_out_gandfST.dzn";
 
-% % Part 3 (epsilon table)
+% Part 3 (epsilon table)
 include "3-2_epsilon_table-ST.dzn";
-
-% % === when close epsilon calculation, open the next constraint ===
-% constraint Tepsilon = 0;
 
 int: OpenST = 1; % 1 -> Trun on State Test;
 constraint if OpenST = 0 
@@ -253,32 +250,45 @@ constraint TimeC = max([T1, T2, T3]);
 
 
 
-include "./format_out/1_format_out_diff.dzn";
-include "./format_out/3-2_format_out_tableST.dzn";
-include "./format_out/0_format_out_Main.dzn";
+% include "./format_out/1_format_out_diff.dzn";
+% include "./format_out/3-2_format_out_tableST.dzn";
+% include "./format_out/0_format_out_Main.dzn";
 % include "./format_out/drawlatex.dzn";
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+constraint forall(i in 0..15)(Ta[Rb+Ru,i] = 0);
+constraint forall(r = 0, c in 0..15)(if c in {1,3,5,10} then uSTK[r,c] = 1 else uSTK[r,c] = 0 endif);
+constraint forall(r = 1, c in 0..15)(if c in {0,4,5,10} then uSTK[r,c] = 1 else uSTK[r,c] = 0 endif);
+constraint forall(r = 2, c in 0..15)(if c in {4,5,7} then uSTK[r,c] = 1 else uSTK[r,c] = 0 endif);
+constraint forall(r in {3,4}, c in 0..15)(uSTK[r,c] = 0);
+constraint forall(r = 5, c in 0..15)(if c in {12} then uSTK[r,c] = 1 else uSTK[r,c] = 0 endif);
 
-constraint forall(r = 0, c in 0..15)(if c in {12,14} then uSTK[r,c] = 1 else uSTK[r,c] = 0 endif);
-constraint forall(r = 1, c in 0..15)(if c in {3,9} then uSTK[r,c] = 1 else uSTK[r,c] = 0 endif);
-constraint forall(r = 2, c in 0..15)(if c in {8,10} then uSTK[r,c] = 1 else uSTK[r,c] = 0 endif);
-constraint forall(r in {3,4,5}, c in 0..15)(uSTK[r,c] = 0);
-
-constraint forall(r = 6, c in 0..15)(if c in {0,2,4,13} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
-constraint forall(r = 7, c in 0..15)(if c in {7,11,12,13} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
-constraint forall(r = 8, c in 0..15)(if c in {2,3,12,14} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
+constraint forall(r = 6, c in 0..15)(if c in {2,11,12,14} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
+constraint forall(r = 7, c in 0..15)(if c in {2,3,9,13} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
+constraint forall(r = 8, c in 0..15)(if c in {8,10,12,13} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
 constraint forall(r in {9,10}, c in 0..15)(lSTK[r,c] = 0);
-constraint mb_p = mb;
-constraint mf_p = 1;
+constraint forall(r = 11, c in 0..15)(if c in {5,10} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
+constraint forall(r = 12, c in 0..15)(if c in {0,2,4} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
+constraint forall(r = 13, c in 0..15)(if c in {4,7,11,13} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
+constraint forall(r = 14, c in 0..15)(if c in {2,11,12,14} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
+constraint forall(r = 15, c in 0..15)(if c in {2,3,9} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
+constraint forall(r = 14, c in 0..15)(if c in {2,8,10,13,15} then lXSB[r,c] = 1 /\ lYSB[r,c] = 0 else lXSB[r,c] = 0 endif);
+constraint mb = mb_p;
 
 constraint sum(i in 0..15)(uLANE[i]) <= 4;
 constraint sum(i in 0..15)(lLANE[i]) <= 4;
 
 constraint PrAtt <= 132;
 
+% Step-1
+% solve minimize PrAtt + 8*VSTK_SUM;
+
+% Step-2
 % constraint Tepsilon = 0 /\ Mepsilon = 0;
+% solve minimize 7*TimeC + 3*MemoryC + Mepsilon;
+
+% Step-3
 solve minimize 7*TimeC + 3*MemoryC + Mepsilon;
 

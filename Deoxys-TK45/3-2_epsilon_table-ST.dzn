@@ -267,7 +267,7 @@ constraint Tepsilon = max([STeTT[s] | s in 1..Step] ++ [0]);
 constraint PrAtt + 8*(
     sum([uST[r,i] >= 1 | r in 0..Rb-1, i in 0..15]) + 
     sum([lST[r,i] >= 1 | r in Rb+Ru+Rm+Rl..Rb+Ru+Rm+Rl+Rf-1, i in 0..15])
-) < block_size;
+) < block_size + 8;
 
 
 

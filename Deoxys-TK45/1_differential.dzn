@@ -61,9 +61,9 @@ constraint forall(i in 0..15)(sum(r in 0..Rb+Ru+Rm)(uSTK[r,hTable[i,r]]) >= ((Rb
 
 constraint forall(r in 0..Rb+Ru, j in 0..3)(4*uAC[r,j] - uXAK[r+1,4*j] - uXAK[r+1,4*j+1] - uXAK[r+1,4*j+2] - uXAK[r+1,4*j+3] - uPasDeg[r,j] = 0);
 constraint forall(r in 0..Rb+Ru, j in 0..3)((uCanDeg[r,j] + uXSR[r,SRp[4*j]] + uXSR[r,SRp[4*j+1]] + uXSR[r,SRp[4*j+2]] + uXSR[r,SRp[4*j+3]]
-                                            - uPasDeg[r,j] - uCAN[r+1,4*j] - uCAN[r+1,4*j+1] - uCAN[r+1,4*j+2] - uCAN[r+1,4*j+3] >= 0) 
-                                            /\ 
-                                            uCanDeg[r,j] >= 0);
+                                                  - uPasDeg[r,j] - uCAN[r+1,4*j] - uCAN[r+1,4*j+1] - uCAN[r+1,4*j+2] - uCAN[r+1,4*j+3] >= 0) 
+                                                  /\ 
+                                                  uCanDeg[r,j] >= 0);
 constraint -(Rb+Ru+Rm-SpecDeoxys+1) * sum(i in 0..15)(uLANE[i]) 
            - sum(r in 0..Rb+Ru, j in 0..3)(uCanDeg[r,j]) 
            + sum(r in 0..Rb+Ru+Rm, i in 0..15)(uSTK[r,i]) >= 1;
@@ -118,14 +118,14 @@ constraint sum(i in 0..15)(lXSB[Rb+Ru+Rm+Rl+Rf-2, i]) <= 15;
 constraint forall(i in 0..15, r in Rb+Ru..Rb+Ru+Rm+Rl+Rf)(lLANE[i] >= lSTK[r,hTable[i,(r mod 16)]]);
 constraint forall(i in 0..15)(sum(r in Rb+Ru..Rb+Ru+Rm+Rl+Rf)(lSTK[r,hTable[i,(r mod 16)]]) >= ((Rm+Rl+Rf+1) * lLANE[i]) - (SpecDeoxys-1));
 
-constraint forall(r in Rb+Ru+Rm-1..Rb+Ru+Rm+Rl-1, j in 0..3)(4*lAC[r,j] - lXAK[r+1,4*j] - lXAK[r+1,4*j+1] - lXAK[r+1,4*j+2] - lXAK[r+1,4*j+3] - lPasDeg[r,j] = 0);
-constraint forall(r in Rb+Ru+Rm-1..Rb+Ru+Rm+Rl-1, j in 0..3)(lCanDeg[r,j] + lXSR[r,SRp[4*j]] + lXSR[r,SRp[4*j+1]] + lXSR[r,SRp[4*j+2]] + lXSR[r,SRp[4*j+3]]
+constraint forall(r in Rb+Ru+Rm-1..Rb+Ru+Rm+Rl+Rf-1, j in 0..3)(4*lAC[r,j] - lXAK[r+1,4*j] - lXAK[r+1,4*j+1] - lXAK[r+1,4*j+2] - lXAK[r+1,4*j+3] - lPasDeg[r,j] = 0);
+constraint forall(r in Rb+Ru+Rm-1..Rb+Ru+Rm+Rl+Rf-1, j in 0..3)(lCanDeg[r,j] + lXSR[r,SRp[4*j]] + lXSR[r,SRp[4*j+1]] + lXSR[r,SRp[4*j+2]] + lXSR[r,SRp[4*j+3]]
                                                            - lPasDeg[r,j] - lCAN[r+1,4*j] - lCAN[r+1,4*j+1] - lCAN[r+1,4*j+2] - lCAN[r+1,4*j+3] >= 0
                                                            /\
                                                            lCanDeg[r,j] >= 0);
            
 constraint -(Rl+Rf+Rm-SpecDeoxys+1) * sum(i in 0..15)(lLANE[i]) 
-           - sum(r in Rb+Ru+Rm-1..Rb+Ru+Rm+Rl-1, j in 0..3)(lCanDeg[r,j])
+           - sum(r in Rb+Ru+Rm-1..Rb+Ru+Rm+Rl+Rf-1, j in 0..3)(lCanDeg[r,j])
            + sum(r in Rb+Ru..Rb+Ru+Rm+Rl+Rf, i in 0..15)(lSTK[r,i]) >= 1;
            
 constraint sum(i in 0..15)(lLANE[i]) >= 1;
