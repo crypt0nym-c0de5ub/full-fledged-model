@@ -594,7 +594,8 @@ constraint forall(r in rEb+rEu+rEm+rEl+1..rEb+rEu+rEm+rEl+rEf-1, c in 0..3)(
                            (fdetdiffX[r,c+12] = 1 \/ fX[r,c+12] = 0)  then fdW[r-1,c+4] else 0 endif /\
                            
   fdetdiffW[r-1,c+ 8] = if (fdetdiffX[r,c+4] = 1 \/ fX[r,c+4] = 0) /\ 
-                           (fdetdiffX[r,c+8] = 1 \/ fX[r,c+8] = 0)    then fdW[r-1,c+8] else 0 endif /\
+                           (fdetdiffX[r,c+12] = 1 \/ fX[r,c+12] = 0)    then fdW[r-1,c+8] else 0 endif /\
+                           
   fdetdiffW[r-1,c+12] = if (fdetdiffX[r,c] = 1 \/ fX[r,c] = 0) /\ 
                            (fdetdiffX[r,c+12] = 1 \/ fX[r,c+12] = 0)  then fdW[r-1,c+12] else 0 endif
 );
