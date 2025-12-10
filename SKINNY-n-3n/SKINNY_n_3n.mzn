@@ -335,7 +335,7 @@ constraint forall(r in 1..rEb-1, c in 0..3)(
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-% ##### Fixed Pattern #####
+% ##### Fixed Pattern (to match the same pattern in our paper) #####
 constraint forall(r = 2, c in 0..15)(if c in {3}      then bSTK[r,c] = 1 else bSTK[r,c] = 0 endif);
 constraint forall(r = 3, c in 0..15)(if c in {1,3}    then bSTK[r,c] = 1 else bSTK[r,c] = 0 endif);
 constraint forall(r = 4, c in 0..15)(if c in {7}      then bSTK[r,c] = 1 else bSTK[r,c] = 0 endif);
@@ -345,14 +345,6 @@ constraint PrEb = 8;
 
 constraint forall(r in 0..3, c in 0..15)(if bvSTK[r,c] = 1 then bgSTK[r,c] = 1 else bgSTK[r,c] = 0 endif);
 constraint forall(c in 0..15)(bgSTK[4,c] = 0);
-% constraint forall(r in {0,2}, c in 0..7)(bgSTK[r,c] = 1);
-% constraint forall(r in {1}, c in 8..15)(bgSTK[r,c] = 1);
-% constraint forall(r in {3}, c in {8,9,11,12,14,15})(bgSTK[r,c] = 1);
-% constraint sum(r in 0..3, c in 0..15)(bgSTK[r,c]) = 30;
-% constraint sum(r in 0..rEb, c in 0..15)(bflagST[r,c]) = 0;
-% constraint forall(r in {3}, c in {8,9,11,12,14})(bgSTK[r,c] = 1);
-% constraint sum(r in 0..3, c in 0..15)(bgSTK[r,c]) = 29;
-% constraint btSC[5,0] = 1;
 constraint sum(r in 0..rEb, c in 0..15)(bflagST[r,c]) = 0;
 % ##### Fixed Pattern #####
 % % ========================================================= Upper (End) ======================================================
@@ -835,7 +827,7 @@ constraint forall(r = 29, c in 0..7)(
 % ----- [Lower] Epsilon (End) -----
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-% ##### Fixed Pattern #####
+% ##### Fixed Pattern (to match the same pattern in our paper) #####
 constraint forall(r = 27, c in 0..15)(if c in {9} then fX[r,c] = 1 else fX[r,c] = 0 endif);
 constraint forall(r in {27,29,31,33}, c in 0..7)(fSTK[r,c] = 0);
 constraint forall(r = 28, c in 0..7)(if c in {6} then fSTK[r,c] = 1 else fSTK[r,c] = 0 endif);

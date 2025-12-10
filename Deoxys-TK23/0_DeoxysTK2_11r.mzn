@@ -251,6 +251,7 @@ constraint TimeC = max([T1, T2, T3]);
 array[1..Step] of var int: sRdS;
 constraint forall(s in 1..Step)(sRdS[s] = 0);
 % =================== TEST ====================
+% maintain the same in our paper (there exist alternative strategies)
 constraint forall(i in 0..15)(Ta[Rb+Ru,i] = 0);
 constraint forall(r = 0, c in 0..15)(if c in {14} then uSTK[r,c] = 1 else uSTK[r,c] = 0 endif);
 constraint forall(r = 1, c in 0..15)(if c in {9} then uSTK[r,c] = 1 else uSTK[r,c] = 0 endif);
@@ -266,7 +267,7 @@ constraint forall(r = 6, c in 0..15)(if c in {} then lXSB[r,c] = 1 else lXSB[r,c
 constraint forall(r = 7, c in 0..15)(if c in {10} then lXSB[r,c] = 1 else lXSB[r,c] = 0 endif);
 constraint forall(r = 8, c in 0..15)(if c in {0,2,5} then lXSB[r,c] = 1 else lXSB[r,c] = 0 endif);
 constraint forall(r = 9, c in 0..15)(if c in {2,3,4,8,9,11} then lXSB[r,c] = 1 else lXSB[r,c] = 0 endif);
-constraint lSGK[11,8] = 2 /\ lSGK[11,7] = 3 /\ lSGK[11,5] = 4 /\ lSGK[11,4] = 5; % maintain the same in our paper (there exist alternative strategies)
+constraint lSGK[11,8] = 2 /\ lSGK[11,7] = 3 /\ lSGK[11,5] = 4 /\ lSGK[11,4] = 5;
 % =================== TEST ====================
 
 % Multi-Obj function
