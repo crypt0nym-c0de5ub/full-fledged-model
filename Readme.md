@@ -2,41 +2,29 @@
 
 # A Guidance of The Full-Fledged Model
 
-our paper [link](link).
-
-our code [link](https://github.com/crypt0nym-c0de5ub/full-fledged-model).
-
 # Overview
-
-
 
 ## Infrastructure
 
 To run the model, ensure "[Minizinc](https://www.minizinc.org/) with [Or-Tools](https://developers.google.com/optimization?hl=zh-cn)" is installed on your computing device. 
 
-
-
 Note that, we run the model on *AMD Ryzen 9 7945HX* with *32* threads, using:
 
-`minizinc --solver CP-SAT -p 32 Modelname.mzn > RESULTs.txt`
-
-
+```bash
+minizinc --solver CP-SAT -p 32 Modelname.mzn > RESULTs.txt
+```
 
 ## Instruction manual
 
-All variables in our model (*solver = CP-SAT*) are integers; when floats arise, try to transform them to a larger integer if it`s possible.
-
-
+All variables in our model (*solver = CP-SAT*) are integers; when floats arise, try to transform them to a integer if it`s possible.
 
 ### Components
 
-Each part of our model is separated in different *dzn* files, therefore, we have the following components:
+Each part of our model is separated in different `dzn` files, therefore, we have the following components:
 
-
-
-* **Main:** "0_Deoxys. mzn" is the center control model. By enabling or disabling the functions in this main model, it`s possible to adjust the searching depth.
+* **Main:** `0_Deoxys. mzn` is the center control model. By enabling or disabling the functions in this main model, it`s possible to adjust the searching depth.
 * **Pattern (Dis. and Ext.):** "1_differential.dzn" constraints the differential pattern of the whole attack.
-  * Returning parameters: ==active cells== $r_b,r_f$, involved subkeys $m_b,m_f$, and $probability$. 
+  * Returning parameters:  #active cells in plaintext, ciphertext $r_b,r_f$, #involved subkeys $m_b,m_f$, and $probability$. 
   * The probabilistic extension is allowed, and $m_b,m_f$ can be smaller when the state test is working in this component.
   * Open `include "1_differential.dzn";` to use this function.
 * **Guessing Strategy:** "2_guess_and_determine.dzn" describes the pre-guessing strategy of subkeys.
@@ -72,7 +60,17 @@ constraint if OpenST = 0
            endif;
 ```
 
+#### epsilon calculation
 
+Switch between two approaches of epsilon calculation:
+
+```
+% Part 3 (epsilon G and F)
+% include "3-1_epsilon_gandf-ST.dzn";
+
+% Part 3 (epsilon table)
+include "3-2_epsilon_table-ST.dzn";
+```
 
 #### Key bridging
 
@@ -121,8 +119,6 @@ output[show(mb+mf) ++ " bytes |" ++ show(sum(c in 0..3)(vRd[c])) ++ " bits -----
 output[show(mb_p+mf_p) ++ " bytes |" ++ show(sum(c in 0..3)(gRd[c])) ++ " bits ------ "]; % pre-guessing
 output[show([sRdS[s] | s in 1..Step])]; % epsilon calculation
 ````
-
-
 
 #### Objective Functions for Elasticizing
 
@@ -261,7 +257,7 @@ Copy the LaTeX code output and paste it into a LaTeX compiler.
 
 $\texttt{SKINNY}$ is a typical example that uses a non-MDS matrix as its linear layer; therefore, in the key recovery phase, differential-determination detection beyond value determination is necessary in the components Guessing Strategy and Epsilon Calculation.
 
-For each differential of state, `X`, sets of variables we used in the key recovery model of $\texttt{SKINNY-64-192}$ and $\texttt{SKINNY-128-384}$:
+For each differential of state, `X`, sets of variables we used in the key recovery model of $\texttt{SKINNY}$.
 
 ```
 vX: value needed
@@ -271,18 +267,102 @@ detX: value determined
 detdiffX: differential determined
 sgSTK: guessed subkey in step assignment
 saX: value assigned step
-sadiffX: differential assigned step
 sdvX: value deduced in step assignment
-sdSTK: subkey deduced (using the property of Sbox) in step assignment
 ```
 
-Considering new sets of variables, `detdiffX, sadiffX, sdvX, sdSTK`, allows more delicate relations to be captured in our model. Specifically, in the Epsilon Calculation component, the Sbox property can be used to deduce subkeys that are not guessed in any process.
+Considering new sets of variables, `detdiffX, sadiffX, sadedX, sadevX`, allows more delicate relations to be captured in our model. Specifically, in the Epsilon Calculation component, the **Sbox property** can be used to deduce subkeys that are not guessed in any process.
 
-# For Deoxys-TK4/5
+```
+sadiffX: differential assigned step
+sadedX: differential deduced using the property of Sbox property
+sadevX: value deduced using the property of Sbox property
+```
 
-Security Claims for $\texttt{Deoxys-TK4}$ and  $\texttt{Deoxys-TK5}$:
+## The stronger key bridging:
 
-The claimed security margins of these two versions of $\texttt{Deoxys-BC}$ are bounded by $2^{256}$ in single-key-scenario key recovery attacks. The advantage of larger tweakey exhibits at the more frequent subkey cancellations (refers to [Benoît Cogliati, Jérémy Jean, Thomas Peyrin, and Yannick Seurin, A Long Tweak Goes a Long Way: High Multi-user Security Authenticated Encryption from Tweakable Block Ciphers. *IACR Communications in Cryptology*, vol. 1, no. 2, Jul 08, 2024, doi: 10.62056/a3qjp2fgx.](https://cic.iacr.org/p/1/2/17/pdf) for details). Notably, the cancellation exists both in the distinguisher and the extension in our models.
+The key bridging component should be adapted to the number of attack rounds. When the attack covers more than 30 rounds, there are subkeys involved, and a full round can be deduced at no cost. To capture all involved subkeys, we use sliding windows that cover 30 rounds. 
 
-Note the tweak update of  $\texttt{Deoxys-TK4}$ and  $\texttt{Deoxys-TK5}$ use multiplication in the Finite Field; therefore, the key bridge is excluded in the models for these two block ciphers.
+For example, for the 33-round attack, the extended rounds span in rounds 0-3, 27-33. The key bridging component relies on the five slide windows that cover the outer rounds: (0 .. 3, 27 .. 29), (1.. 3, 27 .. 30), (2 .. 3, 27 .. 31), (3 .. 3, 27 .. 32).
 
+For classical key bridging, the subkeys in the same LANE provide at most $p$-cell information, which can be easily embedded into the component of stronger key bridging, where $p$ is the number of $\texttt{TK}$ ($p=3$ for SKINNY-n-3n).
+
+```
+constraint forall(c in 0..15)(
+    let {
+        var int: vsum029 = sum(r in 0..4)(bvSTK[r,c]) + sum(r in 27..29)(fvSTK[r,c]),
+        var int: vsum130 = sum(r in 1..4)(bvSTK[r,c]) + sum(r in 27..30)(fvSTK[r,c]),
+        var int: vsum231 = sum(r in 2..4)(bvSTK[r,c]) + sum(r in 27..31)(fvSTK[r,c]),
+        var int: vsum332 = sum(r in 3..4)(bvSTK[r,c]) + sum(r in 27..32)(fvSTK[r,c]),
+        var int: vsum433 = sum(r in 4..4)(bvSTK[r,c]) + sum(r in 27..33)(fvSTK[r,c]),
+    } in (
+        vL_bg[c] = max(max(vsum029, vsum130), max(max(vsum231, vsum332), vsum433))
+    )
+);
+vSTK_Sbg = sum(c in 0..15)(if vL_bg[c] >= 3 then 3 else vL_bg[c] endif);
+```
+
+
+
+---
+
+==The following context is prepared for rebuttal. (delete this sentence)==
+
+# Comparison
+
+We provide the comparison of the effect among different approaches, specifically, the state test and epsilon calculation that impact the final complexities. 
+
+## State Test:
+
+We take the 14-round attack on $\texttt{Deoxys-I-256}$ as an example.
+
+
+
+## Epsilon Calculation:
+
+We take the 11-round attack on $\texttt{Deoxys-I-128}$ as an example:
+
+
+
+## Consider the multi-objective optimize
+
+In many cases, when we optimize time complexity alone, memory complexity can exceed expectations.  Therefore, the multi-objective optimization is necessary for solving, and the results we obtained that are exhibited in our paper are selected considering the time, data, and memory complexity together.
+
+We provide a pattern that corresponds to the alternative results of the 15-round $\texttt{Deoxys-BC-384}$. For this pattern, the time complexity decreases slightly, whereas the memory complexity increases substantially.
+
+
+
+# Search efficiency
+
+We provide five models for the attack instances outlined in our paper, along with the time required to solve each model.  To enable fast verification, each model is equipped with pattern constraints.
+
+## Searching Strategy 1
+
+Solving the optimal.
+
+Before solving the entire model, we will compute lower bounds in complexity, exclude the calculation of epsilon, and collect the nearly lower bounds into a set.  Then, including the calculation of epsilon to complete the model and solve the final complexity.  Once the final complexity matches the lower bound, we obtain the optimal attack.
+
+Time for lower bound searching:
+
+11-round $\texttt{Deoxys-I-128}$:
+
+10-round $\texttt{Deoxys-I-128}$:
+
+14-round $\texttt{Deoxys-I-256}$:
+
+Time for finding the optimal solution:
+
+11-round $\texttt{Deoxys-I-128}$:
+
+10-round $\texttt{Deoxys-I-128}$:
+
+14-round $\texttt{Deoxys-I-256}$:
+
+## Searching Strategy 2
+
+Elastic the model.
+
+
+
+
+
+Since the distinguisher of SKINNY

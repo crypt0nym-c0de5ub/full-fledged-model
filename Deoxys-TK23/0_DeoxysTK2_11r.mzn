@@ -194,7 +194,6 @@ include "2_guess_and_determine.dzn";
 % --------------------------------
 % Part 3 (epsilon G and F)
 % include "3-1_epsilon_gandf-ST.dzn";
-% include "3-1_format_out_gandfST.dzn";
 
 % Part 3 (epsilon table)
 include "3-2_epsilon_table-ST.dzn";
@@ -253,21 +252,23 @@ constraint forall(s in 1..Step)(sRdS[s] = 0);
 % =================== TEST ====================
 % maintain the same in our paper (there exist alternative strategies)
 constraint forall(i in 0..15)(Ta[Rb+Ru,i] = 0);
-constraint forall(r = 0, c in 0..15)(if c in {14} then uSTK[r,c] = 1 else uSTK[r,c] = 0 endif);
-constraint forall(r = 1, c in 0..15)(if c in {9} then uSTK[r,c] = 1 else uSTK[r,c] = 0 endif);
-constraint forall(r = 2, c in 0..15)(if c in {} then uSTK[r,c] = 1 else uSTK[r,c] = 0 endif);
-constraint forall(r = 0, c in 0..15)(if c in {2,7,8,13} then uXSB[r,c] = 1 /\ uYSB[r,c] = 1 else uXSB[r,c] = 0 endif);
-constraint forall(r = 1, c in 0..15)(if c in {9} then uXAK[r,c] = 1 /\ uYAK[r,c] = 0 else uXAK[r,c] = 0 endif);
-constraint forall(r = 4, c in 0..15)(if c in {9,11,13} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
-constraint forall(r = 5, c in 0..15)(if c in {2,8,12} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
-constraint forall(r = 6, c in 0..15)(if c in {13,15} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
-constraint forall(r = 7, c in 0..15)(if c in {10} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
-constraint forall(r = 8, c in 0..15)(if c in {1,3,5} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
-constraint forall(r = 6, c in 0..15)(if c in {} then lXSB[r,c] = 1 else lXSB[r,c] = 0 endif);
-constraint forall(r = 7, c in 0..15)(if c in {10} then lXSB[r,c] = 1 else lXSB[r,c] = 0 endif);
-constraint forall(r = 8, c in 0..15)(if c in {0,2,5} then lXSB[r,c] = 1 else lXSB[r,c] = 0 endif);
-constraint forall(r = 9, c in 0..15)(if c in {2,3,4,8,9,11} then lXSB[r,c] = 1 else lXSB[r,c] = 0 endif);
-constraint lSGK[11,8] = 2 /\ lSGK[11,7] = 3 /\ lSGK[11,5] = 4 /\ lSGK[11,4] = 5;
+constraint sum(c in 0..15)(uLANE[c]) <= 3;
+constraint sum(c in 0..15)(lLANE[c]) <= 3;
+% constraint forall(r = 0, c in 0..15)(if c in {14} then uSTK[r,c] = 1 else uSTK[r,c] = 0 endif);
+% constraint forall(r = 1, c in 0..15)(if c in {9} then uSTK[r,c] = 1 else uSTK[r,c] = 0 endif);
+% constraint forall(r = 2, c in 0..15)(if c in {} then uSTK[r,c] = 1 else uSTK[r,c] = 0 endif);
+% constraint forall(r = 0, c in 0..15)(if c in {2,7,8,13} then uXSB[r,c] = 1 /\ uYSB[r,c] = 1 else uXSB[r,c] = 0 endif);
+% constraint forall(r = 1, c in 0..15)(if c in {9} then uXAK[r,c] = 1 /\ uYAK[r,c] = 0 else uXAK[r,c] = 0 endif);
+% constraint forall(r = 4, c in 0..15)(if c in {9,11,13} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
+% constraint forall(r = 5, c in 0..15)(if c in {2,8,12} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
+% constraint forall(r = 6, c in 0..15)(if c in {13,15} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
+% constraint forall(r = 7, c in 0..15)(if c in {10} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
+% constraint forall(r = 8, c in 0..15)(if c in {1,3,5} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
+% constraint forall(r = 6, c in 0..15)(if c in {} then lXSB[r,c] = 1 else lXSB[r,c] = 0 endif);
+% constraint forall(r = 7, c in 0..15)(if c in {10} then lXSB[r,c] = 1 else lXSB[r,c] = 0 endif);
+% constraint forall(r = 8, c in 0..15)(if c in {0,2,5} then lXSB[r,c] = 1 else lXSB[r,c] = 0 endif);
+% constraint forall(r = 9, c in 0..15)(if c in {2,3,4,8,9,11} then lXSB[r,c] = 1 else lXSB[r,c] = 0 endif);
+% constraint lSGK[11,8] = 2 /\ lSGK[11,7] = 3 /\ lSGK[11,5] = 4 /\ lSGK[11,4] = 5;
 % =================== TEST ====================
 
 % Multi-Obj function
