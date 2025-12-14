@@ -171,14 +171,9 @@ We give the models and the corresponding results of 2 versions of $\texttt{Deoxy
 We give the models and the corresponding results of 2 versions of $\texttt{Deoxys-AE}$, [goto](Deoxys-AE):
 
 * **10-round** $\texttt{Deoxys-I-128-128}$
-
 * **14-round** $\texttt{Deoxys-I-256-128}$
 
-We give the models and the corresponding results of 2 versions of $\texttt{Deoxys-multiTK}$, [goto](Deoxys-TK45):
-
-* **16-round** $\texttt{Deoxys-TBC-512-256}$
-
-* **18-round** $\texttt{Deoxys-TBC-640-256}$
+We give the models and the corresponding results of $\texttt{SKINNY-n-3n}$, [goto](SKINNY-n-3n):
 
 ### Deoxys-BC-256 (11r)
 
@@ -241,8 +236,6 @@ int: Rf = 4;
 ### Deoxys-I-256 (14r)
 
 <img src=".\Figures\Deoxys-AE-I-256.jpg" style="zoom:80%;" />
-
-
 
 ## Pretty Output, Drawing Using TikZ
 
@@ -319,9 +312,7 @@ vSTK_Sbg = sum(c in 0..15)(if vL_bg[c] >= 3 then 3 else vL_bg[c] endif);
 
 ---
 
-==The following context is prepared for rebuttal. (delete this sentence)==
-
-==Draft update in the offline file, and will give in this doc after oragnization==
+---
 
 # Comparison
 
@@ -333,17 +324,30 @@ We take the 14-round attack on $\texttt{Deoxys-I-256}$ as an example.
 
 Under the same key-difference pattern, when closing the state test, we obtain an optimal solution whose time complexity is significantly higher than when the state test is employed.
 
+| State Test | Data | Memory | Time | Ref                                  |
+| :--------: | :--: | :----: | :--: | ------------------------------------ |
+|    open    | 117  |  120   | 242  | [Deoxys-I-256](# Deoxys-I-256 (10r)) |
+|   close    | 116  |  117   | 256  | This section                         |
+
 <img src=".\Figures\Deoxys-AE-I-256-noST.jpg" style="zoom:80%;" />
 
 ## $\epsilon$ Calculation:
 
 After finding the lower bound of the attacks, we constrain the pattern of the difference of subtweakeys. By closing the component of $\epsilon$ calculation (setting the time and memory cost of $\epsilon$ as 0), we obtain different patterns and complexities than the results given above.
 
+| $\texttt{Deoxys-BC-384}$ |   $\epsilon$ calculation   |   Data   |   Memory   |   Time   | $T_\epsilon$ | Ref.                                   |
+| :----------------------: | :------------------------: | :------: | :--------: | :------: | :----------: | -------------------------------------- |
+|                          |            open            |   115    |    128     |   334    |    $2^0$     | [Deoxys-BC-384](# Deoxys-BC-384 (15r)) |
+|                          |           close            |   115    |    115     |   310    | $\gg 2^{24}$ | [This section](# Example 1)            |
+| $\texttt{Deoxys-BC-256}$ | **$\epsilon$ calculation** | **Data** | **Memory** | **Time** |  $\epsilon$  |                                        |
+|                          |            open            |   122    |    123     |   195    |    $2^0$     | [Deoxys-BC-256](# Deoxys-BC-256 (11r)) |
+|                          |           close            |   129    |    130     |   186    |    $2^0$     | [This section](# Example 2)            |
+
 ### Example 1
 
 We take the 15-round attack on $\texttt{Deoxys-BC-384}$ as the first example. When excluding the component of the $\epsilon$ calculation, the time complexity is much lower than the final result, and the state test is not working. However, it's obvious that $\epsilon$ will be much larger than assuming (say 0) under this pattern, and the time complexity is far beyond what can be traded off.
 
-In contrast, when the component of $\epsilon$ calculation is opening, the time complexity is increased slowly while all the efficient techniques (e.g., probability extension, state test) are working to balance the final time complexity and search for the optimal solution.
+In contrast, when the component of the $\epsilon$ calculation is opened, the time complexity is *increased slightly while all the efficient techniques (e.g., probability extension, state test) are working to balance the final time complexity and search for the optimal solution.*
 
 <img src=".\Figures\Deoxys-TK3_noEP.jpg" style="zoom:80%;" />
 
@@ -353,13 +357,18 @@ We take the 11-round attack on $\texttt{Deoxys-BC-256}$ as the second example. W
 
 <img src=".\Figures\DeoxysTK2_noEP.jpg" style="zoom:80%;" />
 
-We note that the $\epsilon$ calculation influences the overall data, memory, and time complexities. By opening the component of $\epsilon$ calculation (under the same multi-objective function), the time complexity is lightly increased, while the data and memory complexities are further traded off, as shown in the context above.
+We note that the $\epsilon$ calculation influences the overall data, memory, and time complexities. By opening the component of $\epsilon$ calculation (under the same multi-objective function), the time complexity is lightly increased, while the *data and memory* complexities are further traded off.
 
-## Consider the multi-objective optimize
+## Consider the multi-objective optimization
 
 In many cases, when we optimize time complexity alone, memory complexity can exceed expectations.  Therefore, the multi-objective optimization is necessary for solving, and the results we obtained that are exhibited in our paper are selected considering the time, data, and memory complexity together.
 
 We provide a pattern that corresponds to the alternative results of the 15-round $\texttt{Deoxys-BC-384}$. For this pattern, the time complexity decreases slightly, whereas the *data complexity increases*.
+
+| Data | Memory | Time | Ref.                                   |
+| :--: | :----: | :--: | -------------------------------------- |
+| 115  |  128   | 334  | [Deoxys-BC-384](# Deoxys-BC-384 (15r)) |
+| 122  |  122   | 331  | This section                           |
 
 <img src=".\Figures\Deoxys-TK3_higherD.jpg" style="zoom:80%;" />
 
@@ -368,8 +377,6 @@ We provide a pattern that corresponds to the alternative results of the 15-round
 We provide five models for the attack instances outlined in our paper, along with the time required to solve each model.  To enable fast verification, each submitted model is equipped with pattern constraints.
 
 ## Searching Strategy
-
-Solving the optimal.
 
 Time for lower bound searching: 
 
