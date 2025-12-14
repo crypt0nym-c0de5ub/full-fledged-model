@@ -60,7 +60,7 @@ constraint if OpenST = 0
            endif;
 ```
 
-#### epsilon calculation
+#### $\epsilon$ calculation
 
 Switch between two approaches of epsilon calculation:
 
@@ -72,7 +72,7 @@ Switch between two approaches of epsilon calculation:
 include "3-2_epsilon_table-ST.dzn";
 ```
 
-#### Key bridging
+#### Strong Key bridging
 
 The following constraints of strong key bridging are applied only when an attack achieves no less than 15 rounds.
 
@@ -112,7 +112,7 @@ constraint forall(s in 1..Step)(if exists(c in 0..3)(sBigRd[c] = s) then sRdS[s]
 constraint forall(c in 0..3)(if sBigRd[c] >= 1 then sRdS[sBigRd[c]] = sRd[c] endif);
 ```
 
-Since the impact of key bridging is ==implicit==, we give the format output to show the influence of key bridging (redundancy in different processes): easy for verify where the key bridging working in.
+We give the format output to show the influence of key bridging (redundancy in different processes): easy to verify where the key bridging is working.
 
 ````
 output[show(mb+mf) ++ " bytes |" ++ show(sum(c in 0..3)(vRd[c])) ++ " bits ------ "]; % involvement
@@ -145,7 +145,21 @@ $$
 
 Due to the long time required to solve the whole model, we provide some constraints as *TEST* for fast verification.
 
+### **The input of our model** 
 
+Alter-abling specifications for different attacks (example = 11-round rectangle attack on $\texttt{Deoxys-BC-256}$)
+
+```
+int: SpecDeoxys = 2; % denotes TK2
+int: block_size = 128;
+int: key_size = block_size * SpecDeoxys;
+
+int: Rb = 1; % backward extension
+int: Ru = 3; % upper differential
+int: Rm = 2; % middle 
+int: Rl = 3; % lower differential
+int: Rf = 2; % forward extension
+```
 
 ## Examples
 
@@ -165,20 +179,6 @@ We give the models and the corresponding results of 2 versions of $\texttt{Deoxy
 * **16-round** $\texttt{Deoxys-TBC-512-256}$
 
 * **18-round** $\texttt{Deoxys-TBC-640-256}$
-
-**Alter-abling specifications for different attacks** (example = 11-round rectangle attack on $\texttt{Deoxys-BC-256}$)
-
-```
-int: SpecDeoxys = 2; % denotes TK2
-int: block_size = 128;
-int: key_size = block_size * SpecDeoxys;
-
-int: Rb = 1; % backward extension
-int: Ru = 3; % upper differential
-int: Rm = 2; % middle 
-int: Rl = 3; % lower differential
-int: Rf = 2; % forward extension
-```
 
 ### Deoxys-BC-256 (11r)
 
@@ -212,7 +212,7 @@ TimeC  : 195 [T1=194 | T2u=195, T2l=253 | T3=188 (epsilon=0)]
 
 Draw with TikZ latex:
 
-<img src=".\Figures\DeoxysTK2.jpg" style="zoom:67%;" />
+<img src=".\Figures\DeoxysTK2.jpg" style="zoom:80%;" />
 
 ### Deoxys-BC-384 (15r)
 
@@ -228,15 +228,19 @@ int: Rl = 4;
 int: Rf = 4;
 ```
 
-<img src=".\Figures\DeoxysTK3.jpg" style="zoom:67%;" />
+<img src=".\Figures\DeoxysTK3.jpg" style="zoom:80%;" />
+
+### Deoxys-BC-256 (11r)
+
+<img src=".\Figures\DeoxysTK2.jpg" style="zoom:80%;" />
 
 ### Deoxys-I-128 (10r)
 
-<img src=".\Figures\Deoxys-AE-I-128.png" style="zoom:50%;" />
+<img src=".\Figures\Deoxys-AE-I-128.jpg" style="zoom:80%;" />
 
 ### Deoxys-I-256 (14r)
 
-<img src=".\Figures\Deoxys-AE-I-256.png" style="zoom:60%;" />
+<img src=".\Figures\Deoxys-AE-I-256.jpg" style="zoom:80%;" />
 
 
 
@@ -278,9 +282,21 @@ sadedX: differential deduced using the property of Sbox property
 sadevX: value deduced using the property of Sbox property
 ```
 
+An example for deducing `sadedX,sadevX`， where `X, Y, W` represent the difference before Sbox, after Sbox, and before MC, respectively:
+
+```
+(W[col.2] = X[col.0] + X[col.3])
+if W[col.2] = 0
+then 
+	sadedX[col.0] = max(detdiffX[col.3], sadiffX[col.3], sadedX[col.3])
+	sadedX[col.3] = max(detdiffX[col.0], sadiffX[col.0], sadedX[col.0])
+if sadedX = step and sadedY <= step
+then sadevX = step
+```
+
 ## The stronger key bridging:
 
-The key bridging component should be adapted to the number of attack rounds. When the attack covers more than 30 rounds, there are subkeys involved, and a full round can be deduced at no cost. To capture all involved subkeys, we use sliding windows that cover 30 rounds. 
+The key bridging component should be adapted to the number of attack rounds. When the attack covers more than 30 rounds, there are subkeys involved, and a full round can be deduced at no cost. To capture all involved subkeys, we use *sliding windows* that cover 30 rounds. 
 
 For example, for the 33-round attack, the extended rounds span in rounds 0-3, 27-33. The key bridging component relies on the five slide windows that cover the outer rounds: (0 .. 3, 27 .. 29), (1.. 3, 27 .. 30), (2 .. 3, 27 .. 31), (3 .. 3, 27 .. 32).
 
@@ -301,68 +317,72 @@ constraint forall(c in 0..15)(
 vSTK_Sbg = sum(c in 0..15)(if vL_bg[c] >= 3 then 3 else vL_bg[c] endif);
 ```
 
-
-
 ---
 
 ==The following context is prepared for rebuttal. (delete this sentence)==
 
+==Draft update in the offline file, and will give in this doc after oragnization==
+
 # Comparison
 
-We provide the comparison of the effect among different approaches, specifically, the state test and epsilon calculation that impact the final complexities. 
+We provide the comparison of the effect among different approaches, specifically, the state test and epsilon calculation that impact the final complexities. The reference for comparison is the attack result given above in the document (Sec. Examples).
 
 ## State Test:
 
 We take the 14-round attack on $\texttt{Deoxys-I-256}$ as an example.
 
+Under the same key-difference pattern, when closing the state test, we obtain an optimal solution whose time complexity is significantly higher than when the state test is employed.
 
+<img src=".\Figures\Deoxys-AE-I-256-noST.jpg" style="zoom:80%;" />
 
-## Epsilon Calculation:
+## $\epsilon$ Calculation:
 
-We take the 11-round attack on $\texttt{Deoxys-I-128}$ as an example:
+After finding the lower bound of the attacks, we constrain the pattern of the difference of subtweakeys. By closing the component of $\epsilon$ calculation (setting the time and memory cost of $\epsilon$ as 0), we obtain different patterns and complexities than the results given above.
 
+### Example 1
 
+We take the 15-round attack on $\texttt{Deoxys-BC-384}$ as the first example. When excluding the component of the $\epsilon$ calculation, the time complexity is much lower than the final result, and the state test is not working. However, it's obvious that $\epsilon$ will be much larger than assuming (say 0) under this pattern, and the time complexity is far beyond what can be traded off.
+
+In contrast, when the component of $\epsilon$ calculation is opening, the time complexity is increased slowly while all the efficient techniques (e.g., probability extension, state test) are working to balance the final time complexity and search for the optimal solution.
+
+<img src=".\Figures\Deoxys-TK3_noEP.jpg" style="zoom:80%;" />
+
+### Example 2
+
+We take the 11-round attack on $\texttt{Deoxys-BC-256}$ as the second example. When $\epsilon$ calculation is closed, and assuming the time and memory consumption of  $\epsilon$ calculation be 0, we found the following solution:
+
+<img src=".\Figures\DeoxysTK2_noEP.jpg" style="zoom:80%;" />
+
+We note that the $\epsilon$ calculation influences the overall data, memory, and time complexities. By opening the component of $\epsilon$ calculation (under the same multi-objective function), the time complexity is lightly increased, while the data and memory complexities are further traded off, as shown in the context above.
 
 ## Consider the multi-objective optimize
 
 In many cases, when we optimize time complexity alone, memory complexity can exceed expectations.  Therefore, the multi-objective optimization is necessary for solving, and the results we obtained that are exhibited in our paper are selected considering the time, data, and memory complexity together.
 
-We provide a pattern that corresponds to the alternative results of the 15-round $\texttt{Deoxys-BC-384}$. For this pattern, the time complexity decreases slightly, whereas the memory complexity increases substantially.
+We provide a pattern that corresponds to the alternative results of the 15-round $\texttt{Deoxys-BC-384}$. For this pattern, the time complexity decreases slightly, whereas the *data complexity increases*.
 
-
+<img src=".\Figures\Deoxys-TK3_higherD.jpg" style="zoom:80%;" />
 
 # Search efficiency
 
-We provide five models for the attack instances outlined in our paper, along with the time required to solve each model.  To enable fast verification, each model is equipped with pattern constraints.
+We provide five models for the attack instances outlined in our paper, along with the time required to solve each model.  To enable fast verification, each submitted model is equipped with pattern constraints.
 
-## Searching Strategy 1
+## Searching Strategy
 
 Solving the optimal.
 
-Before solving the entire model, we will compute lower bounds in complexity, exclude the calculation of epsilon, and collect the nearly lower bounds into a set.  Then, including the calculation of epsilon to complete the model and solve the final complexity.  Once the final complexity matches the lower bound, we obtain the optimal attack.
+Time for lower bound searching: 
 
-Time for lower bound searching:
+* 10-round $\texttt{Deoxys-I-128}$: in 5 minutes
+* 11-round $\texttt{Deoxys-BC-256}$: in 10 minutes
+* 14-round $\texttt{Deoxys-I-256}$: in 9 hours
+* 15-round $\texttt{Deoxys-BC-384}$:  in 1 day
 
-11-round $\texttt{Deoxys-I-128}$:
+Time for finding the optimal solution (under the constraints given in the submitted models):
 
-10-round $\texttt{Deoxys-I-128}$:
+* 10-round $\texttt{Deoxys-I-128}$: in 10 seconds
+* 11-round $\texttt{Deoxys-BC-256}$: in 10 seconds
+* 14-round $\texttt{Deoxys-I-256}$:  in 1 minute
+* 15-round $\texttt{Deoxys-BC-384}$: in 1 miunte
 
-14-round $\texttt{Deoxys-I-256}$:
-
-Time for finding the optimal solution:
-
-11-round $\texttt{Deoxys-I-128}$:
-
-10-round $\texttt{Deoxys-I-128}$:
-
-14-round $\texttt{Deoxys-I-256}$:
-
-## Searching Strategy 2
-
-Elastic the model.
-
-
-
-
-
-Since the distinguisher of SKINNY
+* key recovery phase of $\texttt{SKINNY}$: in 1 minute

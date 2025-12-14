@@ -311,10 +311,9 @@ constraint forall(r = 7, c in 0..15)(if c in {3,14} then lXSB[r,c] = 1 /\ lYSB[r
 constraint forall(r = 8, c in 0..15)(if c in {5,6,7} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
 constraint forall(r in {9,10}, c in 0..15)(lSTK[r,c] = 0);
 
+% to maintain the same assignment in our paper
 constraint mb_p = mb;
 constraint mf_p = 22;
-
-% to maintain the same assignment in our paper
 constraint forall(c in 0..15)(lSGK[15,c] = 0) /\ forall(c in 8..12)(lSGK[14,c] = 0) /\ lSGK[13,13] = 0 /\
            forall(c in 0..3)(lSGK[14,c] = 1) /\ lSGK[13,15] = 2 /\ forall(c in 4..7)(lSGK[14,c] = 3) /\ lSGK[13,14] = 4 /\
            forall(c in 8..10)(lSGK[13,c] = 5) /\ lSSB[12,11] = 6;

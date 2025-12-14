@@ -262,11 +262,9 @@ constraint sum(i in 0..15)(uLANE[i]) = 2;
 constraint forall(r = 0, c in 0..15)(if c in {7,12} then uSTK[r,c] = 1 else uSTK[r,c] = 0 endif);
 constraint sum(i in 0..15)(lLANE[i]) = 2;
 constraint forall(r = 6, c in 0..15)(if c in {7,12} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
-
-constraint mb_p = mb;
+constraint mb = mb_p;
 
 constraint PrAtt <= 132;
-constraint DataC <= 124;
-% solve minimize PrAtt + 5*VSTK_SUM;
+constraint DataC <= 124; 
 solve minimize 9*TimeC + 5*MemoryC + 3*Mepsilon;
 

@@ -200,6 +200,7 @@ include "3-2_epsilon_table-ST.dzn";
 
 % === when close epsilon calculation, open the next constraint ===
 % constraint Tepsilon = 0;
+% constraint Mepsilon = 0;
 
 int: OpenST = 0; % 1 -> Trun on State Test;
 constraint if OpenST = 0 
@@ -252,18 +253,18 @@ constraint forall(s in 1..Step)(sRdS[s] = 0);
 % =================== TEST ====================
 % maintain the same in our paper (there exist alternative strategies)
 constraint forall(i in 0..15)(Ta[Rb+Ru,i] = 0);
-constraint sum(c in 0..15)(uLANE[c]) <= 3;
-constraint sum(c in 0..15)(lLANE[c]) <= 3;
-% constraint forall(r = 0, c in 0..15)(if c in {14} then uSTK[r,c] = 1 else uSTK[r,c] = 0 endif);
-% constraint forall(r = 1, c in 0..15)(if c in {9} then uSTK[r,c] = 1 else uSTK[r,c] = 0 endif);
-% constraint forall(r = 2, c in 0..15)(if c in {} then uSTK[r,c] = 1 else uSTK[r,c] = 0 endif);
-% constraint forall(r = 0, c in 0..15)(if c in {2,7,8,13} then uXSB[r,c] = 1 /\ uYSB[r,c] = 1 else uXSB[r,c] = 0 endif);
-% constraint forall(r = 1, c in 0..15)(if c in {9} then uXAK[r,c] = 1 /\ uYAK[r,c] = 0 else uXAK[r,c] = 0 endif);
-% constraint forall(r = 4, c in 0..15)(if c in {9,11,13} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
-% constraint forall(r = 5, c in 0..15)(if c in {2,8,12} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
-% constraint forall(r = 6, c in 0..15)(if c in {13,15} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
-% constraint forall(r = 7, c in 0..15)(if c in {10} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
-% constraint forall(r = 8, c in 0..15)(if c in {1,3,5} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
+constraint sum(c in 0..15)(uLANE[c]) = 1;
+constraint sum(c in 0..15)(lLANE[c]) = 3;
+constraint forall(r = 0, c in 0..15)(if c in {14} then uSTK[r,c] = 1 else uSTK[r,c] = 0 endif);
+constraint forall(r = 1, c in 0..15)(if c in {9} then uSTK[r,c] = 1 else uSTK[r,c] = 0 endif);
+constraint forall(r = 2, c in 0..15)(if c in {} then uSTK[r,c] = 1 else uSTK[r,c] = 0 endif);
+constraint forall(r = 0, c in 0..15)(if c in {2,7,8,13} then uXSB[r,c] = 1 /\ uYSB[r,c] = 1 else uXSB[r,c] = 0 endif);
+constraint forall(r = 1, c in 0..15)(if c in {9} then uXAK[r,c] = 1 /\ uYAK[r,c] = 0 else uXAK[r,c] = 0 endif);
+constraint forall(r = 4, c in 0..15)(if c in {9,11,13} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
+constraint forall(r = 5, c in 0..15)(if c in {2,8,12} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
+constraint forall(r = 6, c in 0..15)(if c in {13,15} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
+constraint forall(r = 7, c in 0..15)(if c in {10} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
+constraint forall(r = 8, c in 0..15)(if c in {1,3,5} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
 % constraint forall(r = 6, c in 0..15)(if c in {} then lXSB[r,c] = 1 else lXSB[r,c] = 0 endif);
 % constraint forall(r = 7, c in 0..15)(if c in {10} then lXSB[r,c] = 1 else lXSB[r,c] = 0 endif);
 % constraint forall(r = 8, c in 0..15)(if c in {0,2,5} then lXSB[r,c] = 1 else lXSB[r,c] = 0 endif);

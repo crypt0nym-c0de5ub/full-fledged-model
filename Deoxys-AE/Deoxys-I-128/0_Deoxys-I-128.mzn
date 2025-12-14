@@ -202,11 +202,11 @@ include "2_guess_and_determine.dzn";
 % % include "3-1_format_out_gandfST.dzn";
 
 % % % % Part 3 (epsilon table)
-% include "3-2_epsilon_table-ST.dzn";
+include "3-2_epsilon_table-ST.dzn";
 
 % === when close epsilon calculation, open the next constraint ===
-constraint Tepsilon = 0;
-constraint Mepsilon = 0;
+% constraint Tepsilon = 0;
+% constraint Mepsilon = 0;
 
 int: OpenST = 1; % 1 -> Trun on State Test;
 constraint if OpenST = 0 
@@ -264,17 +264,15 @@ include "./format_out/drawlatex.dzn";
 
 
 % =================== TEST ====================
-
 constraint forall(i in 0..15)(Ta[Rb+Ru,i] = 0);
-% solve minimize PrAtt + 5*VSTK_SUM;
 
-constraint sum(i in 0..15)(uLANE[i]) <= 3;
-constraint sum(i in 0..15)(lLANE[i]) <= 3;
+constraint sum(i in 0..15)(uLANE[i]) <= 2;
+constraint sum(i in 0..15)(lLANE[i]) <= 2;
 
 % constraint sum(i in 0..15)(uLANE[i]) = 1;
-% constraint forall(r = 0, c in 0..15)(if c in {14} then uSTK[r,c] = 1 else uSTK[r,c] = 0 endif);
+constraint forall(r = 0, c in 0..15)(if c in {14} then uSTK[r,c] = 1 else uSTK[r,c] = 0 endif);
 % constraint sum(i in 0..15)(lLANE[i]) = 2;
-% constraint forall(r = 4, c in 0..15)(if c in {0,9} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
+constraint forall(r = 4, c in 0..15)(if c in {0,9} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
 % constraint mb_p = mb;
 
 solve minimize 6*TimeC + 3*MemoryC + Mepsilon;
