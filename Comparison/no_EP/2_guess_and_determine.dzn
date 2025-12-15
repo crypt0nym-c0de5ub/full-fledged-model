@@ -1,0 +1,107 @@
+
+/**********************************           **********************************/
+/**********************************    Eb     **********************************/
+/**********************************           **********************************/
+
+% ===== OPERATION: Add RoundKey =====%
+constraint forall(r in 0..Rb-1, i in 0..15)(
+  GuessDetermine(uDetAK[r,i], uGSTK[r,i], uGstate[r,i], uDetSB[r,i])
+);
+constraint forall(r in 0..Rb-1, i in 0..15)(
+  uVSTK[r,i] >= uGSTK[r,i]
+  /\
+  uVstate[r,i] >= uGstate[r,i]
+);
+
+% ===== OPERATION: Sbox Substitution and Filter ===== %
+constraint forall(r in 0..Rb-1, i in 0..15)(
+  uDetSB[r,i] = uDetSR[r,i]
+);
+constraint forall(r in 0..Rb-1, i in 0..15)(
+  FilterSB(uDetSR[r,i], uYSB[r,i], uYSR[r,i], uFSB[r,i])
+);
+
+% ===== OPERATION: ShiftRow ===== %
+constraint forall(r in 0..Rb-1, i in 0..15)(
+  uDetSR[r,SRp[i]] = uDetMC[r,i]
+);
+constraint forall(r in 0..Rb-1, i in 0..15)(
+  DiffMC(uDetMC[r,i], uXSR[r,SRp[i]], uDiffDetMC[r,i])
+);
+constraint forall(r in 0..Rb-1, j in 0..3)(
+  Known4(uDiffDetMC[r,4*j], uDiffDetMC[r,4*j+1], uDiffDetMC[r,4*j+2], uDiffDetMC[r,4*j+3], uDiffDetC[r,j])
+);
+
+% % ===== OPERATION: MixColumn and Filter===== %
+constraint forall(r in 0..Rb-1, j in 0..3)(
+  Known4(uDetMC[r,4*j], uDetMC[r,4*j+1], uDetMC[r,4*j+2], uDetMC[r,4*j+3], uDetC[r,j])
+  /\
+  (uDetAK[r+1,4*j] = uDetC[r,j])
+  /\
+  (uDetAK[r+1,4*j+1] = uDetC[r,j])
+  /\
+  (uDetAK[r+1,4*j+2] = uDetC[r,j])
+  /\
+  (uDetAK[r+1,4*j+3] = uDetC[r,j])
+);
+constraint forall(r in 0..Rb-1, j in 0..3, i in 0..3)(
+  FilterMC(uDiffDetC[r,j], uTC[r,j], uYAK[r+1,4*j+i], uFMC[r,4*j+i])
+);
+
+% ===== Choosen Plaintext ===== %
+constraint sum(i in 0..15)(uDetAK[0,i]) = 16;
+
+
+/**********************************           **********************************/
+/**********************************    Ef     **********************************/
+/**********************************           **********************************/
+
+% ===== OPERATION: Add RoundKey (equivalent key) ===== %
+constraint forall(r in Rb+Ru+Rm+Rl..Rb+Ru+Rm+Rl+Rf-1, i in 0..15)(
+  GuessDetermine(lDetSR[r,i], lGSTK[r+1,i], lGstate[r,i], lDetSB[r,i])
+  /\
+  lDetAK[r,i] = lDetSB[r,i]
+);
+constraint forall(r in Rb+Ru+Rm+Rl+1..Rb+Ru+Rm+Rl+Rf, i in 0..15)(
+  lVSTK[r,i] >= lGSTK[r,i]
+  /\
+  lVstate[r-1,i] >= lGstate[r-1,i]
+);
+
+% Filter SB
+constraint forall(r in Rb+Ru+Rm+Rl..Rb+Ru+Rm+Rl+Rf-1, i in 0..15)(
+  FilterSB(lDetSB[r,i], lYSR[r,i], lYSB[r,i], lFSB[r,i])
+);
+
+% ===== OPERATION: MixColumn and Filter===== %
+constraint forall(r in Rb+Ru+Rm+Rl..Rb+Ru+Rm+Rl+Rf-2, i in 0..15)(
+  DiffMC(lDetAK[r+1,i], lXAK[r+1,i], lDiffDetMC[r,i])
+);
+constraint forall(r in Rb+Ru+Rm+Rl..Rb+Ru+Rm+Rl+Rf-2, j in 0..3)(
+  Known4(lDiffDetMC[r,4*j], lDiffDetMC[r,4*j+1], lDiffDetMC[r,4*j+2], lDiffDetMC[r,4*j+3], lDiffDetC[r,j])
+);
+constraint forall(r in Rb+Ru+Rm+Rl..Rb+Ru+Rm+Rl+Rf-2, j in 0..3)(
+  Known4(lDetAK[r+1,4*j],lDetAK[r+1,4*j+1],lDetAK[r+1,4*j+2],lDetAK[r+1,4*j+3],lDetC[r,j])
+  /\
+  lDetMC[r,4*j] = lDetC[r,j]
+  /\
+  lDetMC[r,4*j+1] = lDetC[r,j]
+  /\
+  lDetMC[r,4*j+2] = lDetC[r,j]
+  /\
+  lDetMC[r,4*j+3] = lDetC[r,j]
+);
+% Filter MC
+constraint forall(r in Rb+Ru+Rm+Rl..Rb+Ru+Rm+Rl+Rf-2, j in 0..3, i in 0..3)(
+  FilterMC(lDiffDetC[r,j], lTC[r,j], lYSR[r,SRp[4*j+i]], lFMC[r,4*j+i])
+);
+
+constraint forall(r in Rb+Ru+Rm+Rl..Rb+Ru+Rm+Rl+Rf-2, i in 0..15)(
+  lDetMC[r,i] = lDetSR[r,SRp[i]]
+);
+
+
+% ===== Plaintext --> Ciphertext (14r) ===== %
+constraint sum(i in 0..15)(lDetSR[Rb+Ru+Rm+Rl+Rf-1,i]) = 16;
+
+

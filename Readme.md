@@ -320,7 +320,7 @@ We provide the comparison of the effect among different approaches, specifically
 
 ## State Test:
 
-We take the 14-round attack on $\texttt{Deoxys-I-256}$ as an example.
+We take the 14-round attack on $\texttt{Deoxys-I-256}$ as an example, [goto](.\Comparison\no_ST).
 
 Under the same key-difference pattern, when closing the state test, we obtain an optimal solution whose time complexity is significantly higher than when the state test is employed.
 
@@ -345,7 +345,7 @@ After finding the lower bound of the attacks, we constrain the pattern of the di
 
 ### Example 1
 
-We take the 15-round attack on $\texttt{Deoxys-BC-384}$ as the first example. When excluding the component of the $\epsilon$ calculation, the time complexity is much lower than the final result, and the state test is not working. However, it's obvious that $\epsilon$ will be much larger than assuming (say 0) under this pattern, and the time complexity is far beyond what can be traded off.
+We take the 15-round attack on $\texttt{Deoxys-BC-384}$ as the first example, [goto](.\Comparison\no_EP). When excluding the component of the $\epsilon$ calculation, the time complexity is much lower than the final result, and the state test is not working. However, it's obvious that $\epsilon$ will be much larger than assuming (say 0) under this pattern, and the time complexity is far beyond what can be traded off.
 
 In contrast, when the component of the $\epsilon$ calculation is opened, the time complexity is *increased slightly while all the efficient techniques (e.g., probability extension, state test) are working to balance the final time complexity and search for the optimal solution.*
 
@@ -353,7 +353,7 @@ In contrast, when the component of the $\epsilon$ calculation is opened, the tim
 
 ### Example 2
 
-We take the 11-round attack on $\texttt{Deoxys-BC-256}$ as the second example. When $\epsilon$ calculation is closed, and assuming the time and memory consumption of  $\epsilon$ calculation be 0, we found the following solution:
+We take the 11-round attack on $\texttt{Deoxys-BC-256}$ as the second example, [goto](.\Comparison\no_EP). When $\epsilon$ calculation is closed, and assuming the time and memory consumption of  $\epsilon$ calculation be 0, we found the following solution:
 
 <img src=".\Figures\DeoxysTK2_noEP.jpg" style="zoom:80%;" />
 
@@ -363,7 +363,7 @@ We note that the $\epsilon$ calculation influences the overall data, memory, and
 
 In many cases, when we optimize time complexity alone, memory complexity can exceed expectations.  Therefore, the multi-objective optimization is necessary for solving, and the results we obtained that are exhibited in our paper are selected considering the time, data, and memory complexity together.
 
-We provide a pattern that corresponds to the alternative results of the 15-round $\texttt{Deoxys-BC-384}$. For this pattern, the time complexity decreases slightly, whereas the *data complexity increases*.
+We provide a pattern that corresponds to the alternative results of the 15-round $\texttt{Deoxys-BC-384}$, [goto](.\Comparison\alterDMT). For this pattern, the time complexity decreases slightly, whereas the *data complexity increases*.
 
 | Data | Memory | Time | Ref.                                   |
 | :--: | :----: | :--: | -------------------------------------- |

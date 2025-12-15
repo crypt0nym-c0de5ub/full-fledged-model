@@ -1,0 +1,167 @@
+% ---------------------------------------------------------------------------------------------------------------------------
+
+predicate AddRoundTweakey(var 0..1: xin, var 0..1: yin, var 0..1: stk, var 0..1: xout, var 0..1: yout, var 0..1: cancel) =
+  (xin - yout - cancel >= 0)
+  /\
+  (- xin + xout + cancel >= 0)
+  /\
+  (xin + stk - xout - 2 * cancel >= 0)
+  /\
+  (- stk + xout + cancel >= 0)
+  /\
+  (yin = yout)
+;
+
+predicate SboxSubstitution(var 0..1: xin, var 0..1: yin, var 0..1: xout, var 0..1: yout)=
+  (xin = xout)
+  /\
+  (xin - yout >= 0)
+  /\
+  (xout - yout >= 0)
+;
+
+predicate SboxSubstitutionMiddle(var 0..1: xin, var 0..1: yin, var 0..1: xout, var 0..1: yout) = 
+  (xin = xout)
+  /\
+  (xin - yout >= 0)
+  /\
+  (xout - yout >= 0)
+  /\
+  (yout - yin >= 0)
+;
+
+predicate Mixcolumn(var 0..1: in0,  var 0..1: in1,  var 0..1: in2,  var 0..1: in3,
+                    var 0..1: out0, var 0..1: out1, var 0..1: out2, var 0..1: out3,
+                    var 0..1: tag) = 
+  (in0 + in1 + in2 + in3 + out0 + out1 + out2 + out3 >= 5 * tag)
+  /\
+  (in0 + in1 + in2 + in3 + out0 + out1 + out2 + out3 <= 8 * tag)
+;
+
+predicate Count_TYPE2(var 0..3: a, var 0..3: b, var 0..3: c, var 0..3: type2) = 
+  (type2 + a - b - c >= 0)
+  /\
+  (type2 >= 0)
+;
+
+predicate BuildTables(var 0..1: uxsb, var 0..1: uysb, var 0..1: uxsr, var 0..1: uysr,
+                      var 0..1: lxsb, var 0..1: lysb, var 0..1: lxsr, var 0..1: lysr,
+                      var 0..1: ta, var 0..1: tb) = 
+  (uxsb - uysb +  lxsb - lysb - ta - tb >= 0)
+  /\
+  (lysb - lysr  >= 0)
+  /\
+  (- uxsb + uysr - lxsb + lysb + 2*ta +  tb >= 0)
+  /\
+  (uxsb + uysb - uysr - tb >= 0)
+  /\
+  (- uxsb - lysr + tb >= - 1)
+  /\
+  (lxsb - lysb + lysr - tb >= 0)
+  /\
+  (- uysb - lxsb + tb >= - 1)
+  /\
+  (uysb + lysr - tb >= 0)
+  /\
+  (uxsb - uysr + lxsb - lysr - ta - tb >= 0)
+  /\
+  (- uxsb - lxsb + ta + tb >= - 1)
+  /\
+  (uxsb - uxsr = 0)
+  /\
+  (lxsb - lxsr = 0)
+;
+
+predicate Boundaries_SB(var 0..1: xsb, var 0..1: ysb, var 0..1: vsb,
+                        var 0..1: xsr, var 0..1: ysr, var 0..1: vsr,
+                        var 0..1: bnd, var 0..1: vc) = 
+  (xsb >= bnd)
+  /\
+  (ysb >= bnd)
+  /\
+  (xsr >= bnd)
+  /\
+  (ysr + bnd <= 1)
+  /\
+  (- xsb - ysb - xsr + ysr + bnd >= -2)
+  /\
+  (vsr >= bnd)
+  /\
+  (bnd + vc >= vsr)
+  /\
+  (vsr >= vc)
+  /\
+  (vsb = vsr)
+;
+  
+predicate Boundaries_MC(var 0..1: vak0, var 0..1: vak1, var 0..1: vak2, var 0..1: vak3,
+                        var 0..1: vc)= 
+  (vak0 + vak1 + vak2 + vak3 - vc >= 0)
+  /\
+  (vc >= vak0)
+  /\
+  (vc >= vak1)
+  /\
+  (vc >= vak2)
+  /\
+  (vc >= vak3)
+;
+
+predicate GuessDetermine(var 0..1: detin, var 0..1: gk, var 0..1: gs, var 0..1: detout) = 
+  (detout >= gs)
+  /\
+  (gk + gs >= detout)
+  /\
+  (detin + gs >= detout)
+  /\
+  (- detin - gk + detout + 1 >= 0)
+;
+
+predicate FilterSB(var 0..1: det, var 0..1: X, var 0..1: Y, var 0..1: filter) = 
+% iff. (X,Y,det) = (1,0,1) then filter = 1
+  (X - Y - filter >= 0)
+  /\
+  (det >= filter)
+  /\
+  (- det - X + Y + filter >= -1)
+;
+
+% predicate FilterSB(var 0..1: det, var 0..1: ysb, var 0..1: ysr, var 0..1: filter) = 
+% iff. (ysb,ysr,det) = (1,0,1) then filter = 1
+%   if det == 1 /\ ysb == 1 /\ ysr == 0 then filter = 1
+%   else filter = 0
+%   endif
+% ;
+
+predicate Known4(var 0..1: sr0, var 0..1: sr1, var 0..1: sr2, var 0..1: sr3,
+                 var 0..1: dc) = 
+  (sr0 >= dc)
+  /\
+  (sr1 >= dc)
+  /\
+  (sr2 >= dc)
+  /\
+  (sr3 >= dc)
+  /\
+  (sr0 + sr1 + sr2 + sr3 - dc <= 3)
+;
+
+% 当 X=1（活跃）时，diffdMC = det，否则 diffdMC = 1
+predicate DiffMC(var 0..1: det, var 0..1: X, var 0..1: diffdMC) = 
+  (diffdMC >= det)
+  /\
+  (det - X - diffdMC >= -1)
+  /\
+  (X + diffdMC >= 1)
+;
+
+% 当 diffdMC = 0， filter = 0, 否则仅当 tc = 1（截断） Y = 0（固定）才产生过滤
+predicate FilterMC(var 0..1: diffdMC, var 0..1: tc, var 0..1: Y, var 0..1: filter) = 
+  (tc >= filter)
+  /\
+  (Y + filter <= 1)
+  /\
+  (diffdMC + tc - Y - filter <= 1)
+  /\
+  (diffdMC >= filter)
+;
