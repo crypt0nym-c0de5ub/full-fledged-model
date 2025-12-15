@@ -291,37 +291,23 @@ constraint T3 = mk_p + 2*DataC + 16*rb + 16*rf - 16*rb_p - 16*rf_p - 2*N + 8*Tep
 constraint TimeC = max([T1, T2, T3]);
 
 % =================== TEST ====================
-% % minimize Pr and involved subkeys ()
-% constraint PrAtt <= 132;
-% solve minimize PrAtt + 5*VSTK_SUM;
-% constraint VSTK_SUM <= 43;
-% constraint sum(i in 0..15)(uLANE[i]) <= 3;
-% constraint sum(i in 0..15)(lLANE[i]) <= 3;
+constraint sum(i in 0..15)(uLANE[i]) = 3;
+constraint sum(i in 0..15)(lLANE[i]) = 3;
 
 % constraints for fast solving
 constraint PrEf = 16;
-constraint forall(r = 0, c in 0..15)(if c in {2,3,6,7,8,9,11,12,13,14} then uXAK[r,c] = 1 /\ uYAK[r,c] = 1 elseif c in {10} then uXAK[r,c] = 1 /\ uYAK[r,c] = 0 else uXAK[r,c] = 0 endif);
-constraint forall(r = 2, c in 0..15)(if c in {4,5,6} then uXAK[r,c] = 1 /\ uYAK[r,c] = 0 else uXAK[r,c] = 0 endif);
 constraint forall(r = 2, c in 0..15)(if c in {4,5,6} then uSTK[r,c] = 1 else uSTK[r,c] = 0 endif);
 constraint forall(r in {3,4}, c in 0..15)(uSTK[r,c] = 0);
-constraint forall(r in {2,3,4}, c in 0..15)(uXSB[r,c] = 0);
-constraint forall(r = 6, c in 0..15)(if c in {8,9,10,11} then uXSB[r,c] = 1 /\ uYSB[r,c] = 1 elseif c in {12,13,14} then uXSB[r,c] = 1 /\ uYSB[r,c] = 0 else uXSB[r,c] = 0 /\ uYSB[r,c] = 0 endif);
 
-constraint forall(r = 6, c in 0..15)(if c in {0,1,2,5,6,7,12,13,15} then lYSB[r,c] = 1 elseif c in {8} then lXSB[r,c] = 1 /\ lYSB[r,c] = 0 else lXSB[r,c] = 0 endif);
-constraint forall(r = 7, c in 0..15)(if c in {3,14} then lXSB[r,c] = 1 /\ lYSB[r,c] = 0 else lXSB[r,c] = 0 endif);
 constraint forall(r = 8, c in 0..15)(if c in {5,6,7} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
 constraint forall(r in {9,10}, c in 0..15)(lSTK[r,c] = 0);
 
 % to maintain the same assignment in our paper
 constraint mb_p = mb;
-constraint mf_p = 22;
-constraint forall(c in 0..15)(lSGK[15,c] = 0) /\ forall(c in 8..12)(lSGK[14,c] = 0) /\ lSGK[13,13] = 0 /\
-           forall(c in 0..3)(lSGK[14,c] = 1) /\ lSGK[13,15] = 2 /\ forall(c in 4..7)(lSGK[14,c] = 3) /\ lSGK[13,14] = 4 /\
-           forall(c in 8..10)(lSGK[13,c] = 5) /\ lSSB[12,11] = 6;
-constraint sum(r in Rb+Ru+Rm+Rl..Rb+Ru+Rm+Rl+Rf-1, s in 0..Step)(lFlagST[r,s]) = 1;
 % =================== TEST ====================
 
-solve minimize 6*TimeC + 3*MemoryC + Mepsilon;
+constraint DataC <= 115;
+solve minimize 5*TimeC + 8*MemoryC + 6*Mepsilon;
 
 % pretty print
 include "./format_out/1_format_out_diff.dzn";

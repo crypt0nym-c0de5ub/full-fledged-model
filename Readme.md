@@ -175,7 +175,7 @@ We give the models and the corresponding results of 2 versions of $\texttt{Deoxy
 
 We give the models and the corresponding results of $\texttt{SKINNY-n-3n}$, [goto](SKINNY-n-3n):
 
-### Deoxys-BC-256 (11r)
+### Deoxys-BC-256_11r
 
 ```
 int: SpecDeoxys = 2;
@@ -189,7 +189,7 @@ int: Rl = 3;
 int: Rf = 2;
 ```
 
-Result obtained ([detail](Deoxys-TK23\res_DeoxysTK2_11r.txt)):
+Result obtained ([detail](Deoxys-TK23//res_DeoxysTK2_11r.txt)):
 
 ```
 Complexity of Rectangle Attack on Deoxys-BC-384: 
@@ -209,7 +209,7 @@ Draw with TikZ latex:
 
 <img src=".\Figures\DeoxysTK2.jpg" style="zoom:80%;" />
 
-### Deoxys-BC-384 (15r)
+### Deoxys-BC-384_15r
 
 ```
 int: SpecDeoxys = 3;
@@ -223,17 +223,13 @@ int: Rl = 4;
 int: Rf = 4;
 ```
 
-<img src=".\Figures\DeoxysTK3.jpg" style="zoom:80%;" />
+<img src=".\Figures\DeoxysTK3_base.jpg" style="zoom:80%;" />
 
-### Deoxys-BC-256 (11r)
-
-<img src=".\Figures\DeoxysTK2.jpg" style="zoom:80%;" />
-
-### Deoxys-I-128 (10r)
+### Deoxys-I-128_10r
 
 <img src=".\Figures\Deoxys-AE-I-128.jpg" style="zoom:80%;" />
 
-### Deoxys-I-256 (14r)
+### Deoxys-I-256_14r
 
 <img src=".\Figures\Deoxys-AE-I-256.jpg" style="zoom:80%;" />
 
@@ -320,14 +316,14 @@ We provide the comparison of the effect among different approaches, specifically
 
 ## State Test:
 
-We take the 14-round attack on $\texttt{Deoxys-I-256}$ as an example, [goto](.\Comparison\no_ST).
+We take the 14-round attack on $\texttt{Deoxys-I-256}$ as an example, [goto](Comparison//no_ST).
 
 Under the same key-difference pattern, when closing the state test, we obtain an optimal solution whose time complexity is significantly higher than when the state test is employed.
 
-| State Test | Data | Memory | Time | Ref                                  |
-| :--------: | :--: | :----: | :--: | ------------------------------------ |
-|    open    | 117  |  120   | 242  | [Deoxys-I-256](# Deoxys-I-256 (10r)) |
-|   close    | 116  |  117   | 256  | This section                         |
+| State Test | Data | Memory | Time | Ref                                |
+| :--------: | :--: | :----: | :--: | ---------------------------------- |
+|    open    | 117  |  120   | 242  | [Deoxys-I-256](# Deoxys-I-256_14r) |
+|   close    | 116  |  117   | 256  | This section                       |
 
 <img src=".\Figures\Deoxys-AE-I-256-noST.jpg" style="zoom:80%;" />
 
@@ -335,17 +331,17 @@ Under the same key-difference pattern, when closing the state test, we obtain an
 
 After finding the lower bound of the attacks, we constrain the pattern of the difference of subtweakeys. By closing the component of $\epsilon$ calculation (setting the time and memory cost of $\epsilon$ as 0), we obtain different patterns and complexities than the results given above.
 
-| $\texttt{Deoxys-BC-384}$ |   $\epsilon$ calculation   |   Data   |   Memory   |   Time   | $T_\epsilon$ | Ref.                                   |
-| :----------------------: | :------------------------: | :------: | :--------: | :------: | :----------: | -------------------------------------- |
-|                          |            open            |   115    |    128     |   334    |    $2^0$     | [Deoxys-BC-384](# Deoxys-BC-384 (15r)) |
-|                          |           close            |   115    |    115     |   310    | $\gg 2^{24}$ | [This section](# Example 1)            |
-| $\texttt{Deoxys-BC-256}$ | **$\epsilon$ calculation** | **Data** | **Memory** | **Time** |  $\epsilon$  |                                        |
-|                          |            open            |   122    |    123     |   195    |    $2^0$     | [Deoxys-BC-256](# Deoxys-BC-256 (11r)) |
-|                          |           close            |   129    |    130     |   186    |    $2^0$     | [This section](# Example 2)            |
+| $\texttt{Deoxys-BC-384}$ |   $\epsilon$ calculation   |   Data   |   Memory   |   Time   | $T_\epsilon$ | Ref.                                 |
+| :----------------------: | :------------------------: | :------: | :--------: | :------: | :----------: | ------------------------------------ |
+|                          |            open            |   115    |    128     |   334    |    $2^0$     | [Deoxys-BC-384](# Deoxys-BC-384_15r) |
+|                          |           close            |   115    |    115     |   310    | $\gg 2^{24}$ | This section                         |
+| $\texttt{Deoxys-BC-256}$ | **$\epsilon$ calculation** | **Data** | **Memory** | **Time** |  $\epsilon$  |                                      |
+|                          |            open            |   122    |    123     |   195    |    $2^0$     | [Deoxys-BC-256](# Deoxys-BC-256_11r) |
+|                          |           close            |   129    |    130     |   186    |    $2^0$     | This section                         |
 
 ### Example 1
 
-We take the 15-round attack on $\texttt{Deoxys-BC-384}$ as the first example, [goto](.\Comparison\no_EP). When excluding the component of the $\epsilon$ calculation, the time complexity is much lower than the final result, and the state test is not working. However, it's obvious that $\epsilon$ will be much larger than assuming (say 0) under this pattern, and the time complexity is far beyond what can be traded off.
+We take the 15-round attack on $\texttt{Deoxys-BC-384}$ as the first example, [goto](Comparison//no_EP). When excluding the component of the $\epsilon$ calculation, the time complexity is much lower than the final result, and the state test is not working. However, it's obvious that $\epsilon$ will be much larger than assuming (say 0) under this pattern, and the time complexity is far beyond what can be traded off.
 
 In contrast, when the component of the $\epsilon$ calculation is opened, the time complexity is *increased slightly while all the efficient techniques (e.g., probability extension, state test) are working to balance the final time complexity and search for the optimal solution.*
 
@@ -353,7 +349,7 @@ In contrast, when the component of the $\epsilon$ calculation is opened, the tim
 
 ### Example 2
 
-We take the 11-round attack on $\texttt{Deoxys-BC-256}$ as the second example, [goto](.\Comparison\no_EP). When $\epsilon$ calculation is closed, and assuming the time and memory consumption of  $\epsilon$ calculation be 0, we found the following solution:
+We take the 11-round attack on $\texttt{Deoxys-BC-256}$ as the second example, [goto](Comparison//no_EP). When $\epsilon$ calculation is closed, and assuming the time and memory consumption of  $\epsilon$ calculation be 0, we found the following solution:
 
 <img src=".\Figures\DeoxysTK2_noEP.jpg" style="zoom:80%;" />
 
@@ -363,14 +359,31 @@ We note that the $\epsilon$ calculation influences the overall data, memory, and
 
 In many cases, when we optimize time complexity alone, memory complexity can exceed expectations.  Therefore, the multi-objective optimization is necessary for solving, and the results we obtained that are exhibited in our paper are selected considering the time, data, and memory complexity together.
 
-We provide a pattern that corresponds to the alternative results of the 15-round $\texttt{Deoxys-BC-384}$, [goto](.\Comparison\alterDMT). For this pattern, the time complexity decreases slightly, whereas the *data complexity increases*.
+We provide a pattern that corresponds to the alternative results of the 15-round $\texttt{Deoxys-BC-384}$, [goto](Comparison//alterDMT). For this pattern, the time complexity decreases slightly, whereas the *data complexity increases*.
 
-| Data | Memory | Time | Ref.                                   |
-| :--: | :----: | :--: | -------------------------------------- |
-| 115  |  128   | 334  | [Deoxys-BC-384](# Deoxys-BC-384 (15r)) |
-| 122  |  122   | 331  | This section                           |
+| Data | Memory |  Time   | Ref.                                 |
+| :--: | :----: | :-----: | ------------------------------------ |
+| 115  |  128   |   334   | [Deoxys-BC-384](# Deoxys-BC-384_15r) |
+| 122  |  122   | **331** | This section                         |
+| 115  |  115   |   350   | This section                         |
 
-<img src=".\Figures\Deoxys-TK3_higherD.jpg" style="zoom:80%;" />
+### Attack with lower time complexity
+
+<img src=".\Figures\Deoxys-TK3_lowerT.jpg" style="zoom:80%;" />
+
+### Attack with lower Memory complexity:
+
+<img src=".\Figures\Deoxys-TK3_lowerM.jpg" style="zoom:80%;" />
+
+### Attacks with the same complexities but different patterns.
+
+#### Altering 1
+
+<img src=".\Figures\DeoxysTK3_alter1.jpg" style="zoom:80%;" />
+
+#### Altering 2
+
+<img src=".\Figures\DeoxysTK3_alter2.jpg" style="zoom:80%;" />
 
 # Search efficiency
 

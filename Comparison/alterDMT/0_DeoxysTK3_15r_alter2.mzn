@@ -300,7 +300,6 @@ constraint TimeC = max([T1, T2, T3]);
 
 % constraints for fast solving
 constraint PrEf = 16;
-constraint forall(r = 0, c in 0..15)(if c in {2,3,6,7,8,9,11,12,13,14} then uXAK[r,c] = 1 /\ uYAK[r,c] = 1 elseif c in {10} then uXAK[r,c] = 1 /\ uYAK[r,c] = 0 else uXAK[r,c] = 0 endif);
 constraint forall(r = 2, c in 0..15)(if c in {4,5,6} then uXAK[r,c] = 1 /\ uYAK[r,c] = 0 else uXAK[r,c] = 0 endif);
 constraint forall(r = 2, c in 0..15)(if c in {4,5,6} then uSTK[r,c] = 1 else uSTK[r,c] = 0 endif);
 constraint forall(r in {3,4}, c in 0..15)(uSTK[r,c] = 0);
@@ -311,7 +310,6 @@ constraint forall(r = 6, c in 0..15)(if c in {0,1,2,5,6,7,12,13,15} then lYSB[r,
 constraint forall(r = 7, c in 0..15)(if c in {3,14} then lXSB[r,c] = 1 /\ lYSB[r,c] = 0 else lXSB[r,c] = 0 endif);
 constraint forall(r = 8, c in 0..15)(if c in {5,6,7} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
 constraint forall(r in {9,10}, c in 0..15)(lSTK[r,c] = 0);
-
 % to maintain the same assignment in our paper
 constraint mb_p = mb;
 constraint mf_p = 22;
