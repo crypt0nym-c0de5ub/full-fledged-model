@@ -206,6 +206,7 @@ include "3-2_epsilon_table-ST.dzn";
 
 % === when close epsilon calculation, open the next constraint ===
 % constraint Tepsilon = 0;
+% constraint Mepsilon = 0;
 
 int: OpenST = 1; % 1 -> Trun on State Test;
 constraint if OpenST = 0 
@@ -296,15 +297,16 @@ constraint sum(i in 0..15)(lLANE[i]) = 3;
 
 % constraints for fast solving
 constraint PrEf = 16;
-constraint forall(r = 2, c in 0..15)(if c in {4,5,6} then uSTK[r,c] = 1 else uSTK[r,c] = 0 endif);
+constraint forall(r = 2, c in 0..15)(if c in {0,2,3} then uSTK[r,c] = 1 else uSTK[r,c] = 0 endif);
 constraint forall(r in {3,4}, c in 0..15)(uSTK[r,c] = 0);
 
-constraint forall(r = 8, c in 0..15)(if c in {5,6,7} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
+constraint forall(r = 8, c in 0..15)(if c in {1,2,3} then lSTK[r,c] = 1 else lSTK[r,c] = 0 endif);
 constraint forall(r in {9,10}, c in 0..15)(lSTK[r,c] = 0);
 constraint mb_p = mb;
 % =================== TEST ====================
 
-constraint DataC <= 115;
+% constraint TimeC = 334;
+% constraint DataC <= 115;
 solve minimize 6*TimeC + 3*MemoryC + Mepsilon;
 
 % pretty print
