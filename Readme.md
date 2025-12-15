@@ -320,7 +320,7 @@ We provide the comparison of the effect among different approaches, specifically
 
 ## State Test:
 
-We take the 14-round attack on $\texttt{Deoxys-I-256}$ as an example, [goto](Comparison\\no_ST).
+We take the 14-round attack on $\texttt{Deoxys-I-256}$ as an example, [goto](Comparison//no_ST).
 
 Under the same key-difference pattern, when closing the state test, we obtain an optimal solution whose time complexity is significantly higher than when the state test is employed.
 
