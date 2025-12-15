@@ -320,10 +320,10 @@ We take the 14-round attack on $\texttt{Deoxys-I-256}$ as an example, [goto](Com
 
 Under the same key-difference pattern, when closing the state test, we obtain an optimal solution whose time complexity is significantly higher than when the state test is employed.
 
-| State Test | Data | Memory | Time | Ref                                |
-| :--------: | :--: | :----: | :--: | ---------------------------------- |
-|    open    | 117  |  120   | 242  | [Deoxys-I-256](# Deoxys-I-256_14r) |
-|   close    | 116  |  117   | 256  | This section                       |
+| State Test | Data | Memory | Time | Ref                               |
+| :--------: | :--: | :----: | :--: | --------------------------------- |
+|    open    | 117  |  120   | 242  | [Deoxys-I-256](#Deoxys-I-256_14r) |
+|   close    | 116  |  117   | 256  | This section                      |
 
 <img src=".\Figures\Deoxys-AE-I-256-noST.jpg" style="zoom:80%;" />
 
@@ -331,13 +331,13 @@ Under the same key-difference pattern, when closing the state test, we obtain an
 
 After finding the lower bound of the attacks, we constrain the pattern of the difference of subtweakeys. By closing the component of $\epsilon$ calculation (setting the time and memory cost of $\epsilon$ as 0), we obtain different patterns and complexities than the results given above.
 
-| $\texttt{Deoxys-BC-384}$ |   $\epsilon$ calculation   |   Data   |   Memory   |   Time   | $T_\epsilon$ | Ref.                                 |
-| :----------------------: | :------------------------: | :------: | :--------: | :------: | :----------: | ------------------------------------ |
-|                          |            open            |   115    |    128     |   334    |    $2^0$     | [Deoxys-BC-384](# Deoxys-BC-384_15r) |
-|                          |           close            |   115    |    115     |   310    | $\gg 2^{24}$ | This section                         |
-| $\texttt{Deoxys-BC-256}$ | **$\epsilon$ calculation** | **Data** | **Memory** | **Time** |  $\epsilon$  |                                      |
-|                          |            open            |   122    |    123     |   195    |    $2^0$     | [Deoxys-BC-256](# Deoxys-BC-256_11r) |
-|                          |           close            |   129    |    130     |   186    |    $2^0$     | This section                         |
+| $\texttt{Deoxys-BC-384}$ |   $\epsilon$ calculation   |   Data   |   Memory   |   Time   | $T_\epsilon$ | Ref.                                |
+| :----------------------: | :------------------------: | :------: | :--------: | :------: | :----------: | ----------------------------------- |
+|                          |            open            |   115    |    128     |   334    |    $2^0$     | [Deoxys-BC-384](#Deoxys-BC-384_15r) |
+|                          |           close            |   115    |    115     |   310    | $\gg 2^{24}$ | This section                        |
+| $\texttt{Deoxys-BC-256}$ | **$\epsilon$ calculation** | **Data** | **Memory** | **Time** |  $\epsilon$  |                                     |
+|                          |            open            |   122    |    123     |   195    |    $2^0$     | [Deoxys-BC-256](#Deoxys-BC-256_11r) |
+|                          |           close            |   129    |    130     |   186    |    $2^0$     | This section                        |
 
 ### Example 1
 
@@ -361,11 +361,11 @@ In many cases, when we optimize time complexity alone, memory complexity can exc
 
 We provide a pattern that corresponds to the alternative results of the 15-round $\texttt{Deoxys-BC-384}$, [goto](Comparison//alterDMT). For this pattern, the time complexity decreases slightly, whereas the *data complexity increases*.
 
-| Data | Memory |  Time   | Ref.                                 |
-| :--: | :----: | :-----: | ------------------------------------ |
-| 115  |  128   |   334   | [Deoxys-BC-384](# Deoxys-BC-384_15r) |
-| 122  |  122   | **331** | This section                         |
-| 115  |  115   |   350   | This section                         |
+| Data | Memory |  Time   | Ref.                                |
+| :--: | :----: | :-----: | ----------------------------------- |
+| 115  |  128   |   334   | [Deoxys-BC-384](#Deoxys-BC-384_15r) |
+| 122  |  122   | **331** | This section                        |
+| 115  |  115   |   350   | This section                        |
 
 ### Attack with lower time complexity
 
