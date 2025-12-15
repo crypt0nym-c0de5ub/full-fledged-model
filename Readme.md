@@ -342,7 +342,7 @@ After finding the lower bound of the attacks, we constrain the pattern of the di
 |                          |            open            |   115    |    128     |   334    |    $2^0$     | [Deoxys-BC-384](#Deoxys-BC-384_15r) |
 |                          |           close            |   115    |    115     |   310    | $\gg 2^{24}$ | This section                         |
 | Deoxys-BC-256 | **$\epsilon$ calculation** | **Data** | **Memory** | **Time** |  $\epsilon$  |                                      |
-|                          |            open            |   122    |    123     |   195    |    $2^0$     | [Deoxys-BC-256](# Deoxys-BC-256_11r) |
+|                          |            open            |   122    |    123     |   195    |    $2^0$     | [Deoxys-BC-256](#Deoxys-BC-256_11r) |
 |                          |           close            |   129    |    130     |   186    |    $2^0$     | This section                         |
 ### Example 1
 
