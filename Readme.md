@@ -331,7 +331,6 @@ Under the same key-difference pattern, when closing the state test, we obtain an
 
 After finding the lower bound of the attacks, we constrain the pattern of the difference of subtweakeys. By closing the component of $\epsilon$ calculation (setting the time and memory cost of $\epsilon$ as 0), we obtain different patterns and complexities than the results given above.
 
-<<<<<<< HEAD
 | $\texttt{Deoxys-BC-384}$ |   $\epsilon$ calculation   |   Data   |   Memory   |   Time   | $T_\epsilon$ | Ref.                                |
 | :----------------------: | :------------------------: | :------: | :--------: | :------: | :----------: | ----------------------------------- |
 |                          |            open            |   115    |    128     |   334    |    $2^0$     | [Deoxys-BC-384](#Deoxys-BC-384_15r) |
@@ -339,16 +338,12 @@ After finding the lower bound of the attacks, we constrain the pattern of the di
 | $\texttt{Deoxys-BC-256}$ | **$\epsilon$ calculation** | **Data** | **Memory** | **Time** |  $\epsilon$  |                                     |
 |                          |            open            |   122    |    123     |   195    |    $2^0$     | [Deoxys-BC-256](#Deoxys-BC-256_11r) |
 |                          |           close            |   129    |    130     |   186    |    $2^0$     | This section                        |
-=======
 | $\texttt{Deoxys-BC-384}$ |   $\epsilon$ calculation   |   Data   |   Memory   |   Time   | $T_\epsilon$ | Ref.                                 |
-| :----------------------: | :------------------------: | :------: | :--------: | :------: | :----------: | ------------------------------------ |
 |                          |            open            |   115    |    128     |   334    |    $2^0$     | [Deoxys-BC-384](#Deoxys-BC-384_15r) |
 |                          |           close            |   115    |    115     |   310    | $\gg 2^{24}$ | This section                         |
 | $\texttt{Deoxys-BC-256}$ | **$\epsilon$ calculation** | **Data** | **Memory** | **Time** |  $\epsilon$  |                                      |
 |                          |            open            |   122    |    123     |   195    |    $2^0$     | [Deoxys-BC-256](# Deoxys-BC-256_11r) |
 |                          |           close            |   129    |    130     |   186    |    $2^0$     | This section                         |
->>>>>>> dc943a0c626da16341a2ecc990280229a932fc9b
-
 ### Example 1
 
 We take the 15-round attack on $\texttt{Deoxys-BC-384}$ as the first example, [goto](Comparison//no_EP). When excluding the component of the $\epsilon$ calculation, the time complexity is much lower than the final result, and the state test is not working. However, it's obvious that $\epsilon$ will be much larger than assuming (say 0) under this pattern, and the time complexity is far beyond what can be traded off.
