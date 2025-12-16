@@ -388,9 +388,11 @@ We provide a pattern that corresponds to the alternative results of the 15-round
 
 We provide five models for the attack instances outlined in our paper, along with the time required to solve each model.  To enable fast verification, each submitted model is equipped with pattern constraints.
 
+Before solving the entire model, we will compute lower bounds in complexity, exclude the calculation of epsilon, and collect the nearly lower bounds into a set (extract some properties to prune the searching space).  Then, including the calculation of epsilon to complete the model and solve the final complexity.  Once the final complexity matches the lower bound, we obtain the optimal attack.
+
 ## Searching Strategy
 
-Time for lower bound searching: 
+Time for lower bound searching (excluding epsilon calculation): 
 
 * 10-round $\texttt{Deoxys-I-128}$: in 5 minutes
 * 11-round $\texttt{Deoxys-BC-256}$: in 10 minutes
