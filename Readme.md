@@ -334,10 +334,10 @@ After finding the lower bound of the attacks, we constrain the pattern of the di
 | Deoxys-BC-384 |   $\epsilon$ calculation   |   Data   |   Memory   |   Time   | $T_\epsilon$ | Ref.                                 |
 | :----------------------: | :------------------------: | :------: | :--------: | :------: | :----------: | ----------------------------------- |
 |                          |            open            |   115    |    128     |   334    |    $2^0$     | [Deoxys-BC-384](#Deoxys-BC-384_15r) |
-|                          |           close            |   115    |    115     |   310    | $\gg 2^{32}$ | This section                         |
+|                          |           close            |   115    |    115     |   310    | $\gg 2^{32}$ | [goto](Comparison//no_ST) |
 | **Deoxys-BC-256** | **$\epsilon$ calculation** | **Data** | **Memory** | **Time** |  $T_\epsilon$  |                                      |
 |                          |            open            |   122    |    123     |   195    |    $2^0$     | [Deoxys-BC-256](#Deoxys-BC-256_11r) |
-|                          |           close            |   129    |    130     |   186    |    $2^0$     | This section                         |
+|                          |           close            |   129    |    130     |   186    |    $2^0$     | [goto](Comparison//no_EP) |
 ### Example 1
 
 We take the 15-round attack on $\texttt{Deoxys-BC-384}$ as the first example, [goto](Comparison//no_EP). When excluding the component of the $\epsilon$ calculation, the time complexity is much lower than the final result, and the state test is not working. However, it's obvious that $\epsilon$ will be much larger than assuming (say 0) under this pattern, and the time complexity is far beyond what can be traded off.
@@ -358,13 +358,13 @@ We note that the $\epsilon$ calculation influences the overall data, memory, and
 
 In many cases, when we optimize time complexity alone, memory complexity can exceed expectations.  Therefore, the multi-objective optimization is necessary for solving, and the results we obtained that are exhibited in our paper are selected considering the time, data, and memory complexity together.
 
-We provide a pattern that corresponds to the alternative results of the 15-round $\texttt{Deoxys-BC-384}$, [goto](Comparison//alterDMT). For this pattern, the time complexity decreases slightly, whereas the *data complexity increases*.
+==We provide a pattern that corresponds to the alternative results of the 15-round $\texttt{Deoxys-BC-384}$, [goto](Comparison//alterDMT). For this pattern, the time complexity decreases slightly, whereas the *data complexity increases*.==
 
-|    Data     |     Memory      |      Time       | Ref.                                |
-| :---------: | :-------------: | :-------------: | ----------------------------------- |
-|     115     |       128       |       334       | [Deoxys-BC-384](#Deoxys-BC-384_15r) |
-| 122 (122.2) |   122 (122.2)   | **331 (331.2)** | This section (Pr=112 --> 110.4)     |
-| 115 (115.2) | **115 (115.2)** |   350 (352.4)   | This section (Pr=98 --> 98.4)       |
+| Data  |  Memory   |   Time    | Ref.                                |
+| :---: | :-------: | :-------: | ----------------------------------- |
+|  115  |    128    |    334    | [Deoxys-BC-384](#Deoxys-BC-384_15r) |
+| 122.2 |   122.2   | **331.2** | [goto](Comparison//alterDMT)        |
+| 115.2 | **115.2** |   352.4   | [goto](Comparison//alterDMT)        |
 
 ### Attack with lower time complexity
 
