@@ -6,9 +6,6 @@
 
 ## Infrastructure
 
-nextline  
-line2
-
 To run the model, ensure "[Minizinc](https://www.minizinc.org/) with [Or-Tools](https://developers.google.com/optimization?hl=zh-cn)" is installed on your computing device. 
 
 Note that, we run the model on *AMD Ryzen 9 7945HX* with *32* threads, using:
