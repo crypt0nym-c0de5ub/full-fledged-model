@@ -16,11 +16,11 @@ minizinc --solver CP-SAT -p 32 Modelname.mzn > RESULTs.txt
 
 ## Instruction manual
 
-All variables in our model (*solver = CP-SAT*) are integers; when floats arise, try to transform them to a integer if it`s possible.
+All variables in our model (*solver = CP-SAT*) are integers; when floats arise, try to transform them to an integer if it`s possible.
 
 ### Components
 
-Each part of our model is separated in different `dzn` files, therefore, we have the following components:
+Each part of our model is separated into different `dzn` files; therefore, we have the following components:
 
 * **Main:** `0_Deoxys. mzn` is the center control model. By enabling or disabling the functions in this main model, it`s possible to adjust the searching depth.
 * **Pattern (Dis. and Ext.):** "1_differential.dzn" constraints the differential pattern of the whole attack.
@@ -32,7 +32,7 @@ Each part of our model is separated in different `dzn` files, therefore, we have
   * $Gstate$ is also contain in $m'_b,m'_f$ when the state test is working.
   * Open `include "2_guess_and_determine.dzn";` to use this function.
 * **Epsilon calculation:** "3-1_epsilon_gandf-ST.dzn" and "3-2_epsilon_table-ST.dzn" give the constraints of step assignment and complexities.
-  * Returning parameters: processing step of the unguessed subkeys, corresponding filters, time and memory complexity of each step.
+  * Returning parameters: processing step of the unguessed subkeys, corresponding filters, time, and memory complexity of each step.
   * When the state test is working, $ST$ is contained as subkeys, and $EGK$ is eliminated, in some steps.
   * Open `include "3-1_epsilon_gandf-ST.dzn";  ` to use the guess-and-filter approach, and `include "3-2_epsilon_table-ST.dzn";  ` for the pre-computation hash table approach.
 
@@ -79,7 +79,7 @@ The following constraints of strong key bridging are applied only when an attack
 3 cases for involvements, guessing strategy, and epsilon calculation....
 
 ```
-% CASE-1: Strong Key Bridges for involved key
+% CASE-1: Strong Key Bridges for the involved key
 array[0..3] of var int: vRd;
 constraint forall(c in 0..3)(vRd[c] = JTable[sum(i in 0..3)(uVSTK[0,hTable[4*c+i,1]]), sum(i in 0..3)(lVSTK[15,4*c+i])]);
 var int: mb  = sum(r in 0..Rb-1, i in 0..15)(uVSTK[r,i] == 1 /\ uEGK[r,i] == -1) + sum(r in 0..Rb-1, i in 0..15)(uVstate[r,i]);
