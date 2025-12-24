@@ -27,7 +27,7 @@ array[0..15, 0..34] of int: posTable = array2d(0..15, 0..34, [
 ]);
 
 
-int: rEb = 5;
+int: rEb = 4;
 int: rEu = 10;
 int: rEm = 6;
 int: rEl = 6;
@@ -333,27 +333,13 @@ constraint forall(r in 1..rEb-1, c in 0..3)(
 );
 % ----- [Upper] Epsilon (End) -----
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-% ##### Fixed Pattern (to match the same pattern in our paper) #####
-constraint forall(r = 2, c in 0..15)(if c in {3}      then bSTK[r,c] = 1 else bSTK[r,c] = 0 endif);
-constraint forall(r = 3, c in 0..15)(if c in {1,3}    then bSTK[r,c] = 1 else bSTK[r,c] = 0 endif);
-constraint forall(r = 4, c in 0..15)(if c in {7}      then bSTK[r,c] = 1 else bSTK[r,c] = 0 endif);
-constraint forall(r = 5, c in 0..15)(if c in {0,7}    then bY[r,c] = 1   else bY[r,c] = 0 endif);
-constraint bX[5,0] = 2 /\ bX[5,7] = 1;
-constraint PrEb = 8;
-
-constraint forall(r in 0..3, c in 0..15)(if bvSTK[r,c] = 1 then bgSTK[r,c] = 1 else bgSTK[r,c] = 0 endif);
-constraint forall(c in 0..15)(bgSTK[4,c] = 0);
-constraint sum(r in 0..rEb, c in 0..15)(bflagST[r,c]) = 0;
-% ##### Fixed Pattern #####
 % % ========================================================= Upper (End) ======================================================
 
 
 
-% ======================================================= Lower (Begin) ======================================================
-% ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-% ----- [Lower] Differential in Lower (Begin) -----
+% % ======================================================= Lower (Begin) ======================================================
+% % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% % ----- [Lower] Differential in Lower (Begin) -----
 array[rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, 0..15] of var 0..2: fX;  % X is extended to the distinguisher
 array[rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, 0..15] of var 0..2: fY;  % Y is extended to the distinguisher
 array[rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, 0..15] of var 0..1: fSTK;
@@ -811,34 +797,10 @@ constraint forall(r in rEb+rEu+rEm+rEl+1..rEb+rEu+rEm+rEl+rEf-1, c in 0..3)(
 constraint forall(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-2, c in 0..15)(fsadevZ[r,SRp[c]] = fsadevW[r,c]);
 % --- deduce values by Sbox-property [end] ---
 
-% TEST temporary
-constraint bsaSTK[4,posTable[0,4]] = 3;
-constraint forall(r = 28, c in 0..7)(
-  if c in {7} then fsgSTK[r,posTable[c,r]] = 5
-  else fsgSTK[r,posTable[c,r]] = -1
-  endif
-);
-constraint forall(r = 29, c in 0..7)(
-  if c in {2} then fsgSTK[r,posTable[c,r]] = 4
-  elseif c in {4} then fsgSTK[r,posTable[c,r]] = 5
-  else fsgSTK[r,posTable[c,r]] = -1
-  endif
-);
 % ----- [Lower] Epsilon (End) -----
 % ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-% ##### Fixed Pattern (to match the same pattern in our paper) #####
-constraint forall(r = 27, c in 0..15)(if c in {9} then fX[r,c] = 1 else fX[r,c] = 0 endif);
-constraint forall(r in {27,29,31,33}, c in 0..7)(fSTK[r,c] = 0);
-constraint forall(r = 28, c in 0..7)(if c in {6} then fSTK[r,c] = 1 else fSTK[r,c] = 0 endif);
-constraint forall(r = 30, c in 0..7)(if c in {5} then fSTK[r,c] = 1 else fSTK[r,c] = 0 endif);
-constraint forall(r = 32, c in 0..7)(if c in {3} then fSTK[r,c] = 1 else fSTK[r,c] = 0 endif);
-constraint PrEf = 0;
-constraint forall(r in 27..33, c in 0..15)(ftSC[r,c] = 0);
-constraint forall(r in 27..29, c in 0..15)(fgSTK[r,c] = 0);
-constraint forall(r in 30..33, c in 0..15)(if fvSTK[r,c] = 1 then fgSTK[r,c] = 1 else fgSTK[r,c] = 0 endif);
-% ##### Fixed Pattern #####
-% ======================================================= Lower (End) ======================================================
+% % ======================================================= Lower (End) ======================================================
 
 % ===================================================== Epsilon Complexity Eb union Ef (Begin) ====================================================
 % ** Filters related to Steps **
@@ -907,34 +869,34 @@ constraint Tepsilon = max([0] ++ [Te[s] | s in 1..Step]);
 % ====================================================== Epsilon Complexity Eb union Ef (End) =====================================================
 
 
-% % =================================================== Key Bridge (Begin) ===================================================
-array[0..15] of var int: vLANE;
-array[0..15] of var int: gLANE;
-var int: vSTK_SUM;
-var int: gSTK_SUM;
-var 0..1: tsFlag; % 0 is state test in preguessing
+% % % =================================================== Key Bridge (Begin) ===================================================
+% array[0..15] of var int: vLANE;
+% array[0..15] of var int: gLANE;
+% var int: vSTK_SUM;
+% var int: gSTK_SUM;
+% var 0..1: tsFlag; % 0 is state test in preguessing
 
-% count involved subkey
-constraint forall(c in 0..15)(
-  vLANE[c] = sum(r in 0..rEb-1)(bvSTK[r,c]) 
-  + sum(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1)(fvSTK[r,c])
-);
+% % count involved subkey
+% constraint forall(c in 0..15)(
+%   vLANE[c] = sum(r in 0..rEb-1)(bvSTK[r,c]) 
+%   + sum(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1)(fvSTK[r,c])
+% );
 
-% count guessed subkey
-constraint forall(c in 0..15)(
-  gLANE[c] = sum(r in 0..rEb-1)(bgSTK[r,c] = 1) + 
-             sum(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1)(fgSTK[r,c] = 1)
-);
-% involved state without consideration of State Test
-constraint vSTK_SUM = sum(c in 0..15)(if vLANE[c] >= 3 then 3 else vLANE[c] endif);
-% guessed state without consideration of State Test
-constraint gSTK_SUM = sum(c in 0..15)(if gLANE[c] >= 3 then 3 else gLANE[c] endif) + 
-                      sum(r in 0..rEb, c in 0..15)(btSC[r,c] = 1) + 
-                      sum(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, c in 0..15)(ftSC[r,c] = 1);
+% % count guessed subkey
+% constraint forall(c in 0..15)(
+%   gLANE[c] = sum(r in 0..rEb-1)(bgSTK[r,c] = 1) + 
+%              sum(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1)(fgSTK[r,c] = 1)
+% );
+% % involved state without consideration of State Test
+% constraint vSTK_SUM = sum(c in 0..15)(if vLANE[c] >= 3 then 3 else vLANE[c] endif);
+% % guessed state without consideration of State Test
+% constraint gSTK_SUM = sum(c in 0..15)(if gLANE[c] >= 3 then 3 else gLANE[c] endif) + 
+%                       sum(r in 0..rEb, c in 0..15)(btSC[r,c] = 1) + 
+%                       sum(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-1, c in 0..15)(ftSC[r,c] = 1);
                       
 % -----------------------------------------------------------------------------------------------------------------------
 % When the stronger key bridge is employed, key counting is performed using a sliding window that spans 30 rounds.
-% For the 33 round attack, the window slide as [0..4, 27..29],[1..4, 27..30],[2..4, 27..31],[3..4, 27..32],[4..4, 27..33]
+% For the 33 round attack, the window slide as [0..3, 26..29],[1..3, 26..30],[2..3, 26..31],[3..3, 26..32]
 array[0..15] of var int: vL_bg;
 array[0..15] of var int: gL_bg;
 var int: vSTK_Sbg;
@@ -942,43 +904,41 @@ var int: gSTK_Sbg;
 
 constraint forall(c in 0..15)(
     let {
-        var int: vsum029 = sum(r in 0..4)(bvSTK[r,c]) + sum(r in 27..29)(fvSTK[r,c]),
-        var int: vsum130 = sum(r in 1..4)(bvSTK[r,c]) + sum(r in 27..30)(fvSTK[r,c]),
-        var int: vsum231 = sum(r in 2..4)(bvSTK[r,c]) + sum(r in 27..31)(fvSTK[r,c]),
-        var int: vsum332 = sum(r in 3..4)(bvSTK[r,c]) + sum(r in 27..32)(fvSTK[r,c]),
-        var int: vsum433 = sum(r in 4..4)(bvSTK[r,c]) + sum(r in 27..33)(fvSTK[r,c]),
+        var int: vsum029 = sum(r in 0..3)(bvSTK[r,c]) + sum(r in 26..29)(fvSTK[r,c]),
+        var int: vsum130 = sum(r in 1..3)(bvSTK[r,c]) + sum(r in 26..30)(fvSTK[r,c]),
+        var int: vsum231 = sum(r in 2..3)(bvSTK[r,c]) + sum(r in 26..31)(fvSTK[r,c]),
+        var int: vsum332 = sum(r in 3..3)(bvSTK[r,c]) + sum(r in 26..32)(fvSTK[r,c]),
     } in (
-        vL_bg[c] = max(max(vsum029, vsum130), max(max(vsum231, vsum332), vsum433))
+        vL_bg[c] = max(max(vsum029, vsum130), max(vsum231, vsum332))
     )
 );
 constraint forall(c in 0..15)(
     let {
-        var int: gsum029 = sum(r in 0..4)(bgSTK[r,c]) + sum(r in 27..29)(fgSTK[r,c]),
-        var int: gsum130 = sum(r in 1..4)(bgSTK[r,c]) + sum(r in 27..30)(fgSTK[r,c]),
-        var int: gsum231 = sum(r in 2..4)(bgSTK[r,c]) + sum(r in 27..31)(fgSTK[r,c]),
-        var int: gsum332 = sum(r in 3..4)(bgSTK[r,c]) + sum(r in 27..32)(fgSTK[r,c]),
-        var int: gsum433 = sum(r in 4..4)(bgSTK[r,c]) + sum(r in 27..33)(fgSTK[r,c]),
+        var int: gsum029 = sum(r in 0..3)(bgSTK[r,c]) + sum(r in 26..29)(fgSTK[r,c]),
+        var int: gsum130 = sum(r in 1..3)(bgSTK[r,c]) + sum(r in 26..30)(fgSTK[r,c]),
+        var int: gsum231 = sum(r in 2..3)(bgSTK[r,c]) + sum(r in 26..31)(fgSTK[r,c]),
+        var int: gsum332 = sum(r in 3..3)(bgSTK[r,c]) + sum(r in 26..32)(fgSTK[r,c]),
     } in (
-        gL_bg[c] = max(max(gsum029, gsum130), max(max(gsum231, gsum332), gsum433))
+        gL_bg[c] = max(max(gsum029, gsum130), max(gsum231, gsum332))
     )
 );
 
 vSTK_Sbg = sum(c in 0..15)(if vL_bg[c] >= 3 then 3 else vL_bg[c] endif);
 gSTK_Sbg = sum(c in 0..15)(if gL_bg[c] >= 3 then 3 else gL_bg[c] endif);
-% ==================================================== Key Bridge (End) ====================================================
+% % ==================================================== Key Bridge (End) ====================================================
 
 
-% ================================================================== Complexity [begin] ===================================================================
+% % ================================================================== Complexity [begin] ===================================================================
 var int: rb;
 var int: rf;
 var int: rb_p;
 var int: rf_p;
 
 constraint rb = sum(c in 0..15)(bX[1,c] = 2);
-constraint rf = sum(c in 0..15)(fZ[rEb+rEu+rEm+rEl+rEf-1,c] = 2);
+constraint rf = sum(c in 0..15)(fY[rEb+rEu+rEm+rEl+rEf-1,c] = 2);
 constraint rb_p = sum(r in 1..rEb-1, c in 0..15)(bfrSC[r,c]) + sum(r in 2..rEb-1, c in 0..15)(bfrMC[r,c]);
 constraint rf_p = sum(r in rEb+rEu+rEm+rEl+1..rEb+rEu+rEm+rEl+rEf-1, c in 0..15)(ffrSC[r,c]) + sum(r in rEb+rEu+rEm+rEl..rEb+rEu+rEm+rEl+rEf-2, c in 0..15)(ffrMC[r,c]);
-% constraint gk = gSTK_Sbg;
+% % constraint gk = gSTK_Sbg;
 
 var int: DataC;
 int: N = 64;
@@ -990,9 +950,11 @@ var int: T3;
 var int: TimeC;
 var int: MemoryC;
 var 0..1: cp_P;
-var int: PrAtt = 46 + PrEb + PrEf;
 
-constraint 2*DataC = N + 4 + PrAtt;
+% var int: PrAtt = 46 + PrEb + PrEf;
+% constraint 2*DataC = N + 4 + PrAtt;
+
+constraint DataC = 59;
 
 constraint MemoryC = max([DataC, min(T2u-(4*gSTK_Sbg), T2l-(4*gSTK_Sbg)), 4*(vSTK_Sbg - gSTK_Sbg)]);
 
@@ -1002,13 +964,31 @@ constraint T2l = T1 + 4*(rf-rf_p) + DataC - N + 1;
 constraint if(T2u <= T2l) then(T2 = T2u /\ cp_P = 1) else(T2 = T2l /\ cp_P = 0) endif;
 constraint T3 = 4*gSTK_Sbg + 2*DataC + 8*(rb+rf-rb_p-rf_p) - 2*N + 4*Tepsilon;
 constraint TimeC = max([T1, T2, T3]);
-% ================================================================== Complexity [end] ===================================================================
+% % ================================================================== Complexity [end] ===================================================================
 
 % Solve
 solve minimize 7*TimeC + 3*MemoryC;
 
+% ---------------------------------------------------------------------------------------------------
+% FIX UPPER FIX UPPER FIX UPPER FIX UPPER FIX UPPER FIX UPPER FIX UPPER FIX UPPER FIX UPPER FIX UPPER
+constraint forall(r = 1, c in 0..15)(if c in {3}      then bSTK[r,c] = 1 else bSTK[r,c] = 0 endif);
+constraint forall(r = 2, c in 0..15)(if c in {1,3}    then bSTK[r,c] = 1 else bSTK[r,c] = 0 endif);
+constraint forall(r = 3, c in 0..15)(if c in {7}      then bSTK[r,c] = 1 else bSTK[r,c] = 0 endif);
+constraint forall(r = 4, c in 0..15)(if c in {0,7}    then bY[r,c] = 1   else bY[r,c] = 0 endif);
+constraint bX[4,0] = 2 /\ bX[4,7] = 1;
+constraint PrEb = 8;
+constraint sum(r in 0..rEb, c in 0..15)(bflagST[r,c]) = 0;
+% FIX UPPER FIX UPPER FIX UPPER FIX UPPER FIX UPPER FIX UPPER FIX UPPER FIX UPPER FIX UPPER FIX UPPER
 
-
+% % FIX LOWER FIX LOWER FIX LOWER FIX LOWER FIX LOWER FIX LOWER FIX LOWER FIX LOWER FIX LOWER FIX LOWER
+constraint forall(r = 26, c in 0..15)(if c in {9} then fX[r,c] = 1 else fX[r,c] = 0 endif);
+constraint forall(r in {26,28,30,32}, c in 0..7)(fSTK[r,c] = 0);
+constraint forall(r = 27, c in 0..7)(if c in {6} then fSTK[r,c] = 1 else fSTK[r,c] = 0 endif);
+constraint forall(r = 29, c in 0..7)(if c in {5} then fSTK[r,c] = 1 else fSTK[r,c] = 0 endif);
+constraint forall(r = 31, c in 0..7)(if c in {3} then fSTK[r,c] = 1 else fSTK[r,c] = 0 endif);
+constraint PrEf = 0;
+constraint forall(r in 26..32, c in 0..15)(ftSC[r,c] = 0);
+% % FIX LOWER FIX LOWER FIX LOWER FIX LOWER FIX LOWER FIX LOWER FIX LOWER FIX LOWER FIX LOWER FIX LOWER
 
 
 % ----- Assistant Predicates -----
